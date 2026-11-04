@@ -21,6 +21,32 @@ test("object intersection", () => {
   expect(() => z.intersection(BaseTeacher.strict(), HasID).parse({ ...data, extra: 12 })).toThrow();
 });
 
+test("object intersection strips __proto__ from pass-through operands", () => {
+  const cases = [
+    [
+      z.intersection(z.object({ name: z.string() }), z.unknown()),
+      JSON.parse('{"__proto__":{"isAdmin":true},"name":"alice"}'),
+      { name: "alice" },
+    ],
+    [z.intersection(z.record(z.string(), z.unknown()), z.any()), JSON.parse('{"__proto__":{},"a":1}'), { a: 1 }],
+  ] as const;
+
+  for (const [schema, input, expected] of cases) {
+    const parsed = schema.parse(input);
+    expect(parsed).toEqual(expected);
+    expect(Object.getPrototypeOf(parsed)).toBe(Object.prototype);
+    expect(Object.prototype.hasOwnProperty.call(parsed, "__proto__")).toBe(false);
+  }
+});
+
+test("intersection of wide objects", () => {
+  const input = Object.fromEntries(Array.from({ length: 40 }, (_, i) => [`k${i}`, i]));
+  expect(z.intersection(z.record(z.number()), z.record(z.number())).parse(input)).toEqual(input);
+  expect(
+    z.intersection(z.record(z.number()), z.record(z.number().transform((n) => n + 1))).safeParse(input).error!.issues
+  ).toMatchObject([{ code: "invalid_intersection_types" }]);
+});
+
 test("deep intersection", () => {
   const Animal = z.object({
     properties: z.object({

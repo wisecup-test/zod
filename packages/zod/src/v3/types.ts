@@ -619,7 +619,7 @@ const emailRegex = /^(?!\.)(?!.*\.\.)([A-Z0-9_'+\-\.]*)[A-Z0-9_+-]@([A-Z0-9][A-Z
 //   /^[a-z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9\-]+)*$/i;
 
 // from https://thekevinscott.com/emojis-in-javascript/#writing-a-regular-expression
-const _emojiRegex = `^(\\p{Extended_Pictographic}|\\p{Emoji_Component})+$`;
+const _emojiRegex = `^[\\p{Extended_Pictographic}\\p{Emoji_Component}]+$`;
 let emojiRegex: RegExp;
 
 // faster, simpler, safer
@@ -2297,6 +2297,14 @@ export class ZodArray<T extends ZodTypeAny, Cardinality extends ArrayCardinality
       }
     }
 
+    // an oversized array fails before any element is parsed
+    if (
+      (def.exactLength !== null && ctx.data.length > def.exactLength.value) ||
+      (def.maxLength !== null && ctx.data.length > def.maxLength.value)
+    ) {
+      return INVALID;
+    }
+
     if (ctx.common.async) {
       return Promise.all(
         ([...ctx.data] as any[]).map((item, i) => {
@@ -3246,10 +3254,14 @@ function mergeValues(a: any, b: any): { valid: true; data: any } | { valid: fals
     return { valid: true, data: a };
   } else if (aType === ZodParsedType.object && bType === ZodParsedType.object) {
     const bKeys = util.objectKeys(b);
-    const sharedKeys = util.objectKeys(a).filter((key) => bKeys.indexOf(key) !== -1);
+    // a set keeps the lookup linear for wide objects
+    const bKeySet = bKeys.length > 32 ? new Set(bKeys) : null;
+    const sharedKeys = util.objectKeys(a).filter((key) => (bKeySet ? bKeySet.has(key) : bKeys.indexOf(key) !== -1));
 
     const newObj: any = { ...a, ...b };
+    if (Object.prototype.hasOwnProperty.call(newObj, "__proto__")) delete newObj.__proto__;
     for (const key of sharedKeys) {
+      if (key === "__proto__") continue;
       const sharedValue = mergeValues(a[key], b[key]);
       if (!sharedValue.valid) {
         return { valid: false };
@@ -3725,7 +3737,8 @@ export class ZodSet<Value extends ZodTypeAny = ZodTypeAny> extends ZodType<
           exact: false,
           message: def.maxSize.message,
         });
-        status.dirty();
+        // an oversized set fails before any element is parsed
+        return INVALID;
       }
     }
 
@@ -3862,8 +3875,7 @@ export class ZodFunction<Args extends ZodTuple<any, any>, Returns extends ZodTyp
     const fn = ctx.data;
 
     if (this._def.returns instanceof ZodPromise) {
-      // Would love a way to avoid disabling this rule, but we need
-      // an alias (using an arrow function was what caused 2651).
+      // Would love a way to avoid disabling this rule, but we need an alias (using an arrow function was what caused 2651).
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const me = this;
       return OK(async function (this: any, ...args: any[]) {
@@ -3882,8 +3894,7 @@ export class ZodFunction<Args extends ZodTuple<any, any>, Returns extends ZodTyp
         return parsedReturns;
       });
     } else {
-      // Would love a way to avoid disabling this rule, but we need
-      // an alias (using an arrow function was what caused 2651).
+      // Would love a way to avoid disabling this rule, but we need an alias (using an arrow function was what caused 2651).
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const me = this;
       return OK(function (this: any, ...args: any[]) {

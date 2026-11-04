@@ -8,6 +8,7 @@ const error: () => errors.$ZodErrorMap = () => {
     file: { unit: "bajtova", verb: "imati" },
     array: { unit: "stavki", verb: "imati" },
     set: { unit: "stavki", verb: "imati" },
+    map: { unit: "stavki", verb: "imati" },
   };
 
   function getSizing(origin: string): { unit: string; verb: string } | null {
@@ -37,12 +38,16 @@ const error: () => errors.$ZodErrorMap = () => {
     duration: "ISO trajanje",
     ipv4: "IPv4 adresa",
     ipv6: "IPv6 adresa",
+    mac: "MAC adresa",
     cidrv4: "IPv4 raspon",
     cidrv6: "IPv6 raspon",
     base64: "base64 kodirani tekst",
     base64url: "base64url kodirani tekst",
     json_string: "JSON tekst",
     e164: "E.164 broj",
+    credit_card: "broj kreditne kartice",
+    currency_code: "kod valute",
+    iban: "IBAN",
     jwt: "JWT",
     template_literal: "unos",
   };

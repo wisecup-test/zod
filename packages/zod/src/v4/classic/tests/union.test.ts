@@ -180,6 +180,17 @@ test("surface continuable errors only if they exist", () => {
   `);
 });
 
+test("surface an option a check stopped when none can continue", () => {
+  // the size cap aborts before parsing elements
+  const schema = z.union([z.array(z.string()).max(2), z.string()]);
+  expect(schema.safeParse(["a", "b", "c"]).error!.issues).toMatchObject([
+    { code: "too_big", origin: "array", path: [] },
+  ]);
+  expect(z.union([z.int(), z.number().max(5)]).safeParse(7.5).error!.issues).toMatchObject([{ code: "too_big" }]);
+  const both = z.union([z.array(z.string()).max(2), z.array(z.number()).max(1)]);
+  expect(both.safeParse(["a", "b", "c"]).error!.issues).toMatchObject([{ code: "invalid_union" }]);
+});
+
 // z.xor() tests
 test("z.xor() - exactly one match succeeds", () => {
   const schema = z.xor([z.string(), z.number()]);
@@ -198,8 +209,45 @@ test("z.xor() - multiple matches fails", () => {
   const result = schema.safeParse("hello");
   expect(result.success).toBe(false);
   if (!result.success) {
-    expect(result.error.issues[0].code).toBe("invalid_union");
-    expect((result.error.issues[0] as any).inclusive).toBe(false);
+    expect(result.error.issues).toMatchInlineSnapshot(`
+      [
+        {
+          "code": "invalid_union",
+          "errors": [],
+          "inclusive": false,
+          "matches": [
+            0,
+            1,
+          ],
+          "message": "Invalid input: more than one option matched",
+          "path": [],
+        },
+      ]
+    `);
+  }
+});
+
+test("z.xor() - multiple matches reports every matching option", () => {
+  // non-strict objects strip unknown keys, so both branches accept the extra key
+  const name = z.object({ name: z.string() });
+  const version = name.extend({ version: z.string() });
+  const result = z.xor([name, version, z.unknown()]).safeParse({ name: "windows", version: "10" });
+  expect(result.success).toBe(false);
+  if (!result.success) {
+    const issue = result.error.issues[0] as z.core.$ZodIssueInvalidUnion;
+    expect(issue.inclusive).toBe(false);
+    expect((issue as Extract<typeof issue, { inclusive: false }>).matches).toEqual([0, 1, 2]);
+    expect(issue.message).toBe("Invalid input: more than one option matched");
+  }
+});
+
+test("z.xor() - zero matches keeps the per-option errors", () => {
+  const result = z.xor([z.string(), z.number()]).safeParse(true);
+  expect(result.success).toBe(false);
+  if (!result.success) {
+    const issue = result.error.issues[0] as z.core.$ZodIssueInvalidUnion;
+    expect(issue.errors).toHaveLength(2);
+    expect(issue.message).toBe("Invalid input");
   }
 });
 

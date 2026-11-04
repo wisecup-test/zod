@@ -95,6 +95,23 @@ const error: () => errors.$ZodErrorMap = () => {
         },
       },
     },
+    map: {
+      unit: {
+        one: "elementą",
+        few: "elementus",
+        many: "elementų",
+      },
+      verb: {
+        smaller: {
+          inclusive: "turi turėti ne daugiau kaip",
+          notInclusive: "turi turėti mažiau kaip",
+        },
+        bigger: {
+          inclusive: "turi turėti ne mažiau kaip",
+          notInclusive: "turi turėti daugiau kaip",
+        },
+      },
+    },
   };
 
   function getSizing(
@@ -138,12 +155,16 @@ const error: () => errors.$ZodErrorMap = () => {
     duration: "ISO trukmė",
     ipv4: "IPv4 adresas",
     ipv6: "IPv6 adresas",
+    mac: "MAC adresas",
     cidrv4: "IPv4 tinklo prefiksas (CIDR)",
     cidrv6: "IPv6 tinklo prefiksas (CIDR)",
     base64: "base64 užkoduota eilutė",
     base64url: "base64url užkoduota eilutė",
     json_string: "JSON eilutė",
     e164: "E.164 numeris",
+    credit_card: "kredito kortelės numeris",
+    currency_code: "valiutos kodas",
+    iban: "IBAN",
     jwt: "JWT",
     template_literal: "įvestis",
   };

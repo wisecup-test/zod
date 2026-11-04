@@ -51,7 +51,7 @@ test("array length", () => {
         "code": "too_small",
         "exact": true,
         "inclusive": true,
-        "message": "Too small: expected array to have >=2 items",
+        "message": "Too small: expected array to have exactly 2 items",
         "minimum": 2,
         "origin": "array",
         "path": [],
@@ -68,7 +68,7 @@ test("array length", () => {
         "exact": true,
         "inclusive": true,
         "maximum": 2,
-        "message": "Too big: expected array to have <=2 items",
+        "message": "Too big: expected array to have exactly 2 items",
         "origin": "array",
         "path": [],
       },
@@ -138,6 +138,81 @@ test("continue parsing despite array size error", () => {
       "success": false,
     }
   `);
+});
+
+test("an upper size bound fails before any element is parsed", () => {
+  let parsed = 0;
+  const el = z.string().refine(() => ++parsed);
+  let refined = 0;
+  const schema = z
+    .array(el)
+    .max(2, "too many")
+    .refine(() => ++refined);
+  expect(schema.safeParse([1, 2, 3]).error!.issues).toMatchObject([{ code: "too_big", path: [], message: "too many" }]);
+  expect(z.array(el).length(2).safeParse(["a", "b", "c"]).error!.issues).toMatchObject([
+    { code: "too_big", exact: true },
+  ]);
+  expect(z.object({ a: z.array(el).max(1) }).safeParse({ a: [1, 2] }).error!.issues).toMatchObject([
+    { code: "too_big", path: ["a"] },
+  ]);
+  expect([parsed, refined]).toEqual([0, 0]);
+
+  // a check that may rewrite the value ends the gate
+  expect(
+    z
+      .array(z.number())
+      .overwrite((a) => a.slice(0, 2))
+      .max(2)
+      .parse([1, 2, 3])
+  ).toEqual([1, 2]);
+});
+
+test("an upper size bound after a refinement, or on encode, fails before any element is parsed", () => {
+  let parsed = 0;
+  const el = z.string().refine(() => ++parsed);
+  let refined = 0;
+  const tooBig = [{ code: "too_big", path: [] }];
+  expect(
+    z
+      .array(el)
+      .refine(() => ++refined)
+      .min(1)
+      .max(2)
+      .safeParse(["a", "b", "c"]).error!.issues
+  ).toMatchObject(tooBig);
+  expect(z.safeEncode(z.array(el).max(2), ["a", "b", "c"]).error!.issues).toMatchObject(tooBig);
+  expect(z.safeEncode(z.set(el).max(1), new Set(["a", "b"])).error!.issues).toMatchObject(tooBig);
+  expect(
+    z.safeEncode(
+      z.object({ a: z.array(el).max(2) }).refine(() => ++refined),
+      { a: ["a", "b", "c"] }
+    ).error!.issues
+  ).toMatchObject([{ code: "too_big", path: ["a"] }]);
+  expect([parsed, refined]).toEqual([0, 0]);
+  expect(z.encode(z.array(el).max(2), ["a", "b"])).toEqual(["a", "b"]);
+
+  // a check function may replace the value, so it ends the gate
+  const shrink = (ctx: { value: number[] }) => {
+    ctx.value = ctx.value.slice(0, 2);
+  };
+  expect(z.array(z.number()).check(shrink).max(2).parse([1, 2, 3])).toEqual([1, 2]);
+  expect(
+    z
+      .array(z.number())
+      .superRefine((_, ctx) => shrink(ctx))
+      .max(2)
+      .parse([1, 2, 3])
+  ).toEqual([1, 2]);
+});
+
+test("forwarding more issues than fit in a call's arguments does not throw", async () => {
+  // past ~125k, spreading a child's issues into push() overflowed the stack
+  const bad = Array(200_000).fill(0);
+  const inner = z.array(z.string());
+  expect(z.array(inner).safeParse([bad]).error!.issues).toHaveLength(200_000);
+  expect(z.record(z.string(), inner).safeParse({ a: bad }).error!.issues[199_999].path).toEqual(["a", 199_999]);
+  expect(z.set(inner).safeParse(new Set([bad])).error!.issues).toHaveLength(200_000);
+  expect((await z.object({ a: inner }).safeParseAsync({ a: bad })).error!.issues).toHaveLength(200_000);
 });
 
 test("parse should fail given sparse array", () => {
