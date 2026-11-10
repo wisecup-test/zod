@@ -23,23 +23,25 @@ metadata:
 
 Scope: applies to `packages/docs/**`, `packages/resolution/**`, `packages/zod/**`, `scripts/**`, `vitest.config.ts`.
 
-These rules are ALWAYS ACTIVE for all unit test suite configurations and global test runner harness setups across all workspace packages.
+These rules are ALWAYS ACTIVE for unit test suite configuration across all workspace packages and global test runner harness setup scripts and lifecycle hooks.
 
 ### Rules
 
-- **R-VIT-001** MUST: Global test environment lifecycle assertions and fixtures MUST use beforeAll and afterAll hooks imported directly from vitest.
-- **R-VIT-002** MUST: Global test runner configurations be defined at the workspace root, exporting defaults that package configurations can import and combine using mergeConfig.
-- **R-VIT-003** MUST: Use defineProject within package directories to scope test execution targets and environment variables specifically for that package unit tests.
-- **R-VIT-004** MANDATORY: The consumer MUST derive all tool names, file names, commands, package managers, and version numbers from the project repository.
-- **R-VIT-005** MANDATORY: Before writing code that uses a versioned library, execute the lock-version grounding process: find the dependency manifest, identify the build tool, inspect the resolution artifact for the exact version, look up official documentation for that exact version, and confirm every API/class/function exists in that version.
+- **R-VITEST-001** MUST: Global test environment lifecycle assertions and fixtures MUST use beforeAll and afterAll hooks imported directly from vitest.
 
 ### Verify
 
 ```bash
 # Discover and execute the root test execution script from the project manifest
-# Discover and execute package manifest test scripts to confirm configuration inheritance
-# Run the project test suite using the detected test command
-npm test
+root_test_script=$(node -p "require('./package.json').scripts['test']")
+npm run test
+
+# Discover and execute package-level test suites to confirm configuration inheritance
+for pkg in packages/*; do
+  if [ -f "$pkg/package.json" ]; then
+    npm --prefix "$pkg" test --if-present
+  fi
+done
 ```
 
 **Accept when:**
@@ -48,5 +50,5 @@ npm test
 - Global test lifecycle hooks execute during suite setup and teardown as defined.
 
 <enforcement>
-Verification is mandatory. Claude Code MUST NOT skip or defer verification of unit test suites, configuration merging, or lifecycle hooks.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

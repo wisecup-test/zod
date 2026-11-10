@@ -19,7 +19,7 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for all internal modules within the core library package responsible for schema definitions, validation checks, registry lookups, and schema transformations.
+These rules are ALWAYS ACTIVE for all internal modules within the core library package responsible for schema definitions, validation checks, registry lookups, and schema transformations, as well as functions performing recursive schema graph analysis, serialization, or metadata aggregation.
 
 ### Rules
 
@@ -39,5 +39,5 @@ These rules are ALWAYS ACTIVE for all internal modules within the core library p
 - Static type checking and automated regression suites pass completely across all core library components.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification. Verified by automated static analysis, mandatory peer code reviews, and comprehensive unit and integration test suites.
 </enforcement>

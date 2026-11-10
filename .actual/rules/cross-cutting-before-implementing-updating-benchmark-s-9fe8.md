@@ -19,7 +19,7 @@ metadata:
 
 Scope: applies to `packages/bench/**`.
 
-These rules are ALWAYS ACTIVE for performance benchmarking suites and micro-benchmark test cases within the repository.
+These rules are ALWAYS ACTIVE for performance benchmarking suites, micro-benchmark test cases, execution harness orchestration, and performance measurement cycles within the repository.
 
 ### Rules
 
@@ -39,5 +39,5 @@ These rules are ALWAYS ACTIVE for performance benchmarking suites and micro-benc
 - Benchmark suite definitions adhere to module import constraints and static type validation passes across all benchmark modules.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification. Verification is mandatory via automated continuous integration pipeline running repository benchmark validation scripts and code review inspection of benchmark suites to ensure exclusive use of the metabench harness.
 </enforcement>

@@ -20,7 +20,7 @@ metadata:
 
 Scope: applies to `packages/tsc/**`, `scripts/**`.
 
-These rules are ALWAYS ACTIVE for repository automation scripts, code generators, and verification routines requiring direct host filesystem access and build-time manifest inspection and artifact generation workflows.
+These rules are ALWAYS ACTIVE for all repository automation scripts, code generators, and verification routines requiring direct host filesystem access and build-time manifest inspection and artifact generation workflows.
 
 ### Rules
 
@@ -38,5 +38,5 @@ These rules are ALWAYS ACTIVE for repository automation scripts, code generators
 - Manifest inspection workflows successfully load and parse target configuration files synchronously without unhandled exceptions.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated static analysis and continuous integration checks will fail on un-prefixed core module imports or asynchronous operations in synchronous script paths.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

@@ -23,7 +23,7 @@ metadata:
 
 Scope: applies to `packages/docs/**`, `packages/resolution/**`, `packages/zod/**`, `scripts/**`, `vitest.config.ts`.
 
-These rules are ALWAYS ACTIVE for all unit test suite configurations across workspace packages and global test runner harness setup scripts.
+These rules are ALWAYS ACTIVE for all files matching the configured scope.
 
 ### Rules
 
@@ -32,16 +32,13 @@ These rules are ALWAYS ACTIVE for all unit test suite configurations across work
 ### Verify
 
 ```bash
-# Discover and run workspace-level test execution
-# (Discover test command from project manifest and execute)
-
-# Discover and run package-level test suites to verify configuration inheritance
-# (Discover package manifests and execute tests)
+# Discover and execute the root test execution script from the project manifest
+# Discover and execute package manifest test scripts to confirm configuration inheritance resolves properly
 ```
 
 **Accept when:**
 - All package unit test suites execute and pass without configuration resolution errors.
-- Configuration merging resolves without conflicting property overrides or runtime schema warnings.
+- Configuration merging via mergeConfig resolves without conflicting property overrides or runtime schema warnings.
 - Global test lifecycle hooks execute during suite setup and teardown as defined.
 
 <enforcement>

@@ -23,13 +23,13 @@ These rules are ALWAYS ACTIVE for performance benchmarking suites, micro-benchma
 
 ### Rules
 
-- **R-MET-001** MUST_NOT: Benchmark suites MUST NOT introduce secondary or ad-hoc benchmarking runner frameworks for suite execution outside of the standardized metabench module.
+- **R-METABENCH-001** MUST_NOT: Benchmark suites MUST NOT introduce secondary or ad-hoc benchmarking runner frameworks for suite execution outside of the standardized metabench module.
 
 ### Verify
 
 ```bash
-# Discover and execute the designated benchmark verification script to validate benchmark suite execution
-# Discover and run the project static type-checking and linting scripts to verify compliance with internal module import conventions
+# Discover and execute the designated benchmark verification script
+# Discover and run static type-checking and linting scripts to verify compliance with internal module import conventions
 ```
 
 **Accept when:**
@@ -37,5 +37,5 @@ These rules are ALWAYS ACTIVE for performance benchmarking suites, micro-benchma
 - Benchmark suite definitions adhere to module import constraints and static type validation passes across all benchmark modules.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification. Automated continuous integration pipeline runs repository benchmark validation scripts and code review inspects benchmark suites to ensure exclusive use of the metabench harness.
 </enforcement>

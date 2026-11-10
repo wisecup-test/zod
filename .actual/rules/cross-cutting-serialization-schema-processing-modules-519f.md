@@ -19,11 +19,11 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for all internal modules within the core library package responsible for schema definitions, validation checks, registry lookups, and schema transformations, as well as functions performing recursive schema graph analysis, serialization, or metadata aggregation.
+These rules are ALWAYS ACTIVE for all internal modules within the core library package responsible for schema definitions, validation checks, registry lookups, and schema transformations.
 
 ### Rules
 
-- **R-CORE-001** MUST_NOT: Serialization and schema processing modules MUST NOT introduce circular import dependencies into core schema definition and validation check modules.
+- **R-MOD-001** MUST_NOT: Serialization and schema processing modules MUST NOT introduce circular import dependencies into core schema definition and validation check modules.
 
 ### Verify
 
@@ -39,5 +39,5 @@ These rules are ALWAYS ACTIVE for all internal modules within the core library p
 - Static type checking and automated regression suites pass completely across all core library components.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated static analysis, module boundary linting, peer code reviews, and comprehensive unit/integration test suites.
+Claude Code MUST NOT skip or defer verification. Verification is mandatory via automated static analysis, module boundary linting, peer code review, and test suites.
 </enforcement>

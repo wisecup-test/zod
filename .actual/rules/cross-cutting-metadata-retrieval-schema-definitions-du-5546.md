@@ -23,13 +23,13 @@ These rules are ALWAYS ACTIVE for all core schema transformation and JSON Schema
 
 ### Rules
 
-- **R-ZOD-001** MUST: Metadata retrieval for schema definitions during transformation MUST resolve through a dedicated metadata registry interface on the traversal context rather than direct schema inspection.
+- **R-META-001** MUST: Metadata retrieval for schema definitions during transformation MUST resolve through a dedicated metadata registry interface on the traversal context rather than direct schema inspection.
 
 ### Verify
 
 ```bash
-# Discover and execute the test runner targeting core schema conversion modules based on repository layout
-# Discover and execute workspace static analysis and linting scripts to verify module dependency boundaries
+# Discover the repository configuration to locate and execute the test runner targeting core schema conversion modules
+# Discover the workspace static analysis and linting scripts to verify compliance with internal module dependency boundaries
 ```
 
 **Accept when:**

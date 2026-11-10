@@ -19,7 +19,7 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for implementation and extension of validation schemas, checks, and error structures, registration and resolution of schema metadata within internal registries, and integration of schema transformation processors and legacy compatibility adapters.
 
 ### Rules
 
@@ -39,5 +39,5 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 - Schema registry resolution tests verify deterministic cache lookups across compatibility facades.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification. Automated dependency graph validation, static lint checks, and peer code reviews are mandatory for any changes altering core module interfaces or registry structures.
 </enforcement>

@@ -25,9 +25,7 @@ These rules are ALWAYS ACTIVE for relational database schema definitions and dat
 
 - **R-PG-001** SHOULD: Custom enumerations and structured array columns SHOULD be declared using pg-core enum and array builder functions.
 - **R-PG-002** MANDATORY: The consumer MUST derive build tools, file names, commands, package managers, and version numbers from the project repository.
-- **R-PG-003** MANDATORY (LOCK-VERSION GROUNDING): Before writing code that uses a versioned library, execute in order: find dependency manifest, identify build tool, inspect lock/resolution artifact for exact version, look up official documentation for that exact version, confirm every API/class/function exists in that version, and re-run at point of use for version-sensitive behavior.
-- **R-PG-004** MANDATORY: Define database tables in designated schema modules using pgTable, declaring explicit primary keys and column modifiers.
-- **R-PG-005** MANDATORY: Derive validation or data transfer schemas from defined database tables using companion schema utilities where required.
+- **R-PG-003** MANDATORY: Before writing code that uses a versioned library, execute the lock-version grounding steps in order (find manifest, identify build tool, inspect lock artifact, look up official documentation for exact version, confirm API existence, re-run per dependency at point of use).
 
 ### Verify
 
@@ -41,5 +39,5 @@ These rules are ALWAYS ACTIVE for relational database schema definitions and dat
 - All database model verification suites execute successfully.
 
 <enforcement>
-Verification is mandatory. Claude Code MUST NOT skip or defer verification. Pull requests introducing non-standard relational schema definitions will be blocked until brought into compliance.
+Claude Code MUST NOT skip or defer verification. Verification is mandatory.
 </enforcement>

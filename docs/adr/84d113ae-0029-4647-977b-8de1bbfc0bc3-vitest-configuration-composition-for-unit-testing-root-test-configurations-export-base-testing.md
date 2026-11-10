@@ -27,6 +27,8 @@ Deciders: Detection Pipeline (automated)
 
 ## Scope Paths
 
+Root: `.` (whole repository)
+
 Applies to:
 - `packages/docs/**`
 - `packages/resolution/**`

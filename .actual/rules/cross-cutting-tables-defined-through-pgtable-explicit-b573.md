@@ -23,15 +23,13 @@ These rules are ALWAYS ACTIVE for relational database schema definitions and dat
 
 ### Rules
 
-- **R-PG-001** MUST: Tables MUST be defined through pgTable with explicit column type declarations and primary key constraints.
-- **R-PG-002** MANDATORY: Execute the discovery policy and lock-version grounding sequence before writing code that uses a versioned library.
-- **R-PG-003** MANDATORY: Define database tables in designated schema modules using pgTable, declaring explicit primary keys and column modifiers.
+- **R-DRIZZLE-001** MUST: Tables MUST be defined through pgTable with explicit column type declarations and primary key constraints.
 
 ### Verify
 
 ```bash
-# Discover and execute the repository type-checking script to ensure schema definitions satisfy compile-time constraints.
-# Discover and run the project test suite to verify schema instantiation and data model operations.
+# Discover and execute the repository type-checking script
+# Discover and run the project test suite
 ```
 
 **Accept when:**
@@ -39,5 +37,5 @@ These rules are ALWAYS ACTIVE for relational database schema definitions and dat
 - All database model verification suites execute successfully.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated continuous integration pipeline type verification and pull request peer code review.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

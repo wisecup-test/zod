@@ -23,17 +23,17 @@ metadata:
 
 Scope: applies to `packages/docs/**`, `packages/resolution/**`, `packages/zod/**`, `scripts/**`, `vitest.config.ts`.
 
-These rules are ALWAYS ACTIVE for unit test suite configurations and global test runner harness setup scripts across all workspace packages.
+These rules are ALWAYS ACTIVE for unit test suite configurations across all workspace packages and global test runner harness setup scripts and lifecycle hooks.
 
 ### Rules
 
-- **R-VIT-001** MUST: Root test configurations MUST export base testing options using defineConfig to establish shared execution defaults across all workspace packages.
+- **R-VITEST-001** MUST: Root test configurations MUST export base testing options using defineConfig to establish shared execution defaults across all workspace packages.
 
 ### Verify
 
 ```bash
-# Discover and run the root test execution script from the project manifest
-# Discover and run package manifest test scripts to confirm project configuration inheritance resolves properly
+# Discover the root test execution script from the project manifest and execute it to verify workspace test suites run cleanly.
+# Discover package manifest test scripts and execute package-level test suites to confirm project configuration inheritance resolves properly.
 ```
 
 **Accept when:**
@@ -42,5 +42,5 @@ These rules are ALWAYS ACTIVE for unit test suite configurations and global test
 - Global test lifecycle hooks execute during suite setup and teardown as defined.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All package test suites must execute successfully, and configurations must use proper base configuration inheritance via mergeConfig.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

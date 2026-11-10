@@ -19,7 +19,7 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for core schema transformation and JSON Schema generation modules within the library, context management, schema processor registries, and metadata lookup implementations.
+These rules are ALWAYS ACTIVE for all core schema transformation and JSON Schema generation modules within the library.
 
 ### Rules
 

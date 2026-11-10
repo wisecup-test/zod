@@ -25,15 +25,15 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 
 ### Rules
 
-- **R-VAL-001** SHOULD: Custom validation constraints SHOULD be declared using modular check functions attached to base type schemas.
-- **R-VAL-002** MANDATORY: The consumer MUST discover tool names, file names, commands, package managers, and version numbers from the project repository.
-- **R-VAL-003** MANDATORY: Before writing code that uses a versioned library, the consumer MUST execute the lock-version grounding steps in order (find manifest, identify build tool, inspect lock artifact, look up official documentation for that exact version, confirm every API/class/function exists, and re-run per dependency at point of use).
+- **R-MOD-001** SHOULD: Custom validation constraints SHOULD be declared using modular check functions attached to base type schemas.
+- **R-MOD-002** MANDATORY: Discover and use version-specific dependency management, lockfile inspection, and API verification before implementing schema validation logic.
+- **R-MOD-003** MANDATORY: Import only modular validation primitives to preserve optimal dead-code elimination across diverse module resolution formats.
 
 ### Verify
 
 ```bash
-# Discover and run the repository verification scripts that validate module imports and runtime parsing test suites.
-# Inspect module resolution outputs to verify that only modular validation primitives are bundled into target artifacts.
+# Discover and run repository verification scripts that validate module imports and runtime parsing test suites
+# Inspect module resolution outputs to verify that only modular validation primitives are bundled
 ```
 
 **Accept when:**
@@ -41,5 +41,5 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 - Repository verification scripts confirm schema validation tests pass without unapproved monolithic validator imports.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated static analysis and module import inspection in continuous integration workflows verify these rules.
+Claude Code MUST NOT skip or defer verification. Verified by automated static analysis, module import inspection, and code review verification.
 </enforcement>

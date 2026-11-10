@@ -19,11 +19,11 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for all core schema transformation modules compiling or translating schemas across representation formats, and all core error formatting and validation dispatch utilities requiring standardized schema contracts.
 
 ### Rules
 
-- **R-SS-001** MUST_NOT: Core transformation utilities MUST NOT bypass standard-schema contracts by introducing direct circular dependencies to consumer-facing wrapper modules.
+- **R-STD-001** MUST_NOT: Core transformation utilities MUST NOT bypass standard-schema contracts by introducing direct circular dependencies to consumer-facing wrapper modules.
 
 ### Verify
 
@@ -37,5 +37,5 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 - Dependency analysis confirms no cyclic dependencies or direct bypasses of the standard-schema module in core schema transformation modules.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification is mandatory and enforced by automated static analysis checks, pull request architecture reviews, and build failures.
+Claude Code MUST NOT skip or defer verification. Verification is mandatory.
 </enforcement>

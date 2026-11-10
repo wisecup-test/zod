@@ -23,7 +23,7 @@ These rules are ALWAYS ACTIVE for all internal modules within the core library p
 
 ### Rules
 
-- **R-REC-001** MUST: Recursive schema transformations MUST pass an execution context containing a visited cache to record and resolve circular or repeated schema instances.
+- **R-CORE-001** MUST: Recursive schema transformations MUST pass an execution context containing a visited cache to record and resolve circular or repeated schema instances.
 
 ### Verify
 
@@ -39,5 +39,5 @@ These rules are ALWAYS ACTIVE for all internal modules within the core library p
 - Static type checking and automated regression suites pass completely across all core library components.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification. Compliance is verified by automated static analysis, module boundary linting, comprehensive test suites, and mandatory peer code review.
 </enforcement>

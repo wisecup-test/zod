@@ -28,9 +28,9 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 ### Verify
 
 ```bash
-# Discover and run the project static analysis and linting command to verify module boundary compliance
-# Discover and execute the project test runner across core module test suites
-# Discover and execute the circular dependency checker script defined in the project configuration
+# Discover and run the project static analysis and linting command to verify module boundary compliance.
+# Discover and execute the project test runner across core module test suites.
+# Discover and execute the circular dependency checker script defined in the project configuration.
 ```
 
 **Accept when:**
@@ -39,5 +39,5 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 - Schema registry resolution tests verify deterministic cache lookups across compatibility facades.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All changes altering core module interfaces or registry structures must pass automated dependency graph validation, static lint checks, and mandatory peer code review.
+Claude Code MUST NOT skip or defer verification. Automated dependency graph validation and static lint checks must pass.
 </enforcement>
