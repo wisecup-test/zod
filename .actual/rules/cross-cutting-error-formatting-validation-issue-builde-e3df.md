@@ -23,12 +23,13 @@ These rules are ALWAYS ACTIVE for all core schema transformation modules compili
 
 ### Rules
 
-- **R-SSM-001** SHOULD: Error formatting and validation issue builders SHOULD preserve standard-schema issue structures across serialization boundaries.
+- **R-SS-001** SHOULD: Error formatting and validation issue builders SHOULD preserve standard-schema issue structures across serialization boundaries.
 
 ### Verify
 
 ```bash
-# Discover and execute the repository build, test, linter, and type-checker commands from the project manifest and configuration
+# Discover and execute the project build and test script from the project manifest
+# Discover and execute the project linter and type-checker commands from project configuration
 ```
 
 **Accept when:**
@@ -36,5 +37,5 @@ These rules are ALWAYS ACTIVE for all core schema transformation modules compili
 - Dependency analysis confirms no cyclic dependencies or direct bypasses of the standard-schema module in core schema transformation modules.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All pull request builds and automated static analysis checks enforcing module import boundaries and contract adherence must pass.
+Claude Code MUST NOT skip or defer verification. Verification is mandatory.
 </enforcement>

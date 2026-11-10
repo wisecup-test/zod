@@ -23,7 +23,7 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 
 ### Rules
 
-- **R-CORE-001** MUST: The core schema translation subsystem MUST delegate all JSON schema generation and transformation logic through the internal json-schema-processors core module architecture.
+- **R-TRAN-001** MUST: The core schema translation subsystem MUST delegate all JSON schema generation and transformation logic through the internal json-schema-processors core module architecture.
 
 ### Verify
 

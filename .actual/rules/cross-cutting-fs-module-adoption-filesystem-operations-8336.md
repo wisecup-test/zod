@@ -32,7 +32,6 @@ These rules are ALWAYS ACTIVE for repository automation scripts, code generators
 ```bash
 # Discover and execute the repository verification script that checks manifest integrity
 # Discover and run the build generation pipeline to confirm all generated artifacts match the declared schema
-npm test
 ```
 
 **Accept when:**
@@ -40,5 +39,5 @@ npm test
 - Manifest inspection workflows successfully load and parse target configuration files synchronously without unhandled exceptions.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification. Automated static analysis and CI checks enforce these rules.
 </enforcement>

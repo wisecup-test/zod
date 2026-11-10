@@ -37,5 +37,5 @@ These rules are ALWAYS ACTIVE for internal schema registry modules, metadata sto
 - Static type analysis confirms correct parameter and return types for all map access, mutation, and deletion calls without type coercion warnings
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification is mandatory.
+Verification is mandatory. Claude Code MUST NOT skip or defer verification steps.
 </enforcement>

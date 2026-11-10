@@ -20,11 +20,11 @@ metadata:
 
 Scope: applies to `packages/tsc/**`, `scripts/**`.
 
-These rules are ALWAYS ACTIVE for repository automation scripts, code generators, and verification routines requiring direct host filesystem access.
+These rules are ALWAYS ACTIVE for all repository automation scripts, code generators, and verification routines requiring direct host filesystem access.
 
 ### Rules
 
-- **R-NODEFS-001** MUST: Raw data retrieved through filesystem read operations MUST undergo structured parsing or input validation immediately following ingestion.
+- **R-FS-001** MUST: Raw data retrieved through filesystem read operations MUST undergo structured parsing or input validation immediately following ingestion.
 
 ### Verify
 

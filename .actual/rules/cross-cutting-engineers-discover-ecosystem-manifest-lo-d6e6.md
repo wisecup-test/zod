@@ -19,14 +19,13 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for core schema-to-JSON-schema transformation, generation modules, validation check routines, and registries interacting with schema translation pipelines.
+These rules are ALWAYS ACTIVE for core schema-to-JSON-schema transformation and generation modules within the library, and validation check routines and registries interacting with schema translation pipelines.
 
 ### Rules
 
-- **R-ADR-001** MUST: Engineers MUST discover the ecosystem manifest and lock artifact in the project repository to verify exact resolved dependency versions before implementing or extending core module features.
-- **R-ADR-002** MUST: Execute in order for lock-version grounding: find dependency manifest, identify build tool, inspect repository lock or resolution artifact for exact version, look up official docs/changelog for that exact version, confirm every API/class/function exists before calling, and re-run steps 3-5 per dependency at point of use for version-sensitive behavior.
-- **R-ADR-003** MUST: Ensure all schema processor additions implement the standard traversal context interface and propagate the seen-node cache across recursive calls.
-- **R-ADR-004** MUST: Verify that newly introduced schema checks and registry entries maintain bidirectional compatibility with existing processor definitions.
+- **R-ARCH-001** MUST: Engineers MUST discover the ecosystem manifest and lock artifact in the project repository to verify exact resolved dependency versions before implementing or extending core module features.
+- **R-ARCH-002** MUST: Ensure all schema processor additions implement the standard traversal context interface and propagate the seen-node cache across recursive calls.
+- **R-ARCH-003** MUST: Verify that newly introduced schema checks and registry entries maintain bidirectional compatibility with existing processor definitions.
 
 ### Verify
 
@@ -40,5 +39,5 @@ These rules are ALWAYS ACTIVE for core schema-to-JSON-schema transformation, gen
 - Static type analysis across all core modules completes with zero diagnostic warnings or type mismatch errors.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All modifications touching core schema processor or generator modules require peer code review and must not contain inline schema conversion logic or bypass the traversal cache.
+Claude Code MUST NOT skip or defer verification. Violation handling: Pull requests containing inline schema conversion logic or bypassing the traversal cache are blocked from merging.
 </enforcement>

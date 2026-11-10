@@ -19,11 +19,11 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for all core schema-to-JSON-schema transformation and generation modules within the library.
+These rules are ALWAYS ACTIVE for all core schema-to-JSON-schema transformation and generation modules within the library, as well as validation check routines and registries interacting with schema translation pipelines.
 
 ### Rules
 
-- **R-PROC-001** MUST: Schema processor implementations MUST register visited schema nodes in the traversal context cache using ctx.seen to prevent circular reference cycles and duplicate processing.
+- **R-SCH-001** MUST: Schema processor implementations MUST register visited schema nodes in the traversal context cache using ctx.seen to prevent circular reference cycles and duplicate processing.
 
 ### Verify
 
@@ -37,5 +37,5 @@ These rules are ALWAYS ACTIVE for all core schema-to-JSON-schema transformation 
 - Static type analysis across all core modules completes with zero diagnostic warnings or type mismatch errors.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification. Verified by automated continuous integration pipeline running test suites and static analysis verification, and peer code review mandatory for all modifications touching core schema processor or generator modules.
 </enforcement>

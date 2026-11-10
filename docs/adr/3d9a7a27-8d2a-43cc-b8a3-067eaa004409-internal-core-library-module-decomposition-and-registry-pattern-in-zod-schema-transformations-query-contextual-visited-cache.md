@@ -23,6 +23,8 @@ Deciders: Detection Pipeline (automated)
 
 ## Scope Paths
 
+Root: `.` (whole repository)
+
 Applies to:
 - `packages/zod/src/v4/core/**`
 

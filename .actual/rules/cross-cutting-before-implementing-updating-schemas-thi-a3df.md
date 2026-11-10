@@ -29,12 +29,13 @@ These rules are ALWAYS ACTIVE for external data ingestion points, API integratio
 
 - **R-ZOD-001** MUST: Before implementing or updating schemas using this library, the consumer MUST inspect the repository lock artifact to determine the exact resolved dependency version and verify API compatibility against version-specific documentation.
 - **R-ZOD-002** MUST: Define shared reusable schema primitives in dedicated module boundaries to prevent redundant schema definitions.
-- **R-ZOD-003** SHOULD: Prefer defensive parsing methods at public ingestion endpoints to capture structured issue reports without triggering uncaught exceptions.
+- **R-ZOD-003** PREFER: Prefer defensive parsing methods at public ingestion endpoints to capture structured issue reports without triggering uncaught exceptions.
+- **R-ZOD-004** MUST: Enforce schema type inference as the single source of truth across all domain type definitions.
 
 ### Verify
 
 ```bash
-git grep -E "(safeParse|parse)\\(" -- "*.ts" "*.mts" "*.cts"
+git grep -E "(safeParse|parse)\(" -- "*.ts" "*.mts" "*.cts"
 find . -name "*test*" -not -path "*/node_modules/*"
 ```
 
