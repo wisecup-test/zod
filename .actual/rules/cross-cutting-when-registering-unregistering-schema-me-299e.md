@@ -19,7 +19,7 @@ metadata:
 
 Scope: applies to `packages/zod/src/**`.
 
-These rules are ALWAYS ACTIVE for internal schema registry modules, metadata storage components, schema transformation pipelines, JSON schema translation pipelines, and discriminated union type dispatch mechanisms.
+These rules are ALWAYS ACTIVE for all files matching the configured scope.
 
 ### Rules
 

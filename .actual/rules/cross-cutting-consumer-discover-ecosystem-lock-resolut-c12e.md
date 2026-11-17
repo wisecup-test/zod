@@ -25,16 +25,17 @@ These rules are ALWAYS ACTIVE for all runtime input parsing, schema definitions,
 
 ### Rules
 
-- **R-ADR-001** MUST: The consumer MUST discover the ecosystem lock or resolution artifact to determine and adhere to the exact resolved library version before utilizing validation APIs.
-- **R-ADR-002** MUST: Execute in order before writing code that uses a versioned library: (1) Find the dependency manifest in the repo, (2) Identify the build tool from the manifest, (3) Inspect the repository lock or resolution artifact to determine the exact resolved version, (4) Look up the official documentation, changelog, or public API reference for that exact version, (5) Confirm every API, class, or function you will call exists in that exact version's documentation, (6) For version-sensitive behavior, re-run steps 3-5 per dependency at point of use.
-- **R-ADR-003** MUST: Compose complex validations by piping modular checks into base schemas rather than importing monolithic utility suites.
-- **R-ADR-004** MUST: Ensure all schema parsing logic handles failure states uniformly at runtime boundaries.
+- **R-MOD-001** MUST: The consumer MUST discover the ecosystem lock or resolution artifact to determine and adhere to the exact resolved library version before utilizing validation APIs.
+- **R-MOD-002** MUST: Derive all tool names, file names, commands, package managers, and version numbers from the project repository.
+- **R-MOD-003** MUST: Execute the lock-version grounding sequence (find dependency manifest, identify build tool, inspect lock/resolution artifact, look up official documentation for that exact version, confirm APIs exist, re-run per dependency at point of use) before writing code that uses a versioned library.
+- **R-MOD-004** MUST: Compose complex validations by piping modular checks into base schemas rather than importing monolithic utility suites.
+- **R-MOD-005** MUST: Ensure all schema parsing logic handles failure states uniformly at runtime boundaries.
 
 ### Verify
 
 ```bash
-# Discover and run repository verification scripts that validate module imports and runtime parsing test suites
-# Inspect module resolution outputs to verify that only modular validation primitives are bundled into target artifacts
+# Discover and run the repository verification scripts that validate module imports and runtime parsing test suites.
+# Inspect module resolution outputs to verify that only modular validation primitives are bundled into target artifacts.
 ```
 
 **Accept when:**
@@ -42,5 +43,5 @@ These rules are ALWAYS ACTIVE for all runtime input parsing, schema definitions,
 - Repository verification scripts confirm schema validation tests pass without unapproved monolithic validator imports.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated static analysis, module import inspection, and code review verification will flag non-modular validation namespaces as blocking lint or static analysis violations.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

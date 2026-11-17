@@ -24,16 +24,16 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 ### Rules
 
 - **R-CORE-001** SHOULD: Core translation modules SHOULD isolate check evaluations, registries, and schema processors into independent modular boundaries within the core subsystem.
-- **R-CORE-002** MANDATORY: Ensure all schema processor additions implement the standard traversal context interface and propagate the seen-node cache across recursive calls.
-- **R-CORE-003** MANDATORY: Verify that newly introduced schema checks and registry entries maintain bidirectional compatibility with existing processor definitions.
-- **R-CORE-004** MANDATORY (DISCOVERY POLICY): Omits all tool names, file names, commands, package managers, and version numbers. The consumer MUST derive them from the project repository.
-- **R-CORE-005** MANDATORY (LOCK-VERSION GROUNDING): Before writing code that uses a versioned library, execute in order: find dependency manifest, identify build tool, inspect repository lock or resolution artifact for exact resolved version, look up official docs/changelog for that exact version, confirm every API/class/function exists in that version, and re-run per dependency at point of use for version-sensitive behavior.
+- **R-CORE-002** MANDATORY: All schema processor additions must implement the standard traversal context interface and propagate the seen-node cache across recursive calls.
+- **R-CORE-003** MANDATORY: Newly introduced schema checks and registry entries must maintain bidirectional compatibility with existing processor definitions.
+- **R-CORE-004** MANDATORY: Restrict deep cloning strictly to non-primitive default value nodes that require mutation isolation.
 
 ### Verify
 
 ```bash
 # Discover and run the project repository validation suite for core module type-checking and unit test suites.
 # Discover and execute the repository integration test suite verifying JSON schema generation across complex and cyclic schema fixtures.
+# (Note: Specific tool commands must be discovered from the repository manifest/build configuration per discovery policy)
 ```
 
 **Accept when:**
@@ -41,5 +41,5 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 - Static type analysis across all core modules completes with zero diagnostic warnings or type mismatch errors.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification is mandatory via automated continuous integration pipeline running test suites and static analysis verification, accompanied by mandatory peer code review for all modifications touching core schema processor or generator modules. Pull requests containing inline schema conversion logic or bypassing the traversal cache are blocked from merging.
+Claude Code MUST NOT skip or defer verification. All modifications touching core schema processor or generator modules require peer code review and passing automated CI pipelines.
 </enforcement>

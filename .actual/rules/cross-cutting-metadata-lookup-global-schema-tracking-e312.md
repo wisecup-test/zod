@@ -19,11 +19,11 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for all internal modules within the core library package responsible for schema definitions, validation checks, registry lookups, schema transformations, and functions performing recursive schema graph analysis, serialization, or metadata aggregation.
+These rules are ALWAYS ACTIVE for all files matching the configured scope.
 
 ### Rules
 
-- **R-ZOD-001** SHOULD: Metadata lookup and global schema tracking SHOULD be mediated through centralized registry structures rather than direct mutation of schema instance properties.
+- **R-META-001** SHOULD: Metadata lookup and global schema tracking SHOULD be mediated through centralized registry structures rather than direct mutation of schema instance properties.
 
 ### Verify
 

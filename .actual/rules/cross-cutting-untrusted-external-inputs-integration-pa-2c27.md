@@ -28,6 +28,8 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 ### Rules
 
 - **R-ZOD-001** SHOULD: Untrusted external inputs and integration payloads SHOULD be evaluated using safeParse rather than throwing parse operations to ensure defensive error handling.
+- **R-ZOD-002** MANDATORY: The consumer MUST discover tool names, file names, commands, package managers, and version numbers from the project repository.
+- **R-ZOD-003** MANDATORY: Before writing code that uses a versioned library, execute the lock-version grounding steps in order: find the manifest, identify the build tool, inspect the lock or resolution artifact for exact resolved version, look up official documentation for that exact version, confirm every API exists in that exact version, and re-run steps per dependency at point of use for version-sensitive behavior.
 
 ### Verify
 
@@ -41,5 +43,5 @@ find . -name "*test*" -not -path "*/node_modules/*"
 - Verification test suites and type-checking scripts pass without unhandled validation errors or structural drift.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification. All schema parsing logic and boundary validation must pass successfully.
 </enforcement>

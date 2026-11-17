@@ -19,7 +19,7 @@ metadata:
 
 Scope: applies to `packages/zod/src/**`.
 
-These rules are ALWAYS ACTIVE for internal schema registry modules, metadata storage components, schema transformation and JSON schema translation pipelines, and discriminated union type dispatch and cached lookup mechanisms.
+These rules are ALWAYS ACTIVE for internal schema registry modules, metadata storage components, schema transformation pipelines, and discriminated union type dispatch mechanisms.
 
 ### Rules
 
@@ -37,5 +37,5 @@ These rules are ALWAYS ACTIVE for internal schema registry modules, metadata sto
 - Static type analysis confirms correct parameter and return types for all map access, mutation, and deletion calls without type coercion warnings
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All pull requests containing uncoordinated map mutations, unindexed linear searches, or unmanaged reference loops are blocked from merging until corrected.
+Claude Code MUST NOT skip or defer verification. Verified by automated CI pipelines and peer code review.
 </enforcement>

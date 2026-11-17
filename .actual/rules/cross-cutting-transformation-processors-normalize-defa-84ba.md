@@ -19,18 +19,26 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for all internal modules within the core library package responsible for schema definitions, validation checks, registry lookups, and schema transformations, as well as functions performing recursive schema graph analysis, serialization, or metadata aggregation.
 
 ### Rules
 
-- **R-CORE-001** MAY: Transformation processors MAY normalize default value definitions and serialization artifacts through structured deep cloning mechanisms when immutability guarantees are required.
+- **R-ZOD-001** MAY: Transformation processors MAY normalize default value definitions and serialization artifacts through structured deep cloning mechanisms when immutability guarantees are required.
+- **R-ZOD-002** MANDATORY: Discover and execute the repository test runner to validate recursive schema generation, registry lookups, and serialization behaviors.
+- **R-ZOD-003** MANDATORY: Discover and execute the repository module boundary and circular dependency verification scripts to ensure import isolation between core submodules.
+- **R-ZOD-004** MANDATORY: Discover and execute the repository static type checker to verify internal interface compatibility across all core module boundaries.
+- **R-ZOD-005** MANDATORY: Enforce unidirectional internal module import hierarchies and verify lack of circular references through automated linting and dependency tree analysis.
+- **R-ZOD-006** MANDATORY: Scope traversal caches strictly to the lifecycle of individual transformation requests to prevent memory leakage across concurrent or repeated operations.
+- **R-ZOD-007** MANDATORY: Maintain clear layering between schema definition primitives, validation checks, and serialization processors to prevent circular module dependencies.
+- **R-ZOD-008** MANDATORY: Ensure the contextual traversal cache is initialized at the root of every recursive traversal and forwarded across all child processing operations.
+- **R-ZOD-009** MANDATORY: Keep global registries focused on instance lookup and metadata resolution rather than transient execution state.
 
 ### Verify
 
 ```bash
-# Discover and execute the repository test runner to validate recursive schema generation, registry lookups, and serialization behaviors.
-# Discover and execute the repository module boundary and circular dependency verification scripts to ensure import isolation between core submodules.
-# Discover and execute the repository static type checker to verify internal interface compatibility across all core module boundaries.
+# Discover and execute the repository test runner
+# Discover and execute the repository module boundary and circular dependency verification scripts
+# Discover and execute the repository static type checker
 ```
 
 **Accept when:**
@@ -39,5 +47,5 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 - Static type checking and automated regression suites pass completely across all core library components.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification is mandatory via automated static analysis, module boundary linting, code review, and unit/integration test suites.
+Claude Code MUST NOT skip or defer verification. All pull requests containing direct circular module imports or bypassed registry context structures are blocked from merging.
 </enforcement>

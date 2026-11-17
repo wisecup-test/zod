@@ -20,26 +20,19 @@ metadata:
 
 Scope: applies to `packages/tsc/**`, `scripts/**`.
 
-These rules are ALWAYS ACTIVE for repository automation scripts, code generators, and verification routines requiring direct host filesystem access and build-time manifest inspection.
+These rules are ALWAYS ACTIVE for repository automation scripts, code generators, and verification routines requiring direct host filesystem access.
 
 ### Rules
 
 - **R-FS-001** MUST: When interacting with versioned modules or repository dependencies, the consumer MUST inspect the repository lock artifact to determine the authoritative resolved version before invoking version-dependent logic.
+- **R-FS-002** MUST: Import node:fs using protocol-prefixed specifiers across all tooling and generation modules to ensure unambiguous runtime resolution.
+- **R-FS-003** MUST: Invoke readFileSync with explicit character encoding parameters when loading repository manifests to prevent buffer decoding anomalies.
 
 ### Verify
 
 ```bash
-# Discover and execute the repository verification script that checks manifest integrity
-if [ -f "package.json" ] && grep -q "verify" package.json; then
-  npm run verify
-else
-  echo "No verify script found or package.json missing"
-fi
-
-# Discover and run the build generation pipeline to confirm all generated artifacts match the declared schema
-if [ -f "package.json" ] && grep -q "build" package.json; then
-  npm run build
-fi
+# Discover and execute the repository verification script that checks manifest integrity.
+# Discover and run the build generation pipeline to confirm all generated artifacts match the declared schema.
 ```
 
 **Accept when:**
@@ -47,5 +40,5 @@ fi
 - Manifest inspection workflows successfully load and parse target configuration files synchronously without unhandled exceptions.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification. Automated static analysis, linting rules, and code reviews enforce these requirements, and continuous integration checks will fail on un-prefixed core module imports or asynchronous operations in synchronous script paths.
 </enforcement>

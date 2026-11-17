@@ -27,12 +27,12 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 ### Rules
 
 - **R-CORE-001** MUST: When adding or updating dependencies that interact with runtime core modules, the consumer MUST discover the repository lock artifact and verify resolved versions against the dependency manifest before implementing changes.
-- **R-CORE-002** MUST: Import built-in runtime capabilities using explicit `node:` protocol prefixes to eliminate module resolution ambiguity.
+- **R-CORE-002** MUST: All TypeScript and JavaScript source files, maintenance scripts, and runner configurations that reference runtime core modules MUST use explicit protocol-prefixed specifiers (e.g., `node:path`, `node:url`, `node:fs`).
 
 ### Verify
 
 ```bash
-# Discover the project's automated verification script from the dependency manifest and run the linter
+# Discover and run the project's linter to ensure no un-prefixed core imports exist
 # Discover and execute the project's test suite to verify module resolution succeeds
 ```
 
@@ -42,5 +42,5 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 - Test suites and build verification scripts execute without module resolution ambiguities or warnings.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated code linting rules and CI checks enforce protocol prefixes on runtime core imports.
+Claude Code MUST NOT skip or defer verification. Automated code linting rules and CI verification runs enforce protocol prefixes on runtime core imports.
 </enforcement>

@@ -23,13 +23,19 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 
 ### Rules
 
-- **R-SSM-001** MUST: Before implementing changes that depend on external or shared specification packages, the consumer MUST discover the repository lock artifact and verify the exact resolved version and specification compliance.
+- **R-STD-001** MUST: Before implementing changes that depend on external or shared specification packages, the consumer MUST discover the repository lock artifact and verify the exact resolved version and specification compliance.
+- **R-STD-002** MANDATORY: When writing code that uses a versioned library, execute in order: (1) Find the dependency manifest in the repo. (2) Identify the build tool from the manifest. (3) Inspect the repository lock or resolution artifact to determine the exact resolved version. (4) Look up official documentation/changelog for that exact version. (5) Confirm every API, class, or function exists in that exact version's documentation before using it. (6) For version-sensitive behavior, re-run steps 3-5 per dependency at point of use.
 
 ### Verify
 
 ```bash
-# Discover the repository build and test script in the project manifest and execute the core test suite to verify contract compliance.
-# Discover the repository linter and type-checker commands from project configuration and verify zero contract violations across core modules.
+# Discover the repository build and test script in the project manifest and execute the core test suite
+BUILD_SCRIPT=$(npm pkg get scripts.test 2>/dev/null || echo "test")
+eval "npm run $BUILD_SCRIPT"
+
+# Discover and run linter and type-checker commands
+LINT_SCRIPT=$(npm pkg get scripts.lint 2>/dev/null || echo "lint")
+eval "npm run $LINT_SCRIPT"
 ```
 
 **Accept when:**

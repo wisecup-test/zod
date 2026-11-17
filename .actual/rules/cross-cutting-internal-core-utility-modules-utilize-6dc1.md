@@ -23,7 +23,7 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 
 ### Rules
 
-- **R-COR-001** MAY: Internal core utility modules MAY utilize reflection proxies when coordinating dynamic property resolution across schema instance boundaries.
+- **R-CORE-001** MAY: Internal core utility modules MAY utilize reflection proxies when coordinating dynamic property resolution across schema instance boundaries.
 
 ### Verify
 
@@ -39,5 +39,5 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 - Schema registry resolution tests verify deterministic cache lookups across compatibility facades.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification. Automated dependency graph validation and static lint checks must pass, and code changes are subject to peer review and automated blocking on boundary violations.
 </enforcement>

@@ -23,7 +23,7 @@ metadata:
 
 Scope: applies to `packages/docs/**`, `packages/resolution/**`, `packages/zod/**`, `scripts/**`, `vitest.config.ts`.
 
-These rules are ALWAYS ACTIVE for all unit test suite configurations across workspace packages and global test runner harness setup scripts and lifecycle hooks.
+These rules are ALWAYS ACTIVE for unit test suite configurations across all workspace packages and global test runner harness setup scripts and lifecycle hooks.
 
 ### Rules
 

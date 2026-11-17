@@ -23,16 +23,12 @@ These rules are ALWAYS ACTIVE for all core schema transformation and JSON Schema
 
 ### Rules
 
-- **R-ZOD-001** MUST_NOT: Processors MUST NOT maintain mutable transformation state across separate invocation lifecycles outside the supplied traversal context.
+- **R-ZOD-001** MUST NOT: Processors MUST NOT maintain mutable transformation state across separate invocation lifecycles outside the supplied traversal context.
 
 ### Verify
 
 ```bash
-# Discover and run the test suite targeting core schema conversion modules
-npm test -- --testPathPattern=schema
-
-# Run static analysis and linting scripts to verify boundary compliance
-npm run lint
+# Discover and run test suites and static analysis per repository configuration for core schema conversion modules
 ```
 
 **Accept when:**
@@ -40,5 +36,5 @@ npm run lint
 - Static boundary checks confirm schema transformation processors only interact with core registries through the context interface.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification is mandatory.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

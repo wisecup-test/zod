@@ -23,15 +23,19 @@ These rules are ALWAYS ACTIVE for all internal modules within the core library p
 
 ### Rules
 
-- **R-ZOD-001** MUST: Schema transformations MUST query the contextual visited cache prior to processing subschemas to prevent unbounded recursion on cyclic structures.
+- **R-MOD-001** MUST: Schema transformations MUST query the contextual visited cache prior to processing subschemas to prevent unbounded recursion on cyclic structures.
+- **R-MOD-002** MUST: Discover the dependency manifest in the repo to identify exact resolved versions before writing code that uses a versioned library, verifying APIs via documentation.
+- **R-MOD-003** MUST: Maintain clear layering between schema definition primitives, validation checks, and serialization processors to prevent circular module dependencies.
+- **R-MOD-004** MUST: Ensure the contextual traversal cache is initialized at the root of every recursive traversal and forwarded across all child processing operations.
+- **R-MOD-005** MUST: Keep global registries focused on instance lookup and metadata resolution rather than transient execution state.
 
 ### Verify
 
-```bash
+\`\`\`bash
 # Discover and execute the repository test runner to validate recursive schema generation, registry lookups, and serialization behaviors.
 # Discover and execute the repository module boundary and circular dependency verification scripts to ensure import isolation between core submodules.
 # Discover and execute the repository static type checker to verify internal interface compatibility across all core module boundaries.
-```
+\`\`\`
 
 **Accept when:**
 - All core module interfaces and internal imports resolve through the defined module boundaries without circular module initialization errors.
@@ -39,5 +43,5 @@ These rules are ALWAYS ACTIVE for all internal modules within the core library p
 - Static type checking and automated regression suites pass completely across all core library components.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All internal core module boundaries, cycle-detection caches, and registry context patterns must be rigorously enforced via automated static analysis and peer review.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

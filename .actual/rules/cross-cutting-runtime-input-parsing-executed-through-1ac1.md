@@ -25,13 +25,13 @@ These rules are ALWAYS ACTIVE for all runtime input parsing, schema definitions,
 
 ### Rules
 
-- **R-MOD-001** MUST: Runtime input parsing MUST be executed through schema parse invocations rather than ad-hoc unchecked type assertions.
+- **R-VAL-001** MUST: Runtime input parsing MUST be executed through schema parse invocations rather than ad-hoc unchecked type assertions.
 
 ### Verify
 
 ```bash
 # Discover and run repository verification scripts that validate module imports and runtime parsing test suites
-# (Repository-specific verification script execution)
+# Inspect module resolution outputs to verify that only modular validation primitives are bundled into target artifacts
 ```
 
 **Accept when:**
@@ -39,5 +39,5 @@ These rules are ALWAYS ACTIVE for all runtime input parsing, schema definitions,
 - Repository verification scripts confirm schema validation tests pass without unapproved monolithic validator imports.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated static analysis and module import inspection in CI will flag non-modular validation namespaces or direct manual validation assertions as blocking violations.
+Claude Code MUST NOT skip or defer verification. Static analysis and module import inspection in CI workflows enforce that imports of non-modular validation namespaces are treated as blocking violations.
 </enforcement>

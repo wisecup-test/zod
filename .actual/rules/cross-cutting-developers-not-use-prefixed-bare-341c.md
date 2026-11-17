@@ -31,10 +31,9 @@ These rules are ALWAYS ACTIVE for all TypeScript and JavaScript source files, ma
 ### Verify
 
 ```bash
-# Discover the project's linter/verification script from the dependency manifest and run it
-npm run lint || pnpm lint || yarn lint
-# Execute the project's test suite to verify module resolution succeeds
-npm test || pnpm test || yarn test
+# Discover the project's linter and automated test runner from the dependency manifest and execute them
+npm run lint
+npm test
 ```
 
 **Accept when:**
@@ -43,5 +42,5 @@ npm test || pnpm test || yarn test
 - Test suites and build verification scripts execute without module resolution ambiguities or warnings.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification. Automated code linting and continuous integration verification runs must pass with zero un-prefixed core module specifiers.
 </enforcement>

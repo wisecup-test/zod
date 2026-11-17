@@ -23,20 +23,13 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 
 ### Rules
 
-- **R-DRIZZLE-001** SHOULD: Derive runtime input validation schemas directly from pgTable definitions rather than manually declaring separate zod structures.
-- **R-DRIZZLE-002** MANDATORY: Execute lock-version grounding (find manifest, identify build tool, inspect lock/resolution artifact, look up exact-version docs, confirm API existence) before writing code using a versioned library.
-- **R-DRIZZLE-003** MANDATORY: Apply schema transformation (pick/omit) utilities when external contract shapes must diverge from underlying table columns to avoid leaking internal database structures.
+- **R-DRIZZLE-001** SHOULD: Developers SHOULD derive runtime input validation schemas directly from pgTable definitions rather than manually declaring separate zod structures.
 
 ### Verify
 
 ```bash
 # Discover and run the project type checking script
-# (Command discovered dynamically from repository package manager/manifest)
-npx tsc --noEmit
-
 # Discover and run the project test suite
-# (Command discovered dynamically from repository package manager/manifest)
-npx test
 ```
 
 **Accept when:**
@@ -44,5 +37,5 @@ npx test
 - Project integration test suites exercising schema modeling and input validation pass without failure.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Pull requests introducing inconsistent table definitions and validation schemas are blocked until reconciled.
+Claude Code MUST NOT skip or defer verification. Continuous integration static type checks and automated test execution verify compliance.
 </enforcement>

@@ -19,19 +19,19 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/**`.
 
-These rules are ALWAYS ACTIVE for all schema definitions, validation checks, error representations, global registry services, transformation processors, and compatibility adapters within the project.
+These rules are ALWAYS ACTIVE for all schema definitions, validation checks, error structures, registry services, and related compatibility integration layers.
 
 ### Rules
 
 - **R-CORE-001** MUST: Define all schema definitions, basic validation checks, error structures, and registry services within and consume them from the internal core module layer.
-- **R-CORE-002** MANDATORY: Execute lock-version grounding before writing code that uses a versioned library (find dependency manifest, identify build tool, inspect lock/resolution artifact, look up official documentation for that exact version, confirm API existence, and re-run per dependency at point of use).
-- **R-CORE-003** MANDATORY: Organize internal imports so that dependent compatibility and transformation layers access core modules via relative boundary entry points without circumventing internal directory scoping.
-- **R-CORE-004** MANDATORY: Implement custom validation logic as discrete check primitives within the core layer before registering public schema methods when extending schema parsing behavior.
+- **R-CORE-002** MUST: Execute project dependency manifest discovery, build tool identification, exact resolved version inspection from lock/resolution artifacts, official documentation lookup, and API existence confirmation prior to writing code that uses a versioned library.
+- **R-CORE-003** MUST: Organize internal imports so that dependent compatibility and transformation layers access core modules via relative boundary entry points without circumventing internal directory scoping.
+- **R-CORE-004** MUST: Implement custom validation logic as discrete check primitives within the core layer before registering public schema methods when extending schema parsing behavior.
 
 ### Verify
 
 ```bash
-# Discover and run static analysis and linting command for module boundary compliance
+# Discover and run static analysis and linting command to verify module boundary compliance
 # Discover and execute test runner across core module test suites
 # Discover and execute circular dependency checker script defined in project configuration
 ```
@@ -42,5 +42,5 @@ These rules are ALWAYS ACTIVE for all schema definitions, validation checks, err
 - Schema registry resolution tests verify deterministic cache lookups across compatibility facades.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All pull requests introducing backward dependencies into core modules or circumventing the global registry are automatically blocked.
+Claude Code MUST NOT skip or defer verification. Automated dependency graph validation and static lint checks executed in continuous integration pipelines enforce these rules.
 </enforcement>

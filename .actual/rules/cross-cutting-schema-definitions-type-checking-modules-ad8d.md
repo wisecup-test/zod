@@ -28,8 +28,8 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 ### Verify
 
 ```bash
-# Discover and run the project repository validation suite for core module type-checking and unit test suites.
-# Discover and execute the repository integration test suite verifying JSON schema generation across complex and cyclic schema fixtures.
+# Discover and run the project repository validation suite for core module type-checking and unit test suites
+# Discover and execute the repository integration test suite verifying JSON schema generation across complex and cyclic schema fixtures
 ```
 
 **Accept when:**
@@ -37,5 +37,5 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 - Static type analysis across all core modules completes with zero diagnostic warnings or type mismatch errors.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated continuous integration pipeline and peer code review. Violations will block merging.
+Claude Code MUST NOT skip or defer verification. Verified by automated continuous integration pipeline and peer code review.
 </enforcement>

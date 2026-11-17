@@ -23,7 +23,7 @@ metadata:
 
 Scope: applies to `packages/bench/**`, `packages/integration/fixtures/**`, `packages/resolution/src/**`, `packages/treeshake/**`, `play.ts`.
 
-These rules are ALWAYS ACTIVE for external data ingestion points, API integration payloads, boundary contracts across application modules, and data model validation logic requiring synchronization between runtime assertions and static typing.
+These rules are ALWAYS ACTIVE for all files matching the configured scope.
 
 ### Rules
 
@@ -41,5 +41,5 @@ find . -name "*test*" -not -path "*/node_modules/*"
 - Verification test suites and type-checking scripts pass without unhandled validation errors or structural drift.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated test suites exercising schema parsing logic and boundary validation, as well as static analysis and architectural review of data entry points and external integration layers.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

@@ -33,10 +33,10 @@ These rules are ALWAYS ACTIVE for unit test suite configuration across all works
 
 ```bash
 # Discover and execute the root test execution script from the project manifest
-# Discover and execute package manifest test scripts to verify configuration inheritance
-root_test_script=$(npm pkg get scripts.test --workspace=. 2>/dev/null || node -p "require('./package.json').scripts.test")
-echo "Running root test script: $root_test_script"
-npm test
+root_test_script=$(node -p "require('./package.json').scripts['test']")
+if [ -n "$root_test_script" ]; then
+  npm run test
+fi
 ```
 
 **Accept when:**
@@ -45,5 +45,5 @@ npm test
 - Global test lifecycle hooks execute during suite setup and teardown as defined.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated continuous integration and code review checks validate that package test configurations use mergeConfig with base configuration imports, blocking pull requests with failing test suites or invalid test configuration resolution.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

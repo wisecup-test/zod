@@ -24,9 +24,6 @@ These rules are ALWAYS ACTIVE for internal schema registry modules, metadata sto
 ### Rules
 
 - **R-REG-001** MAY: Registry consumers MAY expose helper retrieval methods to query metadata by polymorphic identifier keys.
-- **R-REG-002** MANDATORY: Wrap recursive resolution logic in structured try-finally blocks or finalizers ensuring transient processing token deletion executes upon traversal completion to prevent memory leaks and infinite loops.
-- **R-REG-003** MANDATORY: Encapsulate deletion operations inside atomic registry methods that purge both identity and identifier maps simultaneously to prevent inconsistent registry state.
-- **R-REG-004** MANDATORY: Before writing code that uses a versioned library, execute the lock-version grounding process (find dependency manifest, identify build tool, inspect lock/resolution artifact for exact version, check official docs for that version, confirm APIs exist, re-run per dependency at point of use).
 
 ### Verify
 
@@ -40,5 +37,5 @@ These rules are ALWAYS ACTIVE for internal schema registry modules, metadata sto
 - Static type analysis confirms correct parameter and return types for all map access, mutation, and deletion calls without type coercion warnings
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All pull requests containing uncoordinated map mutations, unindexed linear searches, or unmanaged reference loops are blocked until corrected.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

@@ -23,7 +23,7 @@ These rules are ALWAYS ACTIVE for all internal modules within the core library p
 
 ### Rules
 
-- **R-ZOD-001** MUST: Developers MUST discover the project dependency manifest and lock resolution artifact to identify exact resolved versions before implementing or modifying library dependencies.
+- **R-ZOD-001** MUST: Discover the project dependency manifest and lock resolution artifact to identify exact resolved versions before implementing or modifying library dependencies.
 
 ### Verify
 
@@ -39,5 +39,5 @@ These rules are ALWAYS ACTIVE for all internal modules within the core library p
 - Static type checking and automated regression suites pass completely across all core library components.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification is mandatory via automated static analysis, module boundary linting, code reviews, and unit/integration test suites.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

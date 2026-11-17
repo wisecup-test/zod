@@ -19,7 +19,7 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for core schema transformation and JSON Schema generation modules within the library, context management, schema processor registries, and metadata lookup implementations.
+These rules are ALWAYS ACTIVE for core schema transformation and JSON Schema generation modules within the library, including context management, schema processor registries, and metadata lookup implementations.
 
 ### Rules
 
@@ -28,8 +28,8 @@ These rules are ALWAYS ACTIVE for core schema transformation and JSON Schema gen
 ### Verify
 
 ```bash
-# Discover the repository configuration to locate and execute the test runner targeting core schema conversion modules.
-# Discover the workspace static analysis and linting scripts to verify compliance with internal module dependency boundaries.
+# Discover and execute the test runner targeting core schema conversion modules
+# Discover and execute workspace static analysis and linting scripts to verify module dependency boundaries
 ```
 
 **Accept when:**
@@ -37,5 +37,5 @@ These rules are ALWAYS ACTIVE for core schema transformation and JSON Schema gen
 - Static boundary checks confirm schema transformation processors only interact with core registries through the context interface.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All pull requests bypassing the traversal context or directly coupling schema definitions to serialization logic are rejected during code review.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

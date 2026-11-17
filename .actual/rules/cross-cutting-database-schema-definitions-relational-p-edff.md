@@ -19,11 +19,11 @@ metadata:
 
 Scope: applies to `packages/integration/fixtures/drizzle-zod/**`.
 
-These rules are ALWAYS ACTIVE for relational database schema definitions and data model declarations.
+These rules are ALWAYS ACTIVE for all files matching the configured scope.
 
 ### Rules
 
-- **R-DOR-001** MUST: Database schema definitions for relational persistence MUST utilize drizzle-orm/pg-core constructs to declare table structures.
+- **R-DB-001** MUST: Database schema definitions for relational persistence MUST utilize drizzle-orm/pg-core constructs to declare table structures.
 
 ### Verify
 
@@ -37,5 +37,5 @@ These rules are ALWAYS ACTIVE for relational database schema definitions and dat
 - All database model verification suites execute successfully.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification is mandatory via automated continuous integration pipeline type verification and pull request peer code review.
+Claude Code MUST NOT skip or defer verification. Automated continuous integration pipeline type verification and pull request peer code review enforce compliance.
 </enforcement>

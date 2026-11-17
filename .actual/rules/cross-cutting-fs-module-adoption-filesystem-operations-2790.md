@@ -20,7 +20,7 @@ metadata:
 
 Scope: applies to `packages/tsc/**`, `scripts/**`.
 
-These rules are ALWAYS ACTIVE for repository automation scripts, code generators, and verification routines requiring direct host filesystem access.
+These rules are ALWAYS ACTIVE for repository automation scripts, code generators, verification routines, and build-time manifest inspection workflows.
 
 ### Rules
 
@@ -29,8 +29,8 @@ These rules are ALWAYS ACTIVE for repository automation scripts, code generators
 ### Verify
 
 ```bash
-# Discover and execute the repository verification script that checks manifest integrity
-# Discover and run the build generation pipeline to confirm all generated artifacts match the declared schema
+# Discover and execute the repository verification script that checks manifest integrity.
+# Discover and run the build generation pipeline to confirm all generated artifacts match the declared schema.
 ```
 
 **Accept when:**

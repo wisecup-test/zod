@@ -19,19 +19,17 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for all core schema-to-JSON-schema transformation and generation modules within the library, as well as validation check routines and registries interacting with schema translation pipelines.
+These rules are ALWAYS ACTIVE for all core schema-to-JSON-schema transformation, generation modules, validation check routines, and registries interacting with schema translation pipelines.
 
 ### Rules
 
-- **R-SCP-001** SHOULD: Schema processors SHOULD sanitize default values through structural deep-cloning serialization prior to emitting JSON schema definitions.
-- **R-SCP-002** MANDATORY: Ensure all schema processor additions implement the standard traversal context interface and propagate the seen-node cache across recursive calls.
-- **R-SCP-003** MANDATORY: Verify that newly introduced schema checks and registry entries maintain bidirectional compatibility with existing processor definitions.
+- **R-SP-001** SHOULD: Schema processors sanitize default values through structural deep-cloning serialization prior to emitting JSON schema definitions.
 
 ### Verify
 
 ```bash
-# Discover and run the project repository validation suite for core module type-checking and unit test suites
-# Discover and execute the repository integration test suite verifying JSON schema generation across complex and cyclic schema fixtures
+# Discover and run the project repository validation suite for core module type-checking and unit test suites.
+# Discover and execute the repository integration test suite verifying JSON schema generation across complex and cyclic schema fixtures.
 ```
 
 **Accept when:**
@@ -39,5 +37,5 @@ These rules are ALWAYS ACTIVE for all core schema-to-JSON-schema transformation 
 - Static type analysis across all core modules completes with zero diagnostic warnings or type mismatch errors.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated continuous integration pipeline runs test suites and static analysis verification. Pull requests containing inline schema conversion logic or bypassing the traversal cache are blocked from merging.
+Claude Code MUST NOT skip or defer verification. Automated continuous integration pipeline runs test suites and static analysis verification.
 </enforcement>

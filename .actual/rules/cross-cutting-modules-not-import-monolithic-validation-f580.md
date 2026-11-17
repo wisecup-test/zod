@@ -39,5 +39,5 @@ These rules are ALWAYS ACTIVE for all runtime input parsing, schema definitions,
 - Repository verification scripts confirm schema validation tests pass without unapproved monolithic validator imports.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated static analysis, module import inspection, and code review verification of schema definition patterns.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

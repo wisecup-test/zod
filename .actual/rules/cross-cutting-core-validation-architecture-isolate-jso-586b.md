@@ -19,7 +19,7 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for all core schema transformation and JSON Schema generation modules within the library.
 
 ### Rules
 
@@ -28,8 +28,8 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 ### Verify
 
 ```bash
-# Discover and execute the test runner targeting core schema conversion modules
-# Discover and execute workspace static analysis and linting scripts
+# Discover the repository configuration to locate and execute the test runner targeting core schema conversion modules.
+# Discover the workspace static analysis and linting scripts to verify compliance with internal module dependency boundaries.
 ```
 
 **Accept when:**

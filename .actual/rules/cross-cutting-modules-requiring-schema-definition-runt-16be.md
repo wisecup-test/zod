@@ -30,7 +30,7 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 ### Verify
 
 ```bash
-# Discover and run repository verification scripts that validate module imports and runtime parsing test suites.
+# Discover and run the repository verification scripts that validate module imports and runtime parsing test suites.
 # Inspect module resolution outputs to verify that only modular validation primitives are bundled into target artifacts.
 ```
 
@@ -39,5 +39,5 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 - Repository verification scripts confirm schema validation tests pass without unapproved monolithic validator imports.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated static analysis, module import inspection, and code review.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

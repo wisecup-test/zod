@@ -22,7 +22,7 @@ metadata:
 
 Scope: applies to `packages/resolution/**`, `scripts/**`, `vitest.config.ts`, `vitest.root.mjs`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for all TypeScript and JavaScript source files, maintenance scripts, and runner configurations that reference runtime core modules.
 
 ### Rules
 
@@ -31,11 +31,11 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 ### Verify
 
 ```bash
-# Run the project's linter or static analysis check to verify no un-prefixed core imports exist
-# (Discover the exact command from package.json scripts)
+# Run the project's linter to ensure no un-prefixed core imports exist
+# (Command discovered from the project's dependency manifest / package scripts)
 npm run lint
 
-# Execute the project's test suite to ensure module resolution succeeds
+# Run the project's test suite to verify module resolution succeeds
 npm test
 ```
 

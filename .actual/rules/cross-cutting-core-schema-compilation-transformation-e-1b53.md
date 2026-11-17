@@ -19,18 +19,17 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for all core schema transformation modules compiling or translating schemas across representation formats, and all core error formatting and validation dispatch utilities requiring standardized schema contracts.
 
 ### Rules
 
-- **R-SS-001** MUST: Core schema compilation, transformation, and error dispatch modules MUST interface through the standard-schema module contract rather than proprietary internal representations.
+- **R-SSM-001** MUST: Core schema compilation, transformation, and error dispatch modules MUST interface through the standard-schema module contract rather than proprietary internal representations.
 
 ### Verify
 
 ```bash
-# Discover the repository build and test script in the project manifest and execute tests
-# Discover the repository linter and type-checker commands from project configuration
-# Run the linter, type-checker, and core test suite to verify contract compliance
+# Discover the repository build and test script in the project manifest and execute the core test suite
+# Discover the repository linter and type-checker commands from project configuration and verify zero contract violations across core modules
 ```
 
 **Accept when:**
@@ -38,5 +37,5 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 - Dependency analysis confirms no cyclic dependencies or direct bypasses of the standard-schema module in core schema transformation modules.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification. All core schema transformations and error dispatch mechanisms must strictly adhere to the standard-schema module contract with automated static analysis checks enforcing boundaries.
 </enforcement>

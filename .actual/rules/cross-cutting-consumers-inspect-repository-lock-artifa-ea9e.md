@@ -23,17 +23,13 @@ These rules are ALWAYS ACTIVE for all files matching the configured scope.
 
 ### Rules
 
-- **R-DRIZZLE-001** MUST: Consumers MUST inspect the repository lock artifact to determine the exact resolved version of the data modeling dependency prior to applying schema declarations.
-- **R-DRIZZLE-002** MUST: Follow mandatory lock-version grounding before utilizing dialect-specific schema builder functions.
-- **R-DRIZZLE-003** MUST: Define database tables in designated schema modules using pgTable, declaring explicit primary keys and column modifiers.
+- **R-DOR-001** MUST: Consumers MUST inspect the repository lock artifact to determine the exact resolved version of the data modeling dependency prior to applying schema declarations.
 
 ### Verify
 
 ```bash
 # Discover and execute the repository type-checking script to ensure schema definitions satisfy compile-time constraints.
 # Discover and run the project test suite to verify schema instantiation and data model operations.
-npm run typecheck
-npm test
 ```
 
 **Accept when:**
@@ -41,5 +37,5 @@ npm test
 - All database model verification suites execute successfully.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated continuous integration pipeline type verification and pull request peer code review.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

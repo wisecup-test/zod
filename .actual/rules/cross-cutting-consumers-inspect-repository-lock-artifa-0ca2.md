@@ -19,11 +19,13 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/**`.
 
-These rules are ALWAYS ACTIVE for all code, modules, checks, errors, and global registry access within the project.
+These rules are ALWAYS ACTIVE for schema evaluation, registry tracking, error reporting systems, and validation engine core module integration.
 
 ### Rules
 
 - **R-CORE-001** MUST: Consumers MUST inspect the repository lock artifact to verify the exact resolved version of any external library dependency before authoring or integrating module-level consumers.
+- **R-CORE-002** MUST: Organize internal imports so that dependent compatibility and transformation layers access core modules via relative boundary entry points without circumventing internal directory scoping.
+- **R-CORE-003** MUST: Implement custom validation logic as discrete check primitives within the core layer before registering public schema methods when extending schema parsing behavior.
 
 ### Verify
 
@@ -39,5 +41,5 @@ These rules are ALWAYS ACTIVE for all code, modules, checks, errors, and global 
 - Schema registry resolution tests verify deterministic cache lookups across compatibility facades.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated dependency graph validation and static lint checks executed in continuous integration pipelines enforce compliance.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>

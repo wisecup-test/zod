@@ -23,13 +23,13 @@ These rules are ALWAYS ACTIVE for relational database table definitions that der
 
 ### Rules
 
-- **R-DZ-001** MUST_NOT: Developers MUST NOT alter database table column definitions in pgTable declarations without reconciling the corresponding derived drizzle-zod schemas and validation boundaries.
+- **R-DRIZZLE-001** MUST_NOT: Developers MUST NOT alter database table column definitions in pgTable declarations without reconciling the corresponding derived drizzle-zod schemas and validation boundaries.
 
 ### Verify
 
 ```bash
-# Discover and run the project type checking script to verify that derived drizzle-zod validation schemas align with pgTable declarations.
-# Discover and run the project test suite to verify that integration tests for schema models pass.
+# Discover and run the project type checking script
+# Discover and run the project test suite
 ```
 
 **Accept when:**
@@ -37,5 +37,5 @@ These rules are ALWAYS ACTIVE for relational database table definitions that der
 - Project integration test suites exercising schema modeling and input validation pass without failure.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification is mandatory.
+Claude Code MUST NOT skip or defer verification.
 </enforcement>
