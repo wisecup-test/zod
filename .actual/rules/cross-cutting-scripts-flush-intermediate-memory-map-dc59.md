@@ -19,26 +19,28 @@ metadata:
 
 Scope: applies to `scripts/**`.
 
-These rules are ALWAYS ACTIVE for standalone automation and validation scripts requiring transient in-memory indexing or grouping of execution entities, and process-bound CLI routines.
+These rules are ALWAYS ACTIVE for:
+- Standalone automation and validation scripts requiring transient in-memory indexing or grouping of execution entities.
+- Process-bound CLI routines that collect intermediate state without cross-process persistence requirements.
 
 ### Rules
 
-- **R-SCR-001** MAY: Scripts MAY flush intermediate in-memory map collections to standard output or standard error streams when reporting batch processing violations or triage summaries.
-- **R-SCR-002** MANDATORY: Initialize in-memory map instances at the entry point of the processing routine to guarantee clean lifecycle boundaries and avoid global state retention.
-- **R-SCR-003** MANDATORY: Format composite cache keys with explicit domain delimiters when storing heterogeneous entities in shared dictionary structures.
-- **R-SCR-004** MANDATORY: Enforce streaming data ingestion and clear intermediate map structures once entity batches are processed to prevent process memory exhaustion in long-running or large-volume scripts.
+- **R-PD-001** MAY: Scripts MAY flush intermediate in-memory map collections to standard output or standard error streams when reporting batch processing violations or triage summaries.
 
 ### Verify
 
-```bash
-# Discover and execute the repository typechecking script to verify type safety of key-value map operations.
-# Discover and run the repository linter and test suite to ensure scripts adhere to memory management and code quality rules.
-```
+- Discover and execute the repository typechecking script to verify type safety of key-value map operations.
+- Discover and run the repository linter and test suite to ensure scripts adhere to memory management and code quality rules.
 
 **Accept when:**
+
 - All automation and validation scripts complete successfully with zero memory leak warnings and clean exit codes.
 - Typechecking passes without type errors across key-value data structure accessors and mutators.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline checks enforcing script execution success and static analysis.
+- Verified by: Pull request peer review verifying that script state remains process-bound without introducing external datastores.
+- Violation handling: Pull requests introducing unapproved external datastores or unmanaged global caching structures will be rejected.
+- Exception process: Exceptions requiring persistent caching across script runs must submit an architecture proposal justifying cross-process storage requirements.
 </enforcement>

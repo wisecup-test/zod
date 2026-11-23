@@ -21,7 +21,6 @@ metadata:
 
 # Vitest Configuration Composition for Unit Testing: Root Test Configurations Export Base Testing
 
-Status: proposed
 Date: 2025-05-15
 Deciders: Detection Pipeline (automated)
 
@@ -48,17 +47,17 @@ Managing disparate test runner configurations across multiple workspace packages
 
 ## Decision
 
-1. MUST: Root test configurations MUST export base testing options using defineConfig to establish shared execution defaults across all workspace packages.
+- **R-TS-001** MUST: Root test configurations MUST export base testing options using defineConfig to establish shared execution defaults across all workspace packages.
 
 ## Policy Block
 
-- MUST Root test configurations MUST export base testing options using defineConfig to establish shared execution defaults across all workspace packages.
-
 In scope:
+
 - Unit test suite configuration across all workspace packages
 - Global test runner harness setup scripts and lifecycle hooks
 
 Out of scope:
+
 - End-to-end browser automation suites with independent runner runtimes
 - Non-testing build or bundling configurations
 
@@ -71,11 +70,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Eliminates configuration duplication across package test definitions.
 - Ensures uniform test execution semantics and global assertion policies throughout the workspace.
 - Simplifies maintenance by providing a single point of modification for shared test runner options.
 
 Negative:
+
 - Creates tight coupling between package test configurations and the root configuration interface.
 - Requires package authors to understand configuration merging behavior to prevent unintended property overrides.
 
@@ -113,12 +114,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the root test execution script from the project manifest and execute it to verify workspace test suites run cleanly.
 - Discover package manifest test scripts and execute package-level test suites to confirm project configuration inheritance resolves properly.
 
 Accept when:
+
 - All package unit test suites execute and pass without configuration resolution errors.
 - Configuration merging via mergeConfig resolves without conflicting property overrides or runtime schema warnings.
 - Global test lifecycle hooks execute during suite setup and teardown as defined.

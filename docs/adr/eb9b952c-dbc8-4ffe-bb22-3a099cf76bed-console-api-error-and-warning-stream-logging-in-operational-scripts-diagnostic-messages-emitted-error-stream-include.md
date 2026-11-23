@@ -18,7 +18,6 @@ metadata:
 
 # Console API Error and Warning Stream Logging in Operational Scripts: Diagnostic Messages Emitted Error Stream Include
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -42,22 +41,25 @@ Repository operational and verification scripts lack a standardized architecture
 
 ## Decision
 
-1. SHOULD: Diagnostic messages emitted to the error stream SHOULD include human-actionable remediation instructions alongside the identified violation or failure context.
+- **R-L-001** SHOULD: Diagnostic messages emitted to the error stream SHOULD include human-actionable remediation instructions alongside the identified violation or failure context.
 
 ## Policy Block
 
-- SHOULD Diagnostic messages emitted to the error stream SHOULD include human-actionable remediation instructions alongside the identified violation or failure context.
-
 In scope:
+
 - Operational, verification, and repository maintenance scripts executing in standalone execution contexts.
 - Diagnostic, warning, and failure reporting within automated validation routines.
 
 Out of scope:
+
 - Published library source modules intended for external consumption.
 - Long-running daemon services requiring structured distributed tracing or aggregated telemetry sinks.
 
 Exceptions:
-- EXC-001: A script requires structured machine-readable log ingestion into an external operational collector.
+
+- **EXC-001** A script requires structured machine-readable log ingestion into an external operational collector.
+  Approval: Architecture Review Board
+  Documentation: Document structured logging format requirements in the repository verification documentation.
 
 ## Rationale
 
@@ -68,11 +70,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Zero external dependency footprint and zero initialization overhead for standalone repository scripts.
 - Consistent separation between operational standard output and diagnostic standard error streams.
 - Immediate visibility of failure contexts and remediation instructions in terminal environments.
 
 Negative:
+
 - Absence of structured machine-parsable log records for automated log aggregation systems.
 - No configurable log level thresholds or global filtering mechanisms without custom environment evaluation logic.
 - Limited ability to redirect log streams to remote observability backends without shell-level stream redirection.
@@ -111,12 +115,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository project manifest, identify configured script verification tasks, and execute the verification suite to ensure all script checks pass.
 - Inspect the script runner configuration and execute the static code analysis suite to verify error stream logging compliance.
 
 Accept when:
+
 - All repository verification and maintenance scripts execute without throwing unhandled exceptions.
 - Script failures and rule violations emit formatted diagnostics exclusively to the standard error stream.
 - Process exit status accurately reflects the execution outcome indicated by the emitted console stream.

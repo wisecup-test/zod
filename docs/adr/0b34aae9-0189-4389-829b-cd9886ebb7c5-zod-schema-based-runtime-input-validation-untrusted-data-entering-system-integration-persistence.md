@@ -19,7 +19,6 @@ metadata:
 
 # Zod Schema-Based Runtime Input Validation: Untrusted Data Entering System Integration Persistence
 
-Status: proposed
 Date: 2025-05-19
 Deciders: Detection Pipeline (automated)
 
@@ -44,20 +43,23 @@ External inputs and integration boundaries introduce untrusted data into the app
 
 ## Decision
 
-1. MUST: All untrusted data entering the system at integration, persistence, and external boundaries MUST be validated against declared zod schemas prior to consumption.
+- **R-SCP-001** MUST: All untrusted data entering the system at integration, persistence, and external boundaries MUST be validated against declared zod schemas prior to consumption.
 
 ## Policy Block
 
-- MUST All untrusted data entering the system at integration, persistence, and external boundaries MUST be validated against declared zod schemas prior to consumption.
-
 In scope:
+
 - All incoming network payloads, database integration schemas, AI model structured inputs, and untrusted boundary boundaries.
 
 Out of scope:
+
 - Internal trusted function invocations within verified module isolation boundaries.
 
 Exceptions:
-- EXC-42-001: High-throughput internal memory channels where inputs have already been verified at the entry boundary.
+
+- **EXC-42-001** High-throughput internal memory channels where inputs have already been verified at the entry boundary.
+  Approval: Application security lead review.
+  Documentation: Document the verified perimeter boundary and benchmark rationale in the module architecture notes.
 
 ## Rationale
 
@@ -68,11 +70,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Guarantees strict runtime boundary validation and prevents injection or malformed data attacks.
 - Unifies compile-time static types with runtime verification through automatic type inference.
 - Standardizes error handling for invalid input structures across integration endpoints.
 
 Negative:
+
 - Adds runtime execution overhead for parsing and validating complex nested payload structures.
 - Requires maintaining schema definitions alongside or as the source of truth for domain types.
 
@@ -110,12 +114,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository test runner from the project manifest and execute the schema validation test suite.
 - Locate the repository typecheck and linter configurations from the build manifest to verify schema declarations compile without errors.
 
 Accept when:
+
 - All boundary input validation tests pass against declared schemas without unhandled runtime exceptions.
 - Static type verification confirms that inferred output types align with declared schema definitions across integration boundaries.
 

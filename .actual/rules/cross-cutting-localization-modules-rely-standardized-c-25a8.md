@@ -19,27 +19,29 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/locales/**`.
 
-These rules are ALWAYS ACTIVE for all internal localization modules responsible for translating or formatting validation error messages, and internal core modules providing shared checks, error specifications, and utilities.
+These rules are ALWAYS ACTIVE for:
+- All internal localization modules responsible for translating or formatting validation error messages.
+- Internal core modules providing shared checks, error specifications, and utilities.
 
 ### Rules
 
-- **R-LOC-001** SHOULD: Localization modules SHOULD rely on the standardized check, error, and utility contracts exposed by the internal core module to maintain structural parity across all locales.
-- **R-LOC-002** MANDATORY: The consumer MUST discover tool names, file names, commands, package managers, and version numbers from the project repository.
-- **R-LOC-003** MANDATORY: Before writing code that uses a versioned library, execute in order: find the dependency manifest, identify the build tool, inspect the repository lock or resolution artifact, look up official documentation for that exact version, confirm every API/class/function exists in that version's documentation, and re-run steps 3-5 per dependency at point of use.
-- **R-LOC-004** MANDATORY: Verify module import paths adhere to internal architectural boundaries when authoring new locale definitions.
-- **R-LOC-005** MANDATORY: Ensure error formatting templates consume parameters strictly from core error schemas to preserve contract fidelity.
+- **R-LM-001** SHOULD: Localization modules SHOULD rely on the standardized check, error, and utility contracts exposed by the internal core module to maintain structural parity across all locales.
 
 ### Verify
 
-```bash
-# Discover and run the project static analysis and linting scripts to verify module import constraints across localization modules.
-# Discover and execute the repository test suite to validate locale error formatting against core check specifications.
-```
+- Discover and run the project static analysis and linting scripts to verify module import constraints across localization modules.
+- Discover and execute the repository test suite to validate locale error formatting against core check specifications.
 
 **Accept when:**
+
 - All localization modules successfully import core checks, errors, and utilities without boundary violations.
 - Test suites pass for all locale modules with consistent error formatting behavior.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated continuous integration checks verifying module imports and boundary compliance, and peer code review.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration checks verifying module imports and boundary compliance.
+- Verified by: Peer code review for all new and modified localization modules.
+- Violation handling: Pull requests with non-compliant imports or duplicated core logic are blocked from merging.
+- Violation handling: Violations must be refactored to consume the shared core module before approval.
+- Exception process: Exceptions require formal architectural review and approval documented in a follow-up decision record.
 </enforcement>

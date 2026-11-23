@@ -19,26 +19,27 @@ metadata:
 
 Scope: applies to `packages/integration/fixtures/drizzle-zod/**`.
 
-These rules are ALWAYS ACTIVE for relational database table definitions that derive runtime validation schemas using drizzle-zod.
+These rules are ALWAYS ACTIVE for:
+- Relational database table definitions that derive runtime validation schemas using drizzle-zod.
 
 ### Rules
 
-- **R-DRIZZLE-001** MUST: Developers MUST inspect the repository lock artifact to determine the exact resolved versions of drizzle-zod and drizzle-orm/pg-core before implementing or modifying schema definitions.
-- **R-DRIZZLE-002** MANDATORY: Execute the lock-version grounding sequence (manifest discovery, build tool identification, lock file inspection, doc lookup, API confirmation) before writing code using versioned libraries.
-- **R-DRIZZLE-003** MUST: Declare relational table schemas with pgTable and derive corresponding runtime validation schemas through drizzle-zod.
-- **R-DRIZZLE-004** MUST: Apply schema transformation utilities when external contract shapes must diverge from underlying table columns, avoiding internal database column leakage to public API boundaries.
+- **R-DM-001** MUST: Developers MUST inspect the repository lock artifact to determine the exact resolved versions of drizzle-zod and drizzle-orm/pg-core before implementing or modifying schema definitions.
 
 ### Verify
 
-```bash
-# Discover and run type checking to verify derived drizzle-zod validation schemas align with pgTable declarations
-# Discover and run the project test suite to verify integration tests for schema models pass
-```
+- Discover and run the project type checking script to verify that derived drizzle-zod validation schemas align with pgTable declarations.
+- Discover and run the project test suite to verify that integration tests for schema models pass.
 
 **Accept when:**
+
 - Type validation confirms that relational table definitions and derived validation schemas compile without diagnostic errors.
 - Project integration test suites exercising schema modeling and input validation pass without failure.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Pull requests introducing inconsistent table definitions and validation schemas are blocked until reconciled.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Continuous integration static type checks.
+- Verified by: Automated test execution across schema modeling test suites.
+- Violation handling: Pull requests introducing inconsistent table definitions and validation schemas are blocked until reconciled.
+- Exception process: Submit an architectural exception request documenting domain requirements that necessitate decoupled validation schemas.
 </enforcement>

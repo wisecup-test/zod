@@ -17,7 +17,6 @@ metadata:
 
 # Adopt Zod for Boundary Schema Validation and Parsing: Exported Module Entry Points Execute Schema
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Data entering module boundaries and resolution entry points risks introducing ru
 
 ## Decision
 
-1. MUST: Exported module entry points MUST execute schema parse operations on external inputs before passing data to internal components.
+- **R-LM-001** MUST: Exported module entry points MUST execute schema parse operations on external inputs before passing data to internal components.
 
 ## Policy Block
 
-- MUST Exported module entry points MUST execute schema parse operations on external inputs before passing data to internal components.
-
 In scope:
+
 - All public module interfaces and resolution entry points accepting external input data.
 - Boundary parsing routines that process untrusted or polymorphic payloads.
 
 Out of scope:
+
 - Internal private helper functions where input arguments have already undergone boundary schema validation.
 - Performance-critical low-level primitives where benchmarking demonstrates validation overhead is prohibitive.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Enforces deterministic runtime data validation at module entry points.
 - Aligns runtime validation behavior with static type inference.
 - Provides structured parsing and centralized error reporting for invalid input data.
 
 Negative:
+
 - Introduces third-party dependency coupling for schema definitions at module entry points.
 - Adds CPU parsing overhead during input validation on high-frequency execution paths.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the repository verification scripts to verify that all schema parse invocations execute successfully against test inputs.
 - Execute the project test suite to verify that boundary validation logic correctly parses valid data and rejects invalid inputs.
 
 Accept when:
+
 - All input parsing invocations execute through defined validation schemas without unhandled validation failures on valid inputs.
 - The project test suite passes with full verification of boundary inputs against declared schema specifications.
 

@@ -17,7 +17,6 @@ metadata:
 
 # Internal Core Module for Shared Validation Primitives: Peripheral Feature Modules Not Define Standalone
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,18 +39,18 @@ Maintaining sixty-six peripheral modules, including extensive locale dictionarie
 
 ## Decision
 
-1. MUST_NOT: Peripheral feature modules MUST NOT define standalone error representations or duplicate foundational validation check routines that already exist within the core module.
+- **R-LM-001** MUST_NOT: Peripheral feature modules MUST NOT define standalone error representations or duplicate foundational validation check routines that already exist within the core module.
 
 ## Policy Block
 
-- MUST_NOT Peripheral feature modules MUST NOT define standalone error representations or duplicate foundational validation check routines that already exist within the core module.
-
 In scope:
+
 - Implementation of localization dictionaries and error message mappings
 - Implementation of schema adapters and compatibility translation layers
 - Creation of peripheral extensions requiring shared validation checks or error structures
 
 Out of scope:
+
 - Independent standalone packages that do not share the internal core runtime
 - Self-contained utility modules with zero validation or schema dependencies
 
@@ -64,11 +63,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Standardized error handling and check semantics across all locale definitions and schema layers.
 - Reduced duplication of common inspection, traversal, and utility routines across peripheral modules.
 - Clear dependency hierarchy directing peripheral feature modules inward toward foundational core primitives.
 
 Negative:
+
 - Tight coupling of peripheral feature modules to internal core module contracts.
 - Refactoring core module interfaces requires coordinated updates across all dependent locale and compatibility modules.
 
@@ -106,12 +107,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project verification script from the repository manifest and execute static analysis to validate module import paths.
 - Discover and run the project test suite to verify that all localization and compatibility modules satisfy core module interface contracts.
 
 Accept when:
+
 - Static analysis confirms zero circular dependencies and verifies all peripheral modules import shared primitives from the internal core module.
 - All automated test suites pass without interface contract mismatches or unhandled validation errors.
 

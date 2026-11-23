@@ -20,28 +20,28 @@ metadata:
 
 Scope: applies to `packages/zod/src/v3/**`, `packages/zod/src/v4/**`.
 
-These rules are ALWAYS ACTIVE for all public distribution entrypoints, package export targets, and module interface boundary definitions across library variants for the Zod library.
+These rules are ALWAYS ACTIVE for:
+- Applies to all public distribution entrypoints and package export targets for the Zod library.
+- Applies when defining or refactoring public module interface boundaries across library variants.
 
 ### Rules
 
-- **R-ZOD-001** MAY: Module variants targeting constrained environments MAY exclude non-critical secondary utilities from their re-exported external surface while preserving core interface contracts.
-- **R-ZOD-002** MANDATORY (DISCOVERY POLICY): Consumer MUST discover dependency manifest, build tool, and repository lock/resolution artifacts from the repository.
-- **R-ZOD-003** MANDATORY (LOCK-VERSION GROUNDING): Before writing code that uses a versioned library, execute in order: find dependency manifest, identify build tool, inspect repository lock/resolution artifact for exact version, look up official documentation for that exact version, confirm every API/class/function exists in that version, and re-run steps 3-5 per dependency at point of use for version-sensitive behavior.
-- **R-ZOD-004** MANDATORY: Maintainers must channel new public API capabilities through the designated external interface boundary module rather than directly exposing internal implementation structures.
-- **R-ZOD-005** MANDATORY: Verify that all distribution entrypoints import and re-export the unified external module to avoid accidental divergence in public contract definitions.
+- **R-LM-001** MAY: Module variants targeting constrained environments MAY exclude non-critical secondary utilities from their re-exported external surface while preserving core interface contracts.
 
 ### Verify
 
-```bash
-# Discover and run repository interface validation, type check scripts, and test suite
-npm run test
-npm run typecheck
-```
+- Discover and run the repository interface validation and type check scripts to verify module boundary conformance.
+- Discover and run the project test suite to verify that all distribution entrypoint exports satisfy expected public contract behaviors.
 
 **Accept when:**
+
 - All distribution entrypoint exports pass repository interface and type validation checks without boundary violations.
 - All public interface contract test suites pass successfully across all distribution variants.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Continuous integration type checking, boundary linting, and peer code review auditing are mandatory.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Continuous integration type checking and boundary linting scripts discovered from repository configurations.
+- Verified by: Peer code review auditing all modifications to package entrypoints and external interface boundary modules.
+- Violation handling: Pull requests introducing direct imports of internal modules from entrypoints or bypassing external boundary modules are blocked from merging until corrected.
+- Exception process: Exceptions require documented architectural justification and formal sign-off from module maintainers.
 </enforcement>

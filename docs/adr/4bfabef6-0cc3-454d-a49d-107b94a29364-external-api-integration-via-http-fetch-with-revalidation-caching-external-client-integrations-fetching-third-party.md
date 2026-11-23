@@ -17,7 +17,6 @@ metadata:
 
 # External API Integration via HTTP Fetch with Revalidation Caching: External Client Integrations Fetching Third Party
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,16 +39,16 @@ Documentation components requiring external service metrics must perform authent
 
 ## Decision
 
-1. MUST: External client integrations fetching third-party service data MUST configure request-level revalidation caching to limit repetitive remote network calls
+- **R-IA-001** MUST: External client integrations fetching third-party service data MUST configure request-level revalidation caching to limit repetitive remote network calls
 
 ## Policy Block
 
-- MUST External client integrations fetching third-party service data MUST configure request-level revalidation caching to limit repetitive remote network calls
-
 In scope:
+
 - Modules that perform outbound HTTP requests to external third-party services to retrieve metadata or public metrics
 
 Out of scope:
+
 - Internal cross-module function calls within the repository that do not cross network boundaries
 
 ## Rationale
@@ -61,11 +60,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Reduces outbound HTTP calls to third-party endpoints through scheduled revalidation caching
 - Prevents credential leakage by resolving authorization tokens dynamically at runtime
 - Ensures visibility into transient remote failures through logged retry attempts
 
 Negative:
+
 - Data served to consumers may become stale within the revalidation caching window
 - In-memory cache structures are ephemeral and do not persist across isolated process restarts
 
@@ -103,12 +104,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project repository typecheck script to verify external API client typings
 - Discover and execute the project integration test suite to validate external client caching and retry behavior
 
 Accept when:
+
 - Static analysis and test suites execute without errors across all external client modules
 - Mocked external requests confirm caching revalidation headers and retry logic function as specified
 

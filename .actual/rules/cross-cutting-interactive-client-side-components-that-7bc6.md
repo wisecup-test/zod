@@ -21,23 +21,28 @@ metadata:
 
 Scope: applies to `packages/docs/app/**`, `packages/docs/components/**`, `packages/docs/loaders/**`.
 
-These rules are ALWAYS ACTIVE for documentation user interface components, layout templates, interactive client widgets, and modules responsible for rendering documentation content, navigation hierarchies, and client dialogs.
+These rules are ALWAYS ACTIVE for:
+- Documentation user interface components, layout templates, and interactive client widgets.
+- Modules responsible for rendering documentation content, navigation hierarchies, and client dialogs.
 
 ### Rules
 
-- **R-ACT-001** MUST: Interactive client-side components that invoke React hooks or register DOM event handlers MUST explicitly declare the client component rendering boundary directive at the top of the module.
+- **R-LM-001** MUST: Interactive client-side components that invoke React hooks or register DOM event handlers MUST explicitly declare the client component rendering boundary directive at the top of the module.
 
 ### Verify
 
-```bash
-# Discover the repository build script from the dependency manifest and execute static type verification.
-# Inspect project configuration to identify and run the static linter verifying component hook constraints and client directive compliance.
-```
+- Discover the repository build script from the dependency manifest and execute the static type verification.
+- Inspect project configuration to identify and run the static linter verifying component hook constraints and client directive compliance.
 
 **Accept when:**
+
 - All component modules pass static type checking without missing dependency declarations.
 - Component lint verification passes with zero violations of hook rules and rendering boundary constraints.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration static analysis, linting, and type-checking suites.
+- Verified by: Architectural review during pull request evaluation to verify component boundaries and hook lifecycles.
+- Violation handling: Pull requests introducing direct DOM manipulation outside references or omitting required rendering boundaries are blocked until remediated.
+- Exception process: Exceptions require documented architectural justification and formal approval from the engineering team leads.
 </enforcement>

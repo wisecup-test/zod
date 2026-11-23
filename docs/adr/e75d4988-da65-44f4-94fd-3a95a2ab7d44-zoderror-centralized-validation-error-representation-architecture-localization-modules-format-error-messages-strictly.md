@@ -17,7 +17,6 @@ metadata:
 
 # ZodError Centralized Validation Error Representation Architecture: Localization Modules Format Error Messages Strictly
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,18 +39,18 @@ Without a centralized validation error representation and shared utility convent
 
 ## Decision
 
-1. MUST: Localization modules MUST format error messages strictly against standardized issue descriptors defined by ZodError without introducing independent error representation schemas.
+- **R-LM-001** MUST: Localization modules MUST format error messages strictly against standardized issue descriptors defined by ZodError without introducing independent error representation schemas.
 
 ## Policy Block
 
-- MUST Localization modules MUST format error messages strictly against standardized issue descriptors defined by ZodError without introducing independent error representation schemas.
-
 In scope:
+
 - Schema parsing and validation execution pipelines.
 - Validation error message localization and formatting modules.
 - Core error representation and issue construction helper modules.
 
 Out of scope:
+
 - External schema consumer applications consuming final instantiated error instances.
 - Standalone third-party plugins that do not participate in internal parsing issue construction or localization.
 
@@ -64,11 +63,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Ensures uniform error issue structures and diagnostic metadata across all schema parsing routines.
 - Decouples parsing mechanics from specific human-readable message strings, facilitating independent localization.
 - Centralizes validation issue formatting logic in shared utilities to prevent logic duplication.
 
 Negative:
+
 - Internal helper and localization modules incur direct structural coupling to the central ZodError schema definitions.
 - Changes to error issue data structures require synchronized updates across parsing utilities and localization mappings.
 
@@ -106,13 +107,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the test runner defined in the project configuration manifest and execute the test suite covering parsing utilities and error localization.
 - Discover the static analysis and type checking script configured in the project repository and run it to verify module import resolution and type consistency across core error modules.
 - Inspect the project dependency resolution artifact to confirm all module imports align with declared dependency boundaries.
 
 Accept when:
+
 - All schema parsing and localization test suites pass without validation issue schema mismatches.
 - Automated static type verification passes with zero type errors across module boundaries consuming ZodError and shared utility functions.
 - Validation error emissions consistently conform to the standardized issue descriptors defined by ZodError across all configured locales.

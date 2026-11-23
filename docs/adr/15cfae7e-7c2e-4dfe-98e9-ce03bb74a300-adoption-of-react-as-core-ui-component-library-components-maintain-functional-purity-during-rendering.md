@@ -19,7 +19,6 @@ metadata:
 
 # Adoption of React as Core UI Component Library: Components Maintain Functional Purity During Rendering
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -44,17 +43,17 @@ Documentation user interfaces require a standardized component library to suppor
 
 ## Decision
 
-1. SHOULD: Components SHOULD maintain functional purity during rendering by deferring non-rendering side effects to hook lifecycles.
+- **R-LM-001** SHOULD: Components SHOULD maintain functional purity during rendering by deferring non-rendering side effects to hook lifecycles.
 
 ## Policy Block
 
-- SHOULD Components SHOULD maintain functional purity during rendering by deferring non-rendering side effects to hook lifecycles.
-
 In scope:
+
 - Documentation user interface components, layout templates, and interactive client widgets.
 - Modules responsible for rendering documentation content, navigation hierarchies, and client dialogs.
 
 Out of scope:
+
 - Non-browser utility libraries, standalone build-time code generators, and server-only data transform scripts that do not produce interactive markup.
 
 ## Rationale
@@ -66,11 +65,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Provides a unified, declarative component paradigm across all documentation interface modules.
 - Enables composable UI patterns through structured hooks for state, references, and side effects.
 - Facilitates modular composition across navigation controls, search interfaces, and content presentation.
 
 Negative:
+
 - Introduces client-side JavaScript runtime overhead and hydration requirements for interactive documentation components.
 - Requires deliberate boundary separation between server-rendered layouts and client-interactive widgets.
 
@@ -108,12 +109,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository build script from the dependency manifest and execute the static type verification.
 - Inspect project configuration to identify and run the static linter verifying component hook constraints and client directive compliance.
 
 Accept when:
+
 - All component modules pass static type checking without missing dependency declarations.
 - Component lint verification passes with zero violations of hook rules and rendering boundary constraints.
 

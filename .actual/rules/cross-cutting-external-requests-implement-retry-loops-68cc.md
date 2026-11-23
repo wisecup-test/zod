@@ -19,27 +19,27 @@ metadata:
 
 Scope: applies to `packages/docs/loaders/**`.
 
-These rules are ALWAYS ACTIVE for modules that perform outbound HTTP requests to external third-party services to retrieve metadata or public metrics.
+These rules are ALWAYS ACTIVE for:
+- Modules that perform outbound HTTP requests to external third-party services to retrieve metadata or public metrics
 
 ### Rules
 
-- **R-EXT-001** SHOULD: External requests SHOULD implement retry loops with structured error logging to record failed fetch attempts before returning cached or fallback values.
-- **R-EXT-002** MANDATORY: This ADR omits all tool names, file names, commands, package managers, and version numbers. The consumer MUST derive them from the project repository.
-- **R-EXT-003** MANDATORY: Before writing code that uses a versioned library, execute in order: 1. Find dependency manifest. 2. Identify build tool. 3. Inspect repository lock or resolution artifact. 4. Look up official documentation for that exact version. 5. Confirm API/class/function existence. 6. Re-run per dependency at point of use.
-- **R-EXT-004** MANDATORY: Verify that all external client endpoints configure appropriate time-to-live revalidation parameters matching data freshness requirements of consuming presentation components.
-- **R-EXT-005** MANDATORY: Ensure error handlers log sufficient context including attempt count and diagnostic error details without exposing authentication headers.
+- **R-IA-001** SHOULD: External requests SHOULD implement retry loops with structured error logging to record failed fetch attempts before returning cached or fallback values
 
 ### Verify
 
-```bash
-# Discover and run the project repository typecheck script
-# Discover and execute the project integration test suite to validate external client caching and retry behavior
-```
+- Discover and run the project repository typecheck script to verify external API client typings
+- Discover and execute the project integration test suite to validate external client caching and retry behavior
 
 **Accept when:**
+
 - Static analysis and test suites execute without errors across all external client modules
 - Mocked external requests confirm caching revalidation headers and retry logic function as specified
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification is mandatory via automated continuous integration test suites and peer code reviews.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration test suites
+- Verified by: Peer code review of data loader and external client implementations
+- Violation handling: Pull requests lacking credential protection or caching configurations will be rejected during code review
+- Exception process: Exceptions for endpoints requiring real-time updates without caching must be documented and approved by the engineering leads
 </enforcement>

@@ -18,7 +18,6 @@ metadata:
 
 # node:fs Module Adoption: Standardizing Synchronous File System Access in Repository Automation Scripts: File Read Operations Targeting Text Structured
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -42,17 +41,17 @@ Repository verification, code generation, and triage scripts must read and write
 
 ## Decision
 
-1. MUST: File read operations targeting text and structured data files MUST specify explicit character encoding when invoking node:fs read methods.
+- **R-LM-001** MUST: File read operations targeting text and structured data files MUST specify explicit character encoding when invoking node:fs read methods.
 
 ## Policy Block
 
-- MUST File read operations targeting text and structured data files MUST specify explicit character encoding when invoking node:fs read methods.
-
 In scope:
+
 - Standalone repository maintenance, triage, verification, and code generation scripts.
 - Local file system inspection and artifact writing workflows executed outside of published distribution packages.
 
 Out of scope:
+
 - Runtime library source modules destined for cross-platform distribution where runtime-specific core module namespaces are unavailable.
 - High-throughput asynchronous network server handlers requiring non-blocking streaming I/O.
 
@@ -65,11 +64,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Zero external dependencies are introduced for file system operations across maintenance and validation tooling.
 - Deterministic linear execution in verification scripts simplifies debugging and diagnostics upon failure.
 - Protocol-qualified module specifiers prevent accidental shadowing by identically named third-party packages.
 
 Negative:
+
 - Synchronous file operations block the execution thread, making them unsuitable for concurrent high-throughput workloads.
 - Direct reliance on runtime core modules restricts execution to environments that provide compatible core module namespaces.
 
@@ -107,12 +108,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project verification script defined in the repository configuration manifest and execute it to verify repository integrity.
 - Inspect script source files to confirm all file system imports utilize the protocol-prefixed core module namespace without third-party wrapper dependencies.
 
 Accept when:
+
 - All repository automation and verification scripts execute to completion without file system resolution errors.
 - Static module import analysis confirms file system access in script files is restricted to the protocol-qualified core module namespace.
 

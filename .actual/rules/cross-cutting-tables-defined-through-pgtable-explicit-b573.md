@@ -19,23 +19,27 @@ metadata:
 
 Scope: applies to `packages/integration/fixtures/drizzle-zod/**`.
 
-These rules are ALWAYS ACTIVE for relational database schema definitions and data model declarations.
+These rules are ALWAYS ACTIVE for:
+- Relational database schema definitions and data model declarations.
 
 ### Rules
 
-- **R-DRIZZLE-001** MUST: Tables MUST be defined through pgTable with explicit column type declarations and primary key constraints.
+- **R-DM-001** MUST: Tables MUST be defined through pgTable with explicit column type declarations and primary key constraints.
 
 ### Verify
 
-```bash
-# Discover and execute the repository type-checking script
-# Discover and run the project test suite
-```
+- Discover and execute the repository type-checking script to ensure schema definitions satisfy compile-time constraints.
+- Discover and run the project test suite to verify schema instantiation and data model operations.
 
 **Accept when:**
+
 - The project type-checking script passes with zero diagnostic errors across schema definitions.
 - All database model verification suites execute successfully.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline type verification.
+- Verified by: Pull request peer code review.
+- Violation handling: Pull requests introducing non-standard relational schema definitions will be blocked until brought into compliance.
+- Exception process: Exceptions must be documented in an architectural exception request and approved by data architecture leads.
 </enforcement>

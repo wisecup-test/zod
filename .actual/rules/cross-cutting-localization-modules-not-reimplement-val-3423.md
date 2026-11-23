@@ -19,23 +19,29 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/locales/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- All internal localization modules responsible for translating or formatting validation error messages.
+- Internal core modules providing shared checks, error specifications, and utilities.
 
 ### Rules
 
-- **R-LOC-001** MUST_NOT: Localization modules MUST NOT reimplement validation checks, error categorization, or formatting utility logic independently within individual locale definitions.
+- **R-LM-001** MUST_NOT: Localization modules MUST NOT reimplement validation checks, error categorization, or formatting utility logic independently within individual locale definitions.
 
 ### Verify
 
-```bash
-# Discover and run project static analysis, linting scripts, and test suites to verify module import constraints and localization error formatting against core check specifications.
-# (Exact commands must be discovered from the project repository configuration)
-```
+- Discover and run the project static analysis and linting scripts to verify module import constraints across localization modules.
+- Discover and execute the repository test suite to validate locale error formatting against core check specifications.
 
 **Accept when:**
+
 - All localization modules successfully import core checks, errors, and utilities without boundary violations.
 - Test suites pass for all locale modules with consistent error formatting behavior.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All pull requests with non-compliant imports or duplicated core logic are blocked from merging.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration checks verifying module imports and boundary compliance.
+- Verified by: Peer code review for all new and modified localization modules.
+- Violation handling: Pull requests with non-compliant imports or duplicated core logic are blocked from merging.
+- Violation handling: Violations must be refactored to consume the shared core module before approval.
+- Exception process: Exceptions require formal architectural review and approval documented in a follow-up decision record.
 </enforcement>

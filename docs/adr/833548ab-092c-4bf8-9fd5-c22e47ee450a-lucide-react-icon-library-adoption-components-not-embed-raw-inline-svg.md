@@ -19,7 +19,6 @@ metadata:
 
 # Lucide React Icon Library Adoption: Components Not Embed Raw Inline Svg
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -44,20 +43,23 @@ Documentation layouts and interactive UI components require scalable, accessible
 
 ## Decision
 
-1. MUST_NOT: Components MUST NOT embed raw inline SVG markup for iconography supported by the adopted icon library or introduce secondary third-party icon packages.
+- **R-LM-001** MUST_NOT: Components MUST NOT embed raw inline SVG markup for iconography supported by the adopted icon library or introduce secondary third-party icon packages.
 
 ## Policy Block
 
-- MUST_NOT Components MUST NOT embed raw inline SVG markup for iconography supported by the adopted icon library or introduce secondary third-party icon packages.
-
 In scope:
+
 - All user interface components, layouts, and documentation views requiring visual icons or glyphs.
 
 Out of scope:
+
 - Non-UI utility modules, backend server routes, and static assets representing proprietary brand logos or multi-color illustrations.
 
 Exceptions:
-- EXC-20-001: A custom brand logo or proprietary asset does not exist within the lucide-react icon catalog.
+
+- **EXC-20-001** A custom brand logo or proprietary asset does not exist within the lucide-react icon catalog.
+  Approval: Architecture review sign-off
+  Documentation: Recorded in component documentation with rationale for custom asset usage.
 
 ## Rationale
 
@@ -68,11 +70,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Uniform visual design, stroke weight, and aesthetic coherence across all UI components and layouts.
 - Direct integration with design system classes for dynamic sizing, coloring, and interactive state transitions.
 - Reduced maintenance overhead by avoiding custom SVG asset ingestion pipelines and duplicated markup.
 
 Negative:
+
 - Coupling of the user interface subsystem to the specific icon design language and catalog provided by lucide-react.
 - Custom or proprietary brand marks require distinct exception handling outside the standard icon package.
 
@@ -110,13 +114,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project verification and linting scripts from the repository manifest and execute them to verify that icon imports adhere to architectural constraints.
 - Inspect the dependency resolution lock artifact to confirm that only the approved icon library is resolved without unapproved iconography dependencies.
 - Execute the workspace type-checking and build commands to confirm all icon component invocations pass compile-time verification.
 
 Accept when:
+
 - All icon references across interface components resolve to imports from the approved icon library.
 - Type-checking and static analysis scripts run to completion with zero errors or warnings regarding icon component usage.
 - No extraneous icon dependencies or inline SVG glyph duplicates exist within the component tree.

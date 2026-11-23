@@ -17,7 +17,6 @@ metadata:
 
 # Internal Core Module Architecture for Schema Engine and Processing Subsystems: Format Converters External Translators Interact Core
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Without an explicit modular architecture separating core schema definitions and 
 
 ## Decision
 
-1. MUST: Format converters and external translators MUST interact with core schema representations strictly through core library module interfaces and registry accessors.
+- **R-LM-001** MUST: Format converters and external translators MUST interact with core schema representations strictly through core library module interfaces and registry accessors.
 
 ## Policy Block
 
-- MUST Format converters and external translators MUST interact with core schema representations strictly through core library module interfaces and registry accessors.
-
 In scope:
+
 - Internal library modules implementing core schema primitives, registries, error handlers, and utility routines.
 - Compiler and format conversion subsystems interacting with foundational schema models.
 
 Out of scope:
+
 - End-user application code consuming the public facade of the library.
 - Standalone third-party utility scripts operating outside the library core architecture.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Clear separation of concerns between core validation mechanics, compilation passes, and format converters.
 - Enables targeted performance optimizations in compilation and registry lookups without impacting baseline schema behavior.
 - Improves modularity and maintainability across internal library subsystems.
 
 Negative:
+
 - Requires disciplined maintenance of module boundaries and import hierarchies to prevent circular references.
 - Context tracking and registry abstractions introduce architectural indirection compared to inline procedural logic.
 
@@ -105,13 +106,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Run the project test suite to verify internal core module boundaries and schema compilation passes all functional suites.
 - Execute the repository linting and module boundary checks to ensure no circular imports or disallowed core module references exist.
 - Execute the project typechecker to confirm strict type safety across core schema exports and registry interfaces.
 
 Accept when:
+
 - All internal module boundary tests and schema validation suites pass without errors.
 - Dependency and type validation checks complete with zero circular reference or boundary violations.
 - Runtime compilation methods match baseline parser behavior for all defined schema inputs.

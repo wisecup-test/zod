@@ -19,26 +19,30 @@ metadata:
 
 Scope: applies to `packages/zod/src/v3/benchmarks/**`.
 
-These rules are ALWAYS ACTIVE for performance evaluation and throughput profiling of schema parsing and validation functions, and regression analysis of core primitive and composite data structure parsers.
+These rules are ALWAYS ACTIVE for:
+- Performance evaluation and throughput profiling of schema parsing and validation functions.
+- Regression analysis of core primitive and composite data structure parsers.
 
 ### Rules
 
-- **R-BENCH-001** SHOULD: Benchmark suites SHOULD subscribe to the cycle event using the on listener to record target performance metrics upon completion of each scenario evaluation.
-- **R-BENCH-002** MANDATORY: Discover the performance test script declared in the repository dependency manifest and execute it using the project-designated task runner, and inspect the repository task configuration to locate and trigger the benchmark suite execution workflow.
-- **R-BENCH-003** MANDATORY: Before writing code that uses a versioned library, execute in order: find the dependency manifest in the repo, identify the build tool, inspect the repository lock or resolution artifact to determine the exact resolved version, look up official documentation for that exact version, confirm every API/class/function exists in that version's documentation, and re-run steps 3-5 per dependency at point of use for version-sensitive behavior.
-- **R-BENCH-004** MANDATORY: Ensure test payloads represent both minimal and fully populated data structures to measure parsing boundaries accurately, and keep benchmark scenario definitions isolated to avoid cross-suite state contamination during cycle execution.
+- **R-LM-001** SHOULD: Benchmark suites SHOULD subscribe to the cycle event using the on listener to record target performance metrics upon completion of each scenario evaluation.
 
 ### Verify
 
-```bash
-# Discover and execute the performance test script declared in the repository dependency manifest using the project-designated task runner
-# Inspect repository task configuration to locate and trigger the benchmark suite execution workflow
-```
+- Discover the performance test script declared in the repository dependency manifest and execute it using the project-designated task runner.
+- Inspect the repository task configuration to locate and trigger the benchmark suite execution workflow.
 
 **Accept when:**
+
 - All benchmark test suites execute to completion through their registered cycle event handlers without uncaught exceptions.
 - Validation parse operations within benchmark cases accurately reflect real-world payload shapes and error conditions.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated performance validation workflows, peer code reviews, and architectural exception processes enforce these rules.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated performance validation workflows triggered during release verification phases.
+- Verified by: Peer code review verifying that schema additions include corresponding benchmark coverage.
+- Violation handling: Pull requests introducing unbenchmarked core parsing alterations or ad-hoc timing loops are blocked during review.
+- Violation handling: Benchmark suites failing cycle execution or throwing unhandled errors require immediate remediation prior to merge.
+- Exception process: Submit an architectural exception request detailing why standardized benchmarking cannot be applied to the specific schema validation path.
+- Exception process: Secure approval from the performance engineering group and document the alternative evaluation methodology in repository documentation.
 </enforcement>

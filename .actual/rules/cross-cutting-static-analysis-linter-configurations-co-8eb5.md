@@ -22,24 +22,28 @@ metadata:
 
 Scope: applies to `packages/resolution/**`, `scripts/**`, `vitest.config.ts`, `vitest.root.mjs`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- All TypeScript and JavaScript source files, maintenance scripts, and runner configurations that reference runtime core modules.
 
 ### Rules
 
-- **R-NOD-001** SHOULD: Static analysis and linter configurations SHOULD be configured to automatically enforce and autofix protocol-prefixed module specifiers across all codebase entries.
+- **R-LM-001** SHOULD: Static analysis and linter configurations SHOULD be configured to automatically enforce and autofix protocol-prefixed module specifiers across all codebase entries.
 
 ### Verify
 
-```bash
-# Discover the project's automated verification script from the dependency manifest and run the linter to ensure no un-prefixed core imports exist.
-# Discover and execute the project's test suite to verify module resolution succeeds across all configurations.
-```
+- Discover the project's automated verification script from the dependency manifest and run the linter to ensure no un-prefixed core imports exist.
+- Discover and execute the project's test suite to verify module resolution succeeds across all configurations.
 
 **Accept when:**
+
 - All workspace modules and scripts import core Node.js runtime facilities exclusively using the node: protocol namespace prefix.
 - Static analysis and automated lint checks verify zero un-prefixed standard library module specifiers exist across the codebase.
 - Test suites and build verification scripts execute without module resolution ambiguities or warnings.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated code linting rules configured to enforce protocol prefixes on runtime core imports.
+- Verified by: Continuous integration verification runs across all configuration files and utility scripts.
+- Violation handling: Pull requests containing un-prefixed core module specifiers fail automated linting and must be updated before merging.
+- Exception process: Exceptions require architectural review and must document specific legacy platform constraints necessitating bare module specifiers.
 </enforcement>

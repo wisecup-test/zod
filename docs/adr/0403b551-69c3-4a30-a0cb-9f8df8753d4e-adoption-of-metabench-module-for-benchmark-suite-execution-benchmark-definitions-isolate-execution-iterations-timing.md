@@ -17,7 +17,6 @@ metadata:
 
 # Adoption of metabench Module for Benchmark Suite Execution: Benchmark Definitions Isolate Execution Iterations Timing
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Performance benchmarking suites across the repository require a single, consiste
 
 ## Decision
 
-1. SHOULD: Benchmark definitions SHOULD isolate execution iterations and timing collection through the standardized harness lifecycle provided by the metabench module.
+- **R-LM-001** SHOULD: Benchmark definitions SHOULD isolate execution iterations and timing collection through the standardized harness lifecycle provided by the metabench module.
 
 ## Policy Block
 
-- SHOULD Benchmark definitions SHOULD isolate execution iterations and timing collection through the standardized harness lifecycle provided by the metabench module.
-
 In scope:
+
 - Performance benchmarking suites and micro-benchmark test cases within the repository.
 - Execution harness orchestration and performance measurement cycles.
 
 Out of scope:
+
 - Unit test suites and functional integration test suites.
 - Production runtime application code and non-benchmarking modules.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Provides uniform measurement semantics and comparable performance data across all repository benchmark suites.
 - Reduces boilerplate configuration by centralizing benchmark harness lifecycle management in a shared module.
 - Simplifies benchmark authoring by providing consistent harness interfaces across different benchmark cases.
 
 Negative:
+
 - Creates a dependency on internal module maintenance for all benchmarking execution requirements.
 - Requires benchmark authors to adhere strictly to harness execution conventions rather than using arbitrary measurement loops.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository configuration and execute the designated benchmark verification script to validate benchmark suite execution.
 - Discover and run the project static type-checking and linting scripts to verify compliance with internal module import conventions.
 
 Accept when:
+
 - All benchmark suites execute successfully through the metabench harness without execution errors.
 - Benchmark suite definitions adhere to module import constraints and static type validation passes across all benchmark modules.
 

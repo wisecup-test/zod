@@ -20,7 +20,6 @@ metadata:
 
 # node: Protocol Core Modules Adoption: Explicit Namespace Protocol Resolution for Core Runtime Utilities: Modules Not Install Third Party Utility
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -46,18 +45,18 @@ Relying on bare module specifiers for core runtime functionality allows third-pa
 
 ## Decision
 
-1. SHOULD_NOT: Modules SHOULD NOT install third-party utility packages to replicate capabilities natively provided by protocol-prefixed runtime core modules unless specialized polyfill requirements exist.
+- **R-LM-001** SHOULD_NOT: Modules SHOULD NOT install third-party utility packages to replicate capabilities natively provided by protocol-prefixed runtime core modules unless specialized polyfill requirements exist.
 
 ## Policy Block
 
-- SHOULD_NOT Modules SHOULD NOT install third-party utility packages to replicate capabilities natively provided by protocol-prefixed runtime core modules unless specialized polyfill requirements exist.
-
 In scope:
+
 - All repository configuration files requiring core system utilities
 - All automation and verification scripts interfacing with filesystem, path, or URL capabilities
 - All internal modules relying on runtime platform interfaces
 
 Out of scope:
+
 - Client-side browser application bundles executing in environments lacking runtime core module support
 - Third-party vendor libraries packaged as external distribution artifacts
 
@@ -70,11 +69,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Eliminates namespace collisions and prevents malicious or accidental shadowing of platform modules by third-party packages.
 - Enables static analysis and bundlers to immediately recognize platform built-ins without heuristic resolution checks.
 - Ensures consistency across configuration files, maintenance scripts, and automation tasks.
 
 Negative:
+
 - Precludes execution on legacy runtime versions that do not support protocol-prefixed specifiers without transformation.
 - Requires automated linting and continuous integration checks to prevent regression to legacy bare specifiers.
 
@@ -112,12 +113,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the repository linter to verify that no bare imports of runtime core modules exist in source or configuration files.
 - Discover and run the repository test and type-checking scripts to verify successful resolution of all protocol-prefixed module imports.
 
 Accept when:
+
 - Static analysis and linting pass with zero violations of core module import prefix rules.
 - All test suites and configuration modules execute and resolve runtime core utilities without resolution errors.
 

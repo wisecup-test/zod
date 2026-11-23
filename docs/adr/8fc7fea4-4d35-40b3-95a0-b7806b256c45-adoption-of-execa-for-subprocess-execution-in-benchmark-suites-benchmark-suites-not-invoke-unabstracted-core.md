@@ -17,7 +17,6 @@ metadata:
 
 # Adoption of execa for Subprocess Execution in Benchmark Suites: Benchmark Suites Not Invoke Unabstracted Core
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Benchmark suites that execute child processes without a consistent process manag
 
 ## Decision
 
-1. MUST_NOT: Benchmark suites MUST NOT invoke unabstracted core runtime child process spawning APIs directly when execa is available as the adopted process execution interface.
+- **R-LM-001** MUST_NOT: Benchmark suites MUST NOT invoke unabstracted core runtime child process spawning APIs directly when execa is available as the adopted process execution interface.
 
 ## Policy Block
 
-- MUST_NOT Benchmark suites MUST NOT invoke unabstracted core runtime child process spawning APIs directly when execa is available as the adopted process execution interface.
-
 In scope:
+
 - Benchmark harness suites and performance measurement suites executing external processes
 - Integration benchmarks requiring programmatic compiler process invocation
 
 Out of scope:
+
 - In-memory unit tests and pure function test suites
 - Core runtime library exports distributed to external consumers
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Standardizes process stream management and exit code handling across all performance benchmark suites.
 - Reduces boilerplate code required to launch, monitor, and clean up external compiler benchmark executions.
 - Provides consistent promise-based process invocation that simplifies asynchronous benchmark orchestration.
 
 Negative:
+
 - Introduces an external dependency that must be maintained and tracked in the repository dependency resolution manifest.
 - Benchmark authors must adhere to library-specific execution semantics and configuration options rather than runtime defaults.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the benchmark execution task in the project task configuration and run the benchmark suite to verify child process execution.
 - Inspect repository dependency declarations to confirm execa is declared within the appropriate workspace dependency scope.
 
 Accept when:
+
 - All benchmark execution suites spawn external processes through execa without runtime failures.
 - Automated benchmark runs complete with deterministic exit codes and clean child process termination.
 

@@ -17,7 +17,6 @@ metadata:
 
 # Ephemeral In-Memory Map Collections for Script Execution Data Storage: Automation Scripts Restrict Intermediate Data Caching
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Repository automation workflows frequently aggregate and correlate data during e
 
 ## Decision
 
-1. MUST: Automation scripts MUST restrict intermediate data caching and index accumulation to process-local, in-memory key-value data structures.
+- **R-PD-001** MUST: Automation scripts MUST restrict intermediate data caching and index accumulation to process-local, in-memory key-value data structures.
 
 ## Policy Block
 
-- MUST Automation scripts MUST restrict intermediate data caching and index accumulation to process-local, in-memory key-value data structures.
-
 In scope:
+
 - Standalone automation and validation scripts requiring transient in-memory indexing or grouping of execution entities.
 - Process-bound CLI routines that collect intermediate state without cross-process persistence requirements.
 
 Out of scope:
+
 - Production runtime application services requiring durable multi-session persistence.
 - Distributed services requiring shared state across concurrent worker processes.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Eliminates infrastructure dependencies and connection latency for script execution workflows.
 - Guarantees process isolation and prevents stale state leakage across consecutive script runs.
 - Simplifies script implementation by utilizing standard runtime key-value data structures without external drivers.
 
 Negative:
+
 - Cached state is lost upon process termination, preventing incremental caching across multiple script invocations.
 - Memory consumption scales directly with the volume of entities processed within a single script run.
 - Lack of cross-process synchronization restricts concurrent script workers from sharing intermediate computational results.
@@ -106,12 +107,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the repository typechecking script to verify type safety of key-value map operations.
 - Discover and run the repository linter and test suite to ensure scripts adhere to memory management and code quality rules.
 
 Accept when:
+
 - All automation and validation scripts complete successfully with zero memory leak warnings and clean exit codes.
 - Typechecking passes without type errors across key-value data structure accessors and mutators.
 

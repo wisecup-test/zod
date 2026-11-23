@@ -17,7 +17,6 @@ metadata:
 
 # Adoption of fumadocs-ui for Documentation Application Layouts: Developers Discover Project Lock File Resolve
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -39,16 +38,16 @@ Maintaining fragmented layout structures for documentation content causes naviga
 
 ## Decision
 
-1. MUST: Developers MUST discover the project lock file and resolve the exact installed version of the documentation library before introducing or modifying layout implementations.
+- **R-LM-001** MUST: Developers MUST discover the project lock file and resolve the exact installed version of the documentation library before introducing or modifying layout implementations.
 
 ## Policy Block
 
-- MUST Developers MUST discover the project lock file and resolve the exact installed version of the documentation library before introducing or modifying layout implementations.
-
 In scope:
+
 - All documentation route layouts, content pages, and related status fallback boundaries within the documentation application.
 
 Out of scope:
+
 - Non-documentation application routes and external presentation pages that do not render documentation trees.
 
 ## Rationale
@@ -59,10 +58,12 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Standardizes documentation presentation, navigation menus, and content layouts across all documentation routes.
 - Eliminates redundant boilerplate for documentation page shells and status fallbacks.
 
 Negative:
+
 - Couples documentation route structures to the lifecycle and layout conventions of the external documentation UI library.
 - Upgrades require lock-file grounding to verify compatibility with existing layout configurations.
 
@@ -100,12 +101,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the project verification script from the repository manifest to confirm import validity and type consistency across documentation routes.
 - Run the repository automated linting check to verify that documentation layouts do not import unapproved layout alternatives.
 
 Accept when:
+
 - All documentation layout routes import documentation scaffolding components exclusively from the designated documentation UI library.
 - Repository verification scripts pass without unresolved module imports or layout contract mismatches.
 

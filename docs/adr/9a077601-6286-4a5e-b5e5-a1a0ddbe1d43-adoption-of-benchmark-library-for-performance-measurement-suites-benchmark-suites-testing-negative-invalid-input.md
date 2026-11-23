@@ -17,7 +17,6 @@ metadata:
 
 # Adoption of benchmark Library for Performance Measurement Suites: Benchmark Suites Testing Negative Invalid Input
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Manual execution timing produces variable results that fail to isolate parser ov
 
 ## Decision
 
-1. MUST: Benchmark suites testing negative or invalid input conditions MUST encapsulate failing calls within error handling blocks to prevent execution interruption during sample cycles.
+- **R-LM-001** MUST: Benchmark suites testing negative or invalid input conditions MUST encapsulate failing calls within error handling blocks to prevent execution interruption during sample cycles.
 
 ## Policy Block
 
-- MUST Benchmark suites testing negative or invalid input conditions MUST encapsulate failing calls within error handling blocks to prevent execution interruption during sample cycles.
-
 In scope:
+
 - Validation routines, schema parsing modules, and primitive evaluation routines undergoing performance evaluation
 - Automated benchmark execution harnesses and regression measurement suites
 
 Out of scope:
+
 - Functional and unit testing suites verifying validation correctness
 - Production runtime schema compilation and execution logic
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Provides repeatable, high-precision measurement of schema parsing throughput and execution overhead.
 - Standardizes cycle event diagnostics facilitating automated performance regression tracking across revisions.
 - Isolates computational bottlenecks in primitive validation, object parsing, and union resolution early in the development lifecycle.
 
 Negative:
+
 - Incurs ongoing maintenance overhead for dedicated benchmark harnesses alongside regular test suites.
 - Poses risk of synthetic microbenchmarks optimizing for artificial hot paths that diverge from realistic production payload distributions.
 
@@ -105,11 +106,12 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - echo "Discover and execute project benchmark verification scripts from configuration artifacts"
 
 Accept when:
+
 - All benchmark suites complete execution cycles without unhandled exceptions.
 - Cycle event listeners log target operations per second for all registered validation scenarios.
 

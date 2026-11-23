@@ -17,29 +17,32 @@ metadata:
 
 Scope: applies to `packages/treeshake/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- Input validation layers and data parsing modules across the codebase.
+- Runtime schema definitions for structured and primitive payload verification.
 
 ### Rules
 
-- **R-ZOD-001** MUST: Input parsing MUST invoke the parse method on defined schemas to enforce structural and constraint compliance at runtime boundaries.
+- **R-LM-001** MUST: Input parsing MUST invoke the parse method on defined schemas to enforce structural and constraint compliance at runtime boundaries.
 
 ### Verify
 
-```bash
-# Discover dependency manifest and lock file for schema validation library
-# Run the project automated test suite via repository script runner
-npm test
-
-# Run project static type checker and linter
-npm run lint
-npm run typecheck
-```
+- Discover the project dependency manifest and lock file to inspect the declared and resolved module entries for the schema validation library.
+- Execute the project automated test suite via the repository script runner to validate schema parsing assertions.
+- Run the project static type checker and linter to ensure all schema definitions adhere to functional entrypoint constraints.
 
 **Accept when:**
+
 - All schema validation invocations resolve through the modular functional entrypoint without importing monolithic packages.
 - Input parsing tests successfully verify structural and constraint assertions using schema parse methods.
 - Static analysis and type checking pass without errors across all modules declaring validation schemas.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated test suites asserting runtime schema validation and rejection behavior.
+- Verified by: Static analysis import rules verifying that schema imports use the functional entrypoint.
+- Verified by: Peer code review for new schema definitions and boundary validation logic.
+- Violation handling: Pull requests importing non-modular entrypoints are blocked by static analysis checks.
+- Violation handling: Unvalidated data inputs at system boundaries trigger test failures requiring schema enforcement.
+- Exception process: Exceptions require documented justification demonstrating why modular schema validation cannot satisfy runtime constraints, approved by architecture review.
 </enforcement>

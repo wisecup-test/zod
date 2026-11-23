@@ -23,25 +23,31 @@ metadata:
 
 Scope: applies to `packages/docs/app/blog/**`, `packages/docs/app/og.png/**`, `packages/docs/components/**`, `packages/docs/loaders/**`, `packages/docs/pages/api/**`.
 
-These rules are ALWAYS ACTIVE for all server routes, data loaders, and client UI components requiring runtime configuration or deployment metadata, and client-side components requiring external service integration keys.
+These rules are ALWAYS ACTIVE for:
+- All server routes, data loaders, and client UI components requiring runtime configuration or deployment metadata.
+- Client-side components requiring external service integration keys.
 
 ### Rules
 
-- **R-NEXT-001** MUST: Before utilizing framework configuration interfaces, the consumer MUST inspect the repository lock artifact to determine the authoritative resolved version of the runtime framework.
+- **R-CEM-001** MUST: Before utilizing framework configuration interfaces, the consumer MUST inspect the repository lock artifact to determine the authoritative resolved version of the runtime framework.
 
 ### Verify
 
-```bash
-# Discover and run the project's static analysis script to verify that no server-only environment variables are referenced within client component boundaries.
-# Discover and execute the type-checking script to confirm ambient typing and presence handling for all process.env references.
-# Discover and execute the automated test suite to ensure server routes and loaders handle absent environment variables gracefully.
-```
+- Discover and run the project's static analysis script to verify that no server-only environment variables are referenced within client component boundaries.
+- Discover and execute the type-checking script to confirm ambient typing and presence handling for all process.env references.
+- Discover and execute the automated test suite to ensure server routes and loaders handle absent environment variables gracefully.
 
 **Accept when:**
+
 - Static analysis passes with zero violations regarding client-side exposure of server environment variables.
 - Type checking completes without errors across all modules dereferencing process.env properties.
 - All route handlers and loaders execute successfully or handle omitted optional configuration gracefully.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated static analysis checks in the continuous integration pipeline.
+- Verified by: Peer code review for all pull requests modifying environment variable usage.
+- Violation handling: Continuous integration builds fail upon detection of server variables accessed within client components.
+- Violation handling: Code reviews reject pull requests that dereference unvalidated environment variables without appropriate fallbacks.
+- Exception process: Submit an architectural review request documenting why direct framework-level environment variable evaluation is insufficient for a given module.
 </enforcement>

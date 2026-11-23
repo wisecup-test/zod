@@ -17,7 +17,6 @@ metadata:
 
 # Method Interception Middleware for Compiled Execution in Core Schema Engine: Method Interception Wrappers Installed Via Compiled
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Accelerating schema parsing requires integrating compiled routines into existing
 
 ## Decision
 
-1. MUST: Method interception wrappers installed via compiled method installers MUST preserve the original function signature, parameter passing, and return value shapes of both safe parsing and throwing parsing operations.
+- **R-ISP-001** MUST: Method interception wrappers installed via compiled method installers MUST preserve the original function signature, parameter passing, and return value shapes of both safe parsing and throwing parsing operations.
 
 ## Policy Block
 
-- MUST Method interception wrappers installed via compiled method installers MUST preserve the original function signature, parameter passing, and return value shapes of both safe parsing and throwing parsing operations.
-
 In scope:
+
 - Core schema parsing compilation and method installation routines.
 - Internal structural tree traversal and dynamic property initialization utilities.
 
 Out of scope:
+
 - Consumer-facing custom transformation callbacks defined outside the core engine.
 - Static validation rules that do not participate in compilation pipelines.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Enables transparent ahead-of-time execution optimization without breaking the public contract of validation methods.
 - Preserves backward compatibility and robust error handling by falling back to base parsing logic when fast-path execution yields invalid signals.
 - Encapsulates execution interception within a dedicated middleware layer decoupled from schema definition logic.
 
 Negative:
+
 - Direct method patching on target objects creates mutable interception boundaries that complicate debugging of stack traces.
 - Maintaining dual execution paths between compiled fast paths and standard fallback routines increases testing surface area.
 - Safeguarding object prototype modifications requires defensive accessor guards across internal structuring helpers.
@@ -106,12 +107,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the project validation test suite to confirm parity between compiled fast paths and baseline parsing implementations.
 - Discover and execute the project static analysis and linting scripts to verify compliance with internal boundary interception conventions.
 
 Accept when:
+
 - All core parsing and schema validation tests execute and pass when compiled method middleware is engaged.
 - Fallback validation behavior executes identically to the uncompiled base implementation whenever the compiled parser returns an invalid sentinel.
 - Dynamic property assignments in tree-traversal helpers do not alter or pollute prototype structures.

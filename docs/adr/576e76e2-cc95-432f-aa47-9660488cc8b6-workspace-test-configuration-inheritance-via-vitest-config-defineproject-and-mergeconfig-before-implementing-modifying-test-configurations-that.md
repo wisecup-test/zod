@@ -15,7 +15,6 @@ metadata:
 
 # Workspace Test Configuration Inheritance via vitest/config defineProject and mergeConfig: Before Implementing Modifying Test Configurations That
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -38,17 +37,17 @@ Multi-package repositories risk configuration fragmentation and redundant mainte
 
 ## Decision
 
-1. MUST: Before implementing or modifying test configurations that depend on vitest/config, the consumer MUST inspect the repository lock artifact to determine the exact resolved version and verify API compatibility.
+- **R-TS-001** MUST: Before implementing or modifying test configurations that depend on vitest/config, the consumer MUST inspect the repository lock artifact to determine the exact resolved version and verify API compatibility.
 
 ## Policy Block
 
-- MUST Before implementing or modifying test configurations that depend on vitest/config, the consumer MUST inspect the repository lock artifact to determine the exact resolved version and verify API compatibility.
-
 In scope:
+
 - Unit test configuration files located within workspace packages.
 - Test suites requiring custom project-level overrides layered on top of shared base test settings.
 
 Out of scope:
+
 - Standalone external utility scripts that do not run within the workspace test harness.
 - Integration or end-to-end testing environments managed by separate test infrastructure.
 
@@ -61,11 +60,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Standardizes testing environment flags, plugins, and baseline rules across packages while permitting localized customization.
 - Eliminates boilerplate duplication across individual package test configurations within the repository.
 - Enables centralized test configuration updates that propagate consistently to all consuming packages.
 
 Negative:
+
 - Workspace packages become coupled to the structure and export format of the root test configuration artifact.
 - Debugging test execution issues requires tracing configuration resolution between project overrides and inherited base settings.
 
@@ -103,12 +104,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the project test runner script across all workspace packages to verify test configuration resolution.
 - Discover and run the project static analysis or linting command to ensure compliance with test configuration import standards.
 
 Accept when:
+
 - Workspace test configuration files successfully import defineProject and mergeConfig from vitest/config to extend the base configuration.
 - The repository verification suite executes all workspace unit tests without configuration resolution errors.
 

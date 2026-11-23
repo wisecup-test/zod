@@ -19,33 +19,33 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for all internal modules within the core library package responsible for schema definitions, validation checks, registry lookups, and schema transformations, as well as functions performing recursive schema graph analysis, serialization, or metadata aggregation.
+These rules are ALWAYS ACTIVE for:
+- All internal modules within the core library package responsible for schema definitions, validation checks, registry lookups, and schema transformations.
+- Functions performing recursive schema graph analysis, serialization, or metadata aggregation.
 
 ### Rules
 
-- **R-ZOD-001** MAY: Transformation processors MAY normalize default value definitions and serialization artifacts through structured deep cloning mechanisms when immutability guarantees are required.
-- **R-ZOD-002** MANDATORY: Discover and execute the repository test runner to validate recursive schema generation, registry lookups, and serialization behaviors.
-- **R-ZOD-003** MANDATORY: Discover and execute the repository module boundary and circular dependency verification scripts to ensure import isolation between core submodules.
-- **R-ZOD-004** MANDATORY: Discover and execute the repository static type checker to verify internal interface compatibility across all core module boundaries.
-- **R-ZOD-005** MANDATORY: Enforce unidirectional internal module import hierarchies and verify lack of circular references through automated linting and dependency tree analysis.
-- **R-ZOD-006** MANDATORY: Scope traversal caches strictly to the lifecycle of individual transformation requests to prevent memory leakage across concurrent or repeated operations.
-- **R-ZOD-007** MANDATORY: Maintain clear layering between schema definition primitives, validation checks, and serialization processors to prevent circular module dependencies.
-- **R-ZOD-008** MANDATORY: Ensure the contextual traversal cache is initialized at the root of every recursive traversal and forwarded across all child processing operations.
-- **R-ZOD-009** MANDATORY: Keep global registries focused on instance lookup and metadata resolution rather than transient execution state.
+- **R-LM-001** MAY: Transformation processors MAY normalize default value definitions and serialization artifacts through structured deep cloning mechanisms when immutability guarantees are required.
 
 ### Verify
 
-```bash
-# Discover and execute the repository test runner
-# Discover and execute the repository module boundary and circular dependency verification scripts
-# Discover and execute the repository static type checker
-```
+- Discover and execute the repository test runner to validate recursive schema generation, registry lookups, and serialization behaviors.
+- Discover and execute the repository module boundary and circular dependency verification scripts to ensure import isolation between core submodules.
+- Discover and execute the repository static type checker to verify internal interface compatibility across all core module boundaries.
 
 **Accept when:**
+
 - All core module interfaces and internal imports resolve through the defined module boundaries without circular module initialization errors.
 - Schema transformations and serializations correctly track cyclic structures using the contextual traversal cache without memory leaks.
 - Static type checking and automated regression suites pass completely across all core library components.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All pull requests containing direct circular module imports or bypassed registry context structures are blocked from merging.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated static analysis and module boundary linting executed during continuous integration.
+- Verified by: Mandatory peer code review by core library maintainers focusing on internal import hierarchies and context propagation.
+- Verified by: Comprehensive unit and integration test suites validating recursive schema transformation and cycle detection behavior.
+- Violation handling: Pull requests containing direct circular module imports or bypassed registry context structures are blocked from merging.
+- Violation handling: Code review rejections require refactoring non-compliant internal modules to align with designated module boundaries and context protocols.
+- Exception process: Submit an architectural exception request detailing the structural constraints that preclude using standard internal core modules or registry context traversal.
+- Exception process: Obtain formal approval from core library maintainers prior to merging any alternative state passing or module coupling pattern.
 </enforcement>

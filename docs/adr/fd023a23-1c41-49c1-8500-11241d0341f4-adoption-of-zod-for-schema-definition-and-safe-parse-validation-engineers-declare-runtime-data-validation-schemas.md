@@ -18,7 +18,6 @@ metadata:
 
 # Adoption of Zod for Schema Definition and Safe Parse Validation: Engineers Declare Runtime Data Validation Schemas
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -42,22 +41,25 @@ Modules and scripts handling dynamic inputs require reliable runtime validation 
 
 ## Decision
 
-1. MUST: Engineers MUST declare runtime data validation schemas using Zod structural primitives and validate input boundaries using safeParse instead of throwing validation methods.
+- **R-LM-001** MUST: Engineers MUST declare runtime data validation schemas using Zod structural primitives and validate input boundaries using safeParse instead of throwing validation methods.
 
 ## Policy Block
 
-- MUST Engineers MUST declare runtime data validation schemas using Zod structural primitives and validate input boundaries using safeParse instead of throwing validation methods.
-
 In scope:
+
 - Runtime data validation across scripts and operational entry points
 - Schema definition and input boundary verification for untrusted data payloads
 
 Out of scope:
+
 - Internal function calls where static compile-time type guarantees are fully preserved
 - Performance-critical inner loops where external schema validation overhead is demonstrably prohibitive
 
 Exceptions:
-- EXC-20-001: Low-level serialization routines require specialized binary decoders with pre-verified memory structures
+
+- **EXC-20-001** Low-level serialization routines require specialized binary decoders with pre-verified memory structures
+  Approval: Technical lead
+  Documentation: Document structural guarantees and boundary isolation in module documentation
 
 ## Rationale
 
@@ -68,11 +70,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Eliminates unhandled exceptions during data parsing by standardizing on safeParse result objects.
 - Enforces uniform runtime type narrowing and structural schema composition across components.
 - Provides structured validation failure diagnostics without interrupting process execution.
 
 Negative:
+
 - Incurs runtime overhead associated with schema parsing and validation result object allocations.
 - Requires calling code to inspect result discriminators before accessing validated properties.
 
@@ -110,12 +114,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository test runner from project configuration and execute the schema validation test suite.
 - Run the project static analysis and linting scripts to verify compliance with non-throwing validation patterns.
 
 Accept when:
+
 - All schema validation tests execute and pass with zero unhandled exceptions.
 - Input validation call sites use safeParse and handle validation failure cases explicitly.
 

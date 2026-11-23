@@ -1,10 +1,10 @@
 ---
 version: 2
-name: 08574c33-4cc0-4dc0-a9cd-1bb01863f83d-node-fs-module-adoption-standardizing-synchronous-file-system-access-in-repository-automation-scripts-repository-automation-code-generation-verification-scripts
-description: "node:fs Module Adoption: Standardizing Synchronous File System Access in Repository Automation Scripts: Repository Automation Code Generation Verification Scripts"
+name: c0732987-dab1-4589-ba17-2d85a2067e5c-node-fs-module-adoption-standardizing-synchronous-file-system-access-in-repository-automation-scripts-before-introducing-updating-any-5afbd845a84d7efe
+description: "node:fs Module Adoption: Standardizing Synchronous File System Access in Repository Automation Scripts: Before Introducing Updating Any External Dependency"
 metadata:
   actual:
-    adr_id: 08574c33-4cc0-4dc0-a9cd-1bb01863f83d
+    adr_id: c0732987-dab1-4589-ba17-2d85a2067e5c
     status: accepted
     candidate_group_id: f60af43a-94a4-4f74-b47b-742a1e4db0fd
     evidence:
@@ -16,9 +16,8 @@ metadata:
       - scripts/**
 ---
 
-# node:fs Module Adoption: Standardizing Synchronous File System Access in Repository Automation Scripts: Repository Automation Code Generation Verification Scripts
+# node:fs Module Adoption: Standardizing Synchronous File System Access in Repository Automation Scripts: Before Introducing Updating Any External Dependency
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -42,17 +41,17 @@ Repository verification, code generation, and triage scripts must read and write
 
 ## Decision
 
-1. MUST: Repository automation, code generation, and verification scripts MUST import file system capabilities exclusively from the core node:fs module using explicit protocol-qualified specifiers.
+- **R-LM-001** MUST: Before introducing or updating any external dependency associated with repository tooling, engineers MUST inspect the project dependency manifest and lock artifact to resolve the exact locked version.
 
 ## Policy Block
 
-- MUST Repository automation, code generation, and verification scripts MUST import file system capabilities exclusively from the core node:fs module using explicit protocol-qualified specifiers.
-
 In scope:
+
 - Standalone repository maintenance, triage, verification, and code generation scripts.
 - Local file system inspection and artifact writing workflows executed outside of published distribution packages.
 
 Out of scope:
+
 - Runtime library source modules destined for cross-platform distribution where runtime-specific core module namespaces are unavailable.
 - High-throughput asynchronous network server handlers requiring non-blocking streaming I/O.
 
@@ -65,11 +64,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Zero external dependencies are introduced for file system operations across maintenance and validation tooling.
 - Deterministic linear execution in verification scripts simplifies debugging and diagnostics upon failure.
 - Protocol-qualified module specifiers prevent accidental shadowing by identically named third-party packages.
 
 Negative:
+
 - Synchronous file operations block the execution thread, making them unsuitable for concurrent high-throughput workloads.
 - Direct reliance on runtime core modules restricts execution to environments that provide compatible core module namespaces.
 
@@ -107,12 +108,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project verification script defined in the repository configuration manifest and execute it to verify repository integrity.
 - Inspect script source files to confirm all file system imports utilize the protocol-prefixed core module namespace without third-party wrapper dependencies.
 
 Accept when:
+
 - All repository automation and verification scripts execute to completion without file system resolution errors.
 - Static module import analysis confirms file system access in script files is restricted to the protocol-qualified core module namespace.
 

@@ -21,23 +21,30 @@ metadata:
 
 Scope: applies to `packages/integration/fixtures/ai-sdk/**`, `packages/integration/fixtures/drizzle-zod/**`, `packages/integration/fixtures/internal-types/**`.
 
-These rules are ALWAYS ACTIVE for all incoming network payloads, database integration schemas, AI model structured inputs, and untrusted boundary boundaries.
+These rules are ALWAYS ACTIVE for:
+- All incoming network payloads, database integration schemas, AI model structured inputs, and untrusted boundary boundaries.
 
 ### Rules
 
-- **R-ZOD-001** MUST_NOT: Components MUST NOT bypass runtime schema validation by casting raw external input structures using unverified type assertions.
+- **R-SCP-001** MUST_NOT: Components MUST NOT bypass runtime schema validation by casting raw external input structures using unverified type assertions.
 
 ### Verify
 
-```bash
-# Discover the repository test runner from the project manifest and execute the schema validation test suite.
-# Locate the repository typecheck and linter configurations from the build manifest to verify schema declarations compile without errors.
-```
+- Discover the repository test runner from the project manifest and execute the schema validation test suite.
+- Locate the repository typecheck and linter configurations from the build manifest to verify schema declarations compile without errors.
 
 **Accept when:**
+
 - All boundary input validation tests pass against declared schemas without unhandled runtime exceptions.
 - Static type verification confirms that inferred output types align with declared schema definitions across integration boundaries.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All pull requests introducing unvalidated boundary inputs or unsanitized type casts are blocked.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated verification suites executing boundary validation test cases.
+- Verified by: Static analysis rules preventing unvalidated input ingestion at integration boundaries.
+- Verified by: Peer review verification during code integration.
+- Violation handling: Pull requests introducing unvalidated boundary inputs or unsanitized type casts are blocked.
+- Violation handling: Runtime validation failures at system boundaries are logged and rejected with structured validation errors.
+- Exception process: Submit an architectural exception request detailing why schema validation is infeasible at the given boundary.
+- Exception process: Require explicit approval from the application security and architecture review teams before bypassing boundary schema parsing.
 </enforcement>

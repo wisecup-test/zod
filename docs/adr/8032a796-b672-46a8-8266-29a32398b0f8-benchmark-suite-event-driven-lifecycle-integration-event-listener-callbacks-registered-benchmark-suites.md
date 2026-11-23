@@ -17,7 +17,6 @@ metadata:
 
 # Benchmark Suite Event-Driven Lifecycle Integration: Event Listener Callbacks Registered Benchmark Suites
 
-Status: proposed
 Date: 2025-02-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,16 +39,16 @@ Performance evaluation of schema parsing and data transformations requires high-
 
 ## Decision
 
-1. MUST: Event listener callbacks registered on benchmark suites MUST accept the benchmark event object and read execution targets directly from the event target property.
+- **R-IP-001** MUST: Event listener callbacks registered on benchmark suites MUST accept the benchmark event object and read execution targets directly from the event target property.
 
 ## Policy Block
 
-- MUST Event listener callbacks registered on benchmark suites MUST accept the benchmark event object and read execution targets directly from the event target property.
-
 In scope:
+
 - Benchmark test suites and performance measurement modules utilizing the benchmark library.
 
 Out of scope:
+
 - Standard unit, integration, and end-to-end test suites that do not utilize benchmark suite lifecycle events.
 
 ## Rationale
@@ -61,11 +60,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Measurement purity is maintained by excluding console and reporting input and output from timed execution cycles.
 - Uniform suite cycle reporting provides predictable metric output across diverse validation benchmarks.
 - Lifecycle event hooks provide clean interception points for cycle observation and suite termination signals.
 
 Negative:
+
 - Suite setup requires boilerplate event subscription configuration for every benchmark suite definition.
 - Event-driven reporting defers output generation until cycle completion, obscuring intermediate iteration failures if a suite halts prematurely.
 
@@ -103,12 +104,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository benchmark script defined in the dependency manifest and execute it to verify suite cycle output.
 - Inspect benchmark suite definitions to ensure test lambdas do not contain standard input and output or logging statements.
 
 Accept when:
+
 - Benchmark suites execute and emit cycle events reporting target completion without throwing unhandled exceptions.
 - All benchmark suites register cycle event listeners via the on method and exclude logging logic from add test lambdas.
 

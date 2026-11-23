@@ -18,7 +18,6 @@ metadata:
 
 # Execa Subprocess Execution with SIGINT Interruption Lifecycle Cleanup: Modules Orchestrating External Subprocess Execution Use
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -42,17 +41,17 @@ External process execution in long-running orchestration workflows risks creatin
 
 ## Decision
 
-1. MUST: Modules orchestrating external subprocess execution MUST use execa for process invocation and MUST register a process.on signal handler for SIGINT events to manage child process lifecycles.
+- **R-IP-001** MUST: Modules orchestrating external subprocess execution MUST use execa for process invocation and MUST register a process.on signal handler for SIGINT events to manage child process lifecycles.
 
 ## Policy Block
 
-- MUST Modules orchestrating external subprocess execution MUST use execa for process invocation and MUST register a process.on signal handler for SIGINT events to manage child process lifecycles.
-
 In scope:
+
 - Modules and scripts that orchestrate asynchronous external subprocess executions
 - CLI task runners and benchmarking harnesses managing long-running child processes
 
 Out of scope:
+
 - In-memory synchronous operations that do not spawn external system processes
 - Short-lived purely internal utility functions with no subprocess boundaries
 
@@ -65,11 +64,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Deterministic termination of child processes upon interruption prevents orphaned system processes and resource leaks.
 - Unified subprocess execution interface provided by execa simplifies child process invocation and error handling.
 - Explicit SIGINT interception ensures clean exit semantics across interactive and automated execution contexts.
 
 Negative:
+
 - Requires explicit tracking and state inspection of active child process handles within execution modules.
 - Custom signal handling increases boilerplate in scripts that manage multiple concurrent processes.
 
@@ -107,12 +108,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project static analysis and linting scripts to verify compliance with process execution and signal handler conventions.
 - Discover and execute the project test runner against subprocess orchestration and signal handling test suites to confirm graceful termination.
 
 Accept when:
+
 - Subprocess executions use execa and register SIGINT signal listeners that terminate active child process handles.
 - Interruption during execution results in all child processes being terminated without orphaned background tasks.
 

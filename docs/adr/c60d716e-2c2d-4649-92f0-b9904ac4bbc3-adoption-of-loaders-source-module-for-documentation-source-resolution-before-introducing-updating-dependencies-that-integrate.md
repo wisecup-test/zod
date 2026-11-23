@@ -18,7 +18,6 @@ metadata:
 
 # Adoption of @/loaders/source Module for Documentation Source Resolution: Before Introducing Updating Dependencies That Integrate
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -43,17 +42,17 @@ Without a unified content resolution mechanism, disparate documentation routes a
 
 ## Decision
 
-1. MUST: Before introducing or updating dependencies that integrate with the documentation source loader, the engineering team MUST inspect the repository lock artifact to determine and verify the exact resolved version.
+- **R-LM-001** MUST: Before introducing or updating dependencies that integrate with the documentation source loader, the engineering team MUST inspect the repository lock artifact to determine and verify the exact resolved version.
 
 ## Policy Block
 
-- MUST Before introducing or updating dependencies that integrate with the documentation source loader, the engineering team MUST inspect the repository lock artifact to determine and verify the exact resolved version.
-
 In scope:
+
 - Documentation route handlers that expose structured or aggregated documentation content.
 - Documentation loader utilities and transformation pipelines that query or compile documentation pages.
 
 Out of scope:
+
 - Static assets and media files stored outside the documentation page collection.
 - Application components that do not interface with documentation source pages or frontmatter.
 
@@ -66,11 +65,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Enforces a single source of truth for documentation page structures and metadata extraction across endpoints.
 - Simplifies endpoint logic by providing pre-structured page collections and ordering accessors.
 - Shields application routes from direct dependencies on underlying content resolution libraries.
 
 Negative:
+
 - Couples content consumers to the specific data schema and interface exposed by the source loader module.
 - Introduces memory overhead when maintaining page collections and order indices in runtime memory.
 
@@ -108,12 +109,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Inspect the workspace configuration to discover the project verification script, then run the test suite to validate documentation loader resolution.
 - Discover and run the project typecheck and linting commands from the package manifest to verify import boundary compliance across documentation endpoints.
 
 Accept when:
+
 - Documentation route handlers and text extraction loaders resolve page sources through @/loaders/source without import boundary errors.
 - Automated verification suites confirm consistent page order indexing and successful content extraction across all endpoints.
 

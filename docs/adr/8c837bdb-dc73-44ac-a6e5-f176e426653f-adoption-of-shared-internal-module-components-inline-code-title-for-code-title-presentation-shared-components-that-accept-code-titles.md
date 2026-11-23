@@ -18,7 +18,6 @@ metadata:
 
 # Adoption of Shared Internal Module `@/components/inline-code-title` for Code Title Presentation: Shared Components That Accept Code Titles
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -42,17 +41,17 @@ Rendering code titles and inline code headers using disparate, locally defined m
 
 ## Decision
 
-1. SHOULD: Shared UI components that accept code titles SHOULD accept standard title property types defined by `@/components/inline-code-title` to preserve semantic markup.
+- **R-LM-001** SHOULD: Shared UI components that accept code titles SHOULD accept standard title property types defined by `@/components/inline-code-title` to preserve semantic markup.
 
 ## Policy Block
 
-- SHOULD Shared UI components that accept code titles SHOULD accept standard title property types defined by `@/components/inline-code-title` to preserve semantic markup.
-
 In scope:
+
 - Documentation content pages, blog rendering views, navigation sidebars, and syndicated feed endpoints that display code titles.
 - UI components within the documentation workspace requiring standardized code title labels.
 
 Out of scope:
+
 - Plain code blocks that do not display title headers or filenames.
 - External third-party widgets operating outside the shared documentation module boundary.
 
@@ -65,11 +64,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Enforces consistent design system aesthetics and semantic structure for code titles across all documentation surfaces.
 - Eliminates duplicate presentation markup across blog views, documentation sidebars, and syndication route handlers.
 - Centralizes styling and accessibility maintenance for code titles within a single authoritative module.
 
 Negative:
+
 - Couples content rendering routes and navigation components to a shared internal component dependency.
 - Requires syndicated feed generators to adapt or serialize component outputs for non-HTML or XML payloads.
 
@@ -107,12 +108,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the repository static analysis script to verify all code title imports resolve to the shared internal component.
 - Discover and run the project type checking and test suites to verify interface compatibility across documentation routes and components.
 
 Accept when:
+
 - All documentation pages, blog views, navigation components, and syndication endpoints import code title rendering from the centralized internal module without unresolved path errors.
 - Project static analysis, type verification, and test suites pass without violations regarding unshared inline code title implementations.
 

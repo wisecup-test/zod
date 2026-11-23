@@ -17,7 +17,6 @@ metadata:
 
 # React Client Component Interaction Architecture: Interactive Callback Handlers Passed Props Referenced
 
-Status: proposed
 Date: 2025-02-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,16 +39,16 @@ UI components in the documentation layer need to execute browser-specific logic 
 
 ## Decision
 
-1. SHOULD: Interactive callback handlers passed as props or referenced within effect dependency arrays SHOULD be memoized with the useCallback hook.
+- **R-IP-001** SHOULD: Interactive callback handlers passed as props or referenced within effect dependency arrays SHOULD be memoized with the useCallback hook.
 
 ## Policy Block
 
-- SHOULD Interactive callback handlers passed as props or referenced within effect dependency arrays SHOULD be memoized with the useCallback hook.
-
 In scope:
+
 - All interactive UI components authoring client-side state, DOM manipulation, or third-party client integrations in frontend documentation packages.
 
 Out of scope:
+
 - Static server-rendered content components, pure layout shells without state, and headless utility modules.
 
 ## Rationale
@@ -61,11 +60,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Predictable lifecycle management and clear separation between server-rendered layouts and interactive client controls.
 - Consistent handling of browser APIs, clipboard integrations, and third-party UI integrations across the documentation site.
 - Prevention of memory leaks through structured effect cleanup patterns.
 
 Negative:
+
 - Increased client bundle payload for components marked with the client directive.
 - Hydration overhead for components requiring client-side mounting and DOM reconciliation.
 - Inability to directly leverage server-only capabilities within components marked as client boundaries.
@@ -104,13 +105,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the workspace static analysis script from the project manifest and run it to verify compliance with hook usage and client directive requirements.
 - Discover the project automated test script from the project manifest and execute it to validate interactive component behavior and state transitions.
 - Discover the project type checking script from the project manifest and run it to verify type safety across component props and hook dependencies.
 
 Accept when:
+
 - All interactive UI components declare the client directive at the module root and pass static analysis without lint violations.
 - All component interaction tests execute successfully with zero unhandled exceptions or effect lifecycle warnings.
 - Static type checking completes with zero diagnostic errors across all client component files.

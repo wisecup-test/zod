@@ -17,7 +17,6 @@ metadata:
 
 # drizzle-orm/pg-core Table Schema Modeling: Relational Database Table Definitions Declared Pgtable
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,16 +39,16 @@ Database schema definitions in TypeScript projects often suffer from drift betwe
 
 ## Decision
 
-1. MUST: Relational database table definitions MUST be declared using pgTable definitions from drizzle-orm/pg-core with typed column primitives and explicit primary key constraints.
+- **R-DM-001** MUST: Relational database table definitions MUST be declared using pgTable definitions from drizzle-orm/pg-core with typed column primitives and explicit primary key constraints.
 
 ## Policy Block
 
-- MUST Relational database table definitions MUST be declared using pgTable definitions from drizzle-orm/pg-core with typed column primitives and explicit primary key constraints.
-
 In scope:
+
 - Relational database schema modeling and table definitions across data access modules.
 
 Out of scope:
+
 - Transient in-memory structures and third-party data serialization schemas.
 
 ## Rationale
@@ -61,11 +60,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Relational database tables gain end-to-end static type safety derived directly from schema declarations.
 - Database column constraints such as serial primary keys and enum arrays are validated at compile time.
 - Eliminates out-of-band schema mapping synchronization layers between application code and database persistence.
 
 Negative:
+
 - Persistence data modeling is tightly coupled to the column helper APIs of the adopted library dialect.
 - Complex database migrations and custom dialect capabilities require adherence to library-specific abstraction primitives.
 
@@ -103,12 +104,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - command -v discover_build_tool >/dev/null 2>&1 && discover_and_run_schema_typecheck || echo 'Run project typecheck command'
 - command -v discover_test_runner >/dev/null 2>&1 && discover_and_run_schema_unit_tests || echo 'Run project test suite'
 
 Accept when:
+
 - All database table schema declarations pass static type verification without unresolved column constraints or type errors.
 - Relational models correctly instantiate serial primary keys and typed enum array column structures.
 

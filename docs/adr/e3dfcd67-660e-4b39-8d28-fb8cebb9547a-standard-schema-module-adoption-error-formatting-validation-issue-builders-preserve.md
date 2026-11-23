@@ -17,7 +17,6 @@ metadata:
 
 # standard-schema Module Adoption: Error Formatting Validation Issue Builders Preserve
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Schema processing cores often suffer from tight coupling between internal error 
 
 ## Decision
 
-1. SHOULD: Error formatting and validation issue builders SHOULD preserve standard-schema issue structures across serialization boundaries.
+- **R-LM-001** SHOULD: Error formatting and validation issue builders SHOULD preserve standard-schema issue structures across serialization boundaries.
 
 ## Policy Block
 
-- SHOULD Error formatting and validation issue builders SHOULD preserve standard-schema issue structures across serialization boundaries.
-
 In scope:
+
 - All core schema transformation modules compiling or translating schemas across representation formats.
 - All core error formatting and validation dispatch utilities requiring standardized schema contracts.
 
 Out of scope:
+
 - Platform-agnostic primitive helper functions that operate independently of schema contracts.
 - User-facing convenience wrappers that consume already resolved schema instances.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Decouples core error reporting and schema serialization from proprietary internal AST formats.
 - Ensures schema transformation mechanisms adhere to consistent standard schema protocols.
 - Facilitates centralized caching and metadata lookup integration across modular transformations.
 
 Negative:
+
 - Requires consistent maintenance of standard-schema adapter boundaries alongside internal engine representations.
 - Introduces an indirection layer that must be reconciled during performance-critical schema traversals.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository build and test script in the project manifest and execute the core test suite to verify contract compliance.
 - Discover the repository linter and type-checker commands from project configuration and verify zero contract violations across core modules.
 
 Accept when:
+
 - All core schema transformations and error definitions pass automated type-checking and unit test suites verifying conformity to the standard-schema module contracts.
 - Dependency analysis confirms no cyclic dependencies or direct bypasses of the standard-schema module in core schema transformation modules.
 

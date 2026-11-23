@@ -18,7 +18,6 @@ metadata:
 
 # Zod Library External Module Interface Boundary: Library Module Variants Sharing Common External
 
-Status: proposed
 Date: 2025-05-15
 Deciders: Detection Pipeline (automated)
 
@@ -42,17 +41,17 @@ Exposing internal library implementation details directly across diverse distrib
 
 ## Decision
 
-1. SHOULD: Library module variants sharing common external public contracts SHOULD reuse the unified external boundary module to maintain consistent public API surface contracts across distributions.
+- **R-LM-001** SHOULD: Library module variants sharing common external public contracts SHOULD reuse the unified external boundary module to maintain consistent public API surface contracts across distributions.
 
 ## Policy Block
 
-- SHOULD Library module variants sharing common external public contracts SHOULD reuse the unified external boundary module to maintain consistent public API surface contracts across distributions.
-
 In scope:
+
 - Applies to all public distribution entrypoints and package export targets for the Zod library.
 - Applies when defining or refactoring public module interface boundaries across library variants.
 
 Out of scope:
+
 - Does not apply to internal test suites, benchmarking modules, or private build helper scripts.
 - Does not apply to isolated internal core submodules that do not expose public contracts.
 
@@ -65,11 +64,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Provides clean architectural separation between internal core engine logic and consumer-facing library exports.
 - Enables independent evolution of internal schema representations without mutating public consumer interfaces.
 - Ensures consistency across parallel distribution targets by channeling external contracts through an authoritative boundary.
 
 Negative:
+
 - Introduces an intermediate indirection layer that requires maintainers to update export bindings when expanding the public interface.
 - Requires strict review discipline to ensure internal submodules are not inadvertently imported directly by consumers.
 
@@ -107,12 +108,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the repository interface validation and type check scripts to verify module boundary conformance.
 - Discover and run the project test suite to verify that all distribution entrypoint exports satisfy expected public contract behaviors.
 
 Accept when:
+
 - All distribution entrypoint exports pass repository interface and type validation checks without boundary violations.
 - All public interface contract test suites pass successfully across all distribution variants.
 

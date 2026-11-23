@@ -19,30 +19,33 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for internal core library modules responsible for schema definition, compilation routines, and validation checks.
+These rules are ALWAYS ACTIVE for:
+- Internal core library modules responsible for schema definition, compilation routines, and validation checks.
+- Runtime compilation and method installation mechanisms wrapping parser functions.
 
 ### Rules
 
-- **R-COR-001** SHOULD: Intermediate compiler representations and schema transformations SHOULD be coordinated through contextual cache lookups and dedicated registries rather than redundant re-computation.
-- **R-COR-002** MANDATORY: When installing compiled methods via installCompiledUserMethods, wrap target parse and safeParse functions with fallback delegation to original source implementations.
-- **R-COR-003** MANDATORY: Scope contextual compiler caches and state mappings to active evaluation cycles to prevent unbounded memory growth.
-- **R-COR-004** MANDATORY: Enforce strict module hierarchy rules and automated linting to prevent cyclic cross-module imports.
-- **R-COR-005** MANDATORY: Explicitly clear contextual constants and registries upon completion of schema processing runs.
-- **R-COR-006** MANDATORY: Consumer MUST discover build tools, dependencies, and exact versions from the repository manifest, lockfile, and official documentation (Lock-Version Grounding).
+- **R-LM-001** SHOULD: Intermediate compiler representations and schema transformations SHOULD be coordinated through contextual cache lookups and dedicated registries rather than redundant re-computation.
 
 ### Verify
 
-```bash
-# Discover and execute the repository build verification script to validate module resolution across all core library boundaries.
-# Discover and run the project test suite targeting core schema compilation, parsing, and validation check routines.
-# Discover and run the repository static type checker and module linting tools to confirm interface compliance and absence of circular references.
-```
+- Discover and execute the repository build verification script to validate module resolution across all core library boundaries.
+- Discover and run the project test suite targeting core schema compilation, parsing, and validation check routines.
+- Discover and run the repository static type checker and module linting tools to confirm interface compliance and absence of circular references.
 
 **Accept when:**
+
 - All unit tests covering core schema compilation, parsing, and check validations pass cleanly.
 - Static type analysis confirms that function signatures and compiled method wrappers adhere to declared interfaces with zero type errors.
 - Module boundary analysis verifies no undeclared cyclic references exist between core library modules.
 
 <enforcement>
-Verification is mandatory. Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Continuous integration suites verifying module boundaries and running core unit tests.
+- Verified by: Static type checking ensuring structural compliance with compiled function and schema interfaces.
+- Verified by: Code reviews by core library maintainers for any changes to internal module structure.
+- Violation handling: Automated build failures on circular dependencies or unauthorized module boundary violations.
+- Violation handling: Rejection of pull requests that mutate public parser contracts without using approved installation wrappers.
+- Exception process: Engineers must submit an architectural exception request detailing technical blockers to core module decoupling.
+- Exception process: Exceptions require unanimous approval from core library maintainers and must include an issue tracker reference for future remediation.
 </enforcement>

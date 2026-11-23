@@ -19,23 +19,28 @@ metadata:
 
 Scope: applies to `packages/docs/loaders/**`.
 
-These rules are ALWAYS ACTIVE for documentation loader modules transforming Markdown and MDX content, and text extraction pipelines preparing documentation content for downstream ingestion.
+These rules are ALWAYS ACTIVE for:
+- Documentation loader modules transforming Markdown and MDX content
+- Text extraction pipelines preparing documentation content for downstream ingestion
 
 ### Rules
 
-- **R-TRANS-001** MAY: Custom transformations MAY register additional syntax plugins after remarkGfm provided they preserve compatibility with remarkStringify.
+- **R-ISP-001** MAY: Custom transformations MAY register additional syntax plugins after remarkGfm provided they preserve compatibility with remarkStringify.
 
 ### Verify
 
-```bash
-# Discover and execute the project test runner covering documentation loaders
-# Discover and execute the static analysis command from root project configuration
-```
+- Discover the project test runner invocation from the dependency manifest and execute the test suite covering documentation loaders.
+- Discover the static analysis command from the root project configuration and verify all loader pipeline definitions satisfy type and lint rules.
 
 **Accept when:**
+
 - The documentation loader pipeline successfully parses MDX sources and produces valid string representations.
 - All automated test suites and static analysis checks covering document extraction execute without failure.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated continuous integration checks, peer code review, and static analysis verification are mandatory.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration checks executing loader test suites and static analysis.
+- Verified by: Peer code review on all pull requests modifying documentation parsing or loader pipelines.
+- Violation handling: Pull requests attempting manual string manipulation or unverified middleware pipeline configurations will be rejected during review.
+- Exception process: Submit an architectural review request outlining why a specific document transform cannot be accommodated within the remark unified pipeline.
 </enforcement>

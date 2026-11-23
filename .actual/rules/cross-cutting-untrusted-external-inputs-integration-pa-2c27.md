@@ -23,25 +23,30 @@ metadata:
 
 Scope: applies to `packages/bench/**`, `packages/integration/fixtures/**`, `packages/resolution/src/**`, `packages/treeshake/**`, `play.ts`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- External data ingestion points, API integration payloads, and boundary contracts across application modules.
+- Data model validation logic requiring synchronization between runtime assertions and static typing.
 
 ### Rules
 
-- **R-ZOD-001** SHOULD: Untrusted external inputs and integration payloads SHOULD be evaluated using safeParse rather than throwing parse operations to ensure defensive error handling.
-- **R-ZOD-002** MANDATORY: The consumer MUST discover tool names, file names, commands, package managers, and version numbers from the project repository.
-- **R-ZOD-003** MANDATORY: Before writing code that uses a versioned library, execute the lock-version grounding steps in order: find the manifest, identify the build tool, inspect the lock or resolution artifact for exact resolved version, look up official documentation for that exact version, confirm every API exists in that exact version, and re-run steps per dependency at point of use for version-sensitive behavior.
+- **R-LM-001** SHOULD: Untrusted external inputs and integration payloads SHOULD be evaluated using safeParse rather than throwing parse operations to ensure defensive error handling.
 
 ### Verify
 
-```bash
-git grep -E "(safeParse|parse)\(" -- "*.ts" "*.mts" "*.cts"
-find . -name "*test*" -not -path "*/node_modules/*"
-```
+- git grep -E "(safeParse|parse)\(" -- "*.ts" "*.mts" "*.cts"
+- find . -name "*test*" -not -path "*/node_modules/*"
 
 **Accept when:**
+
 - All schema-governed boundary inputs parse incoming payloads using Zod schemas before application processing.
 - Verification test suites and type-checking scripts pass without unhandled validation errors or structural drift.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All schema parsing logic and boundary validation must pass successfully.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated test suites exercising schema parsing logic and boundary validation.
+- Verified by: Static analysis and architectural review of data entry points and external integration layers.
+- Violation handling: Pull requests introducing raw unvalidated data casts at external boundaries are blocked during review.
+- Violation handling: Failing validation test suites block integration pipelines until schemas or payloads are corrected.
+- Exception process: Submit an architecture exception request detailing why runtime schema validation cannot be applied on the targeted boundary.
+- Exception process: Obtain sign-off from designated engineering reviewers and document alternative defensive boundary controls.
 </enforcement>

@@ -17,7 +17,6 @@ metadata:
 
 # In-Memory Schema Registry and Reference Cache via Registries Module: When Registering Unregistering Schema Metadata Registry
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -41,18 +40,18 @@ Unmanaged or linear schema lookups during parsing, transformation, and validatio
 
 ## Decision
 
-1. MUST: When registering or unregistering schema metadata in the registry, components MUST synchronize mutations across both the schema object map and identifier map using corresponding set and delete operations to prevent orphan entries.
+- **R-DAP-001** MUST: When registering or unregistering schema metadata in the registry, components MUST synchronize mutations across both the schema object map and identifier map using corresponding set and delete operations to prevent orphan entries.
 
 ## Policy Block
 
-- MUST When registering or unregistering schema metadata in the registry, components MUST synchronize mutations across both the schema object map and identifier map using corresponding set and delete operations to prevent orphan entries.
-
 In scope:
+
 - Internal schema registry modules and metadata storage components
 - Schema transformation and JSON schema translation pipelines
 - Discriminated union type dispatch and cached lookup mechanisms
 
 Out of scope:
+
 - Stateless primitive validation operations that do not require external references or metadata persistence
 - External database and persistent storage access layers outside in-memory schema operations
 
@@ -65,11 +64,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Provides deterministic constant-time retrieval of schema definitions and metadata by object identity or identifier
 - Prevents infinite loops and stack overflow errors during recursive schema expansion through active path tracking
 - Guarantees state synchronization between identity-based and identifier-based registries through coupled mutation primitives
 
 Negative:
+
 - Increases in-memory footprint due to duplicate references held within paired map structures
 - Requires diligent cleanup and explicit deletion calls during traversal unwinding to avoid memory retention
 
@@ -107,12 +108,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - # Discover and run the repository test command covering registry and reference caching modules
 - # Discover and execute workspace type checking and linting scripts to verify data access boundaries
 
 Accept when:
+
 - All unit and integration test suites validating schema registry lookups, dual-map mutations, and reference cache resolution pass with zero errors
 - Static type analysis confirms correct parameter and return types for all map access, mutation, and deletion calls without type coercion warnings
 

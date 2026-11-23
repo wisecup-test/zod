@@ -17,7 +17,6 @@ metadata:
 
 # drizzle-orm/pg-core Relational Schema Definition: Custom Enumerations Structured Array Columns Declared
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,16 +39,16 @@ The codebase requires a standardized approach to defining relational database ta
 
 ## Decision
 
-1. SHOULD: Custom enumerations and structured array columns SHOULD be declared using pg-core enum and array builder functions.
+- **R-DM-001** SHOULD: Custom enumerations and structured array columns SHOULD be declared using pg-core enum and array builder functions.
 
 ## Policy Block
 
-- SHOULD Custom enumerations and structured array columns SHOULD be declared using pg-core enum and array builder functions.
-
 In scope:
+
 - Relational database schema definitions and data model declarations.
 
 Out of scope:
+
 - Non-relational data persistence, transient memory stores, and third-party external service payload definitions.
 
 ## Rationale
@@ -61,10 +60,12 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Provides type-safe schema definitions directly in application code.
 - Ensures consistency across relational table declarations and column constraints.
 
 Negative:
+
 - Couples data access definitions to dialect-specific schema builders.
 - Requires strict synchronization between database migrations and application schema declarations.
 
@@ -102,12 +103,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the repository type-checking script to ensure schema definitions satisfy compile-time constraints.
 - Discover and run the project test suite to verify schema instantiation and data model operations.
 
 Accept when:
+
 - The project type-checking script passes with zero diagnostic errors across schema definitions.
 - All database model verification suites execute successfully.
 

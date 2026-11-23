@@ -17,7 +17,6 @@ metadata:
 
 # React Mutable Ref Map Pattern for DOM Node Caching: Components Not Store Mutable Dom Element
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -41,17 +40,17 @@ Client-rendered navigation components that dynamically position active indicator
 
 ## Decision
 
-1. MUST_NOT: Components MUST_NOT store mutable DOM element references in reactive component state when the updates do not alter the rendered markup hierarchy.
+- **R-DAP-001** MUST_NOT: Components MUST_NOT store mutable DOM element references in reactive component state when the updates do not alter the rendered markup hierarchy.
 
 ## Policy Block
 
-- MUST_NOT Components MUST_NOT store mutable DOM element references in reactive component state when the updates do not alter the rendered markup hierarchy.
-
 In scope:
+
 - Client-rendered navigation components that measure and track DOM element positions dynamically.
 - Components maintaining active indicators synchronized with scroll or focus events.
 
 Out of scope:
+
 - Server-rendered components that do not execute in client browser environments.
 - Components where element collections are static and do not require runtime coordinate calculations.
 
@@ -64,11 +63,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Decouples layout tracking from reactive state, eliminating unnecessary component re-renders during high-frequency scroll events.
 - Provides constant-time lookup for target DOM nodes during indicator position calculations.
 - Isolates DOM reference mutations within the component lifecycle boundary.
 
 Negative:
+
 - Requires explicit manual lifecycle management to add and delete elements, increasing the risk of memory leaks if cleanup is omitted.
 - Circumvents standard reactive data flow by storing mutable instance references outside component state.
 - Limits pattern utility to client-rendered environments where the document object model is accessible.
@@ -107,13 +108,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the project test runner to validate component rendering and active element indicator calculations.
 - Discover and execute the static type checker to ensure proper typing of ref collections and element map accessors.
 - Discover and execute the project linter to enforce hook dependency rules and prevent improper ref modifications during render.
 
 Accept when:
+
 - Component tests pass with all target DOM nodes correctly registered, accessed, and cleaned up upon unmount.
 - Type checking completes with zero errors across mutable ref definitions and Map operations.
 - Lint analysis reports no violations for hook dependency arrays or mutable ref assignments during render.

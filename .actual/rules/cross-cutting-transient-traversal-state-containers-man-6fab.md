@@ -20,24 +20,33 @@ metadata:
 
 Scope: applies to `packages/zod/src/v3/**`, `packages/zod/src/v4/**`.
 
-These rules are ALWAYS ACTIVE for all schema processing, compilation, serialization, and traversal code interacting with schema metadata registries.
+These rules are ALWAYS ACTIVE for:
+- Schema metadata association and external identifier resolution.
+- Recursive schema serialization and deserialization involving circular reference tracking.
+- Compiler constant registration and variable scope isolation during schema code generation.
 
 ### Rules
 
-- **R-SCH-001** MUST: Transient traversal state containers managing cyclic reference resolution and recursion tracking MUST invoke explicit deletion operations upon exiting recursion scopes to prevent reference retention.
+- **R-DAP-001** MUST: Transient traversal state containers managing cyclic reference resolution and recursion tracking MUST invoke explicit deletion operations upon exiting recursion scopes to prevent reference retention.
 
 ### Verify
 
-```bash
-# Discover the workspace test execution script in the project manifest and run the suite covering schema registries and compiler traversal.
-# Discover the repository static analysis script and verify zero direct property mutations on schema instances across data access modules.
-```
+- Discover the workspace test execution script in the project manifest and run the suite covering schema registries and compiler traversal.
+- Discover the repository static analysis script and verify zero direct property mutations on schema instances across data access modules.
 
 **Accept when:**
+
 - All registry unit and integration test suites pass with complete assertion coverage on bidirectional lookup, registration, and deletion.
 - Memory profiling tests confirm traversal context maps release all tracking references upon traversal completion without leakage.
 - Static type checks verify that schema definitions remain read-only and all external metadata access occurs through registry abstractions.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated unit and integration test runs executed during continuous integration workflows.
+- Verified by: Peer code reviews auditing registry data access patterns and recursion cleanup logic.
+- Verified by: Static analysis checks detecting unauthorized property assignments to schema definition objects.
+- Violation handling: Code review rejection for pull requests that mutate schema instances directly to store state.
+- Violation handling: Automated continuous integration failures when bidirectional registry indices fail synchronization invariants.
+- Exception process: Submit an architectural review request detailing why registry-based access is impractical for the specific isolated evaluation path.
+- Exception process: Obtain explicit sign-off from the technical lead with documented memory profiling and immutability impact assessments.
 </enforcement>

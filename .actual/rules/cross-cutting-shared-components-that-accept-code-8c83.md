@@ -20,23 +20,28 @@ metadata:
 
 Scope: applies to `packages/docs/app/blog/**`, `packages/docs/components/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- Documentation content pages, blog rendering views, navigation sidebars, and syndicated feed endpoints that display code titles.
+- UI components within the documentation workspace requiring standardized code title labels.
 
 ### Rules
 
-- **R-CODE-TITLE-001** SHOULD: Shared UI components that accept code titles SHOULD accept standard title property types defined by `@/components/inline-code-title` to preserve semantic markup.
+- **R-LM-001** SHOULD: Shared UI components that accept code titles SHOULD accept standard title property types defined by `@/components/inline-code-title` to preserve semantic markup.
 
 ### Verify
 
-```bash
-# Discover and execute repository static analysis / linting to check import statements
-# Discover and run project type checking and test suites
-```
+- Discover and execute the repository static analysis script to verify all code title imports resolve to the shared internal component.
+- Discover and run the project type checking and test suites to verify interface compatibility across documentation routes and components.
 
 **Accept when:**
+
 - All documentation pages, blog views, navigation components, and syndication endpoints import code title rendering from the centralized internal module without unresolved path errors.
 - Project static analysis, type verification, and test suites pass without violations regarding unshared inline code title implementations.
 
 <enforcement>
-Verification is mandatory. Claude Code MUST NOT skip or defer verification.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated static analysis and linter rules checking import statements during continuous integration.
+- Verified by: Peer code review for all new documentation components, blog templates, and feed generation routes.
+- Violation handling: Pull requests containing ad-hoc code title implementations or unapproved styling wrappers are blocked until updated to import the shared module.
+- Exception process: Exceptions must be submitted via an architecture review request detailing why the centralized module cannot accommodate the specific presentation or serialization constraint.
 </enforcement>

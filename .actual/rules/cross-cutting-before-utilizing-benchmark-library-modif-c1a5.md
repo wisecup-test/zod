@@ -19,26 +19,27 @@ metadata:
 
 Scope: applies to `packages/zod/src/v3/benchmarks/**`.
 
-These rules are ALWAYS ACTIVE for all benchmark test suites and performance measurement modules utilizing the benchmark library.
+These rules are ALWAYS ACTIVE for:
+- Benchmark test suites and performance measurement modules utilizing the benchmark library.
 
 ### Rules
 
-- **R-BMK-001** MUST: Before utilizing the benchmark library or modifying suite execution logic, engineers MUST inspect the repository dependency manifest and lock artifact to resolve the exact locked version of the benchmark library.
-- **R-BMK-002** MUST: Register cycle event listeners immediately after suite instantiation and prior to invoking suite execution routines.
-- **R-BMK-003** MUST: Extract cycle target metrics through the event target property on the event object to maintain decoupled telemetry reporting.
-- **R-BMK-004** MUST: Enforce defensive programming inside cycle event callbacks to prevent unhandled runtime errors during reporting.
+- **R-IP-001** MUST: Before utilizing the benchmark library or modifying suite execution logic, engineers MUST inspect the repository dependency manifest and lock artifact to resolve the exact locked version of the benchmark library.
 
 ### Verify
 
-```bash
-# Discover the repository benchmark script defined in the dependency manifest and execute it to verify suite cycle output.
-# Inspect benchmark suite definitions to ensure test lambdas do not contain standard input and output or logging statements.
-```
+- Discover the repository benchmark script defined in the dependency manifest and execute it to verify suite cycle output.
+- Inspect benchmark suite definitions to ensure test lambdas do not contain standard input and output or logging statements.
 
 **Accept when:**
+
 - Benchmark suites execute and emit cycle events reporting target completion without throwing unhandled exceptions.
 - All benchmark suites register cycle event listeners via the on method and exclude logging logic from add test lambdas.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated static analysis and code review checks verifying that benchmark suites use suite cycle event listeners.
+- Verified by: Continuous integration test runs ensuring all benchmark suites run to completion without unhandled callback errors.
+- Violation handling: Pull requests containing inline logging inside benchmark case definitions or missing cycle event listeners must be revised before merge.
+- Exception process: Exceptions require documented architectural justification and sign-off from the performance engineering team.
 </enforcement>

@@ -19,27 +19,29 @@ metadata:
 
 Scope: applies to `packages/integration/fixtures/internal-types/**`.
 
-These rules are ALWAYS ACTIVE for modules defining runtime schema validation contracts, data transfer object validation, or type integrity boundaries, and internal types and integration testing fixtures verifying dual module runtime compatibility.
+These rules are ALWAYS ACTIVE for:
+- Modules defining runtime schema validation contracts, data transfer object validation, or type integrity boundaries.
+- Internal types and integration testing fixtures verifying dual module runtime compatibility.
 
 ### Rules
 
-- **R-ZOD-001** SHOULD: Numeric constraints SHOULD use the check method combining validation predicates rather than unconstrained primitive types.
-- **R-ZOD-002** MANDATORY: Discover the project test execution script and run it to evaluate schema validation suite passes.
-- **R-ZOD-003** MANDATORY: Discover the project type check script and ensure static type inference aligns with runtime schemas.
-- **R-ZOD-004** MANDATORY: Discover the project module build verification script and run it across all supported module targets.
+- **R-LM-001** SHOULD: Numeric constraints SHOULD use the check method combining validation predicates rather than unconstrained primitive types.
 
 ### Verify
 
-```bash
-# Discover and run the project test execution script
-# Discover and run the project type check script
-# Discover and run the project module build verification script across all supported module targets
-```
+- Discover and run the project test execution script to evaluate schema validation suite passes.
+- Discover and run the project type check script to ensure static type inference aligns with runtime schemas.
+- Discover and run the project module build verification script across all supported module targets.
 
 **Accept when:**
+
 - All schema validation test fixtures execute without parsing errors under both ECMAScript and CommonJS module formats.
 - Static type checking completes with zero diagnostic errors across all schema definitions and inferred types.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline running test suites and type verification.
+- Verified by: Peer code review confirming adherence to modular schema builder patterns.
+- Violation handling: Pull requests introducing monolithic validation library imports or unconstrained schemas are blocked until aligned with modular validation standards.
+- Exception process: Submit an architectural deviation request detailing specific schema capabilities unavailable in the mini variant, subject to engineering lead approval.
 </enforcement>

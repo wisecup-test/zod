@@ -19,25 +19,32 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/**`.
 
-These rules are ALWAYS ACTIVE for implementation and extension of validation schemas, checks, and error structures, registration and resolution of schema metadata within internal registries, and integration of schema transformation processors and legacy compatibility adapters.
+These rules are ALWAYS ACTIVE for:
+- Implementation and extension of validation schemas, checks, and error structures.
+- Registration and resolution of schema metadata within internal registries.
+- Integration of schema transformation processors and legacy compatibility adapters.
 
 ### Rules
 
-- **R-CORE-001** MUST: Cross-cutting schema metadata and instance tracking MUST interact through the global registry interface rather than maintaining localized state within validation schemas.
+- **R-LM-001** MUST: Cross-cutting schema metadata and instance tracking MUST interact through the global registry interface rather than maintaining localized state within validation schemas.
 
 ### Verify
 
-```bash
-# Discover and run the project static analysis and linting command to verify module boundary compliance.
-# Discover and execute the project test runner across core module test suites.
-# Discover and execute the circular dependency checker script defined in the project configuration.
-```
+- Discover and run the project static analysis and linting command to verify module boundary compliance.
+- Discover and execute the project test runner across core module test suites.
+- Discover and execute the circular dependency checker script defined in the project configuration.
 
 **Accept when:**
+
 - All core module test suites complete with zero errors.
 - Static dependency validation passes without detecting disallowed inward imports into the core module layer.
 - Schema registry resolution tests verify deterministic cache lookups across compatibility facades.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated dependency graph validation, static lint checks, and peer code reviews are mandatory for any changes altering core module interfaces or registry structures.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated dependency graph validation and static lint checks executed in continuous integration pipelines.
+- Verified by: Peer code review mandatory for any changes altering core module interfaces or registry structures.
+- Violation handling: Pull requests introducing backward dependencies into core modules or circumventing the global registry are automatically blocked.
+- Violation handling: Architectural violations must be refactored to comply with core module boundaries prior to merge approval.
+- Exception process: Exceptions require formal architectural review and written consensus from library maintainers documenting why the dependency boundary cannot be maintained.
 </enforcement>

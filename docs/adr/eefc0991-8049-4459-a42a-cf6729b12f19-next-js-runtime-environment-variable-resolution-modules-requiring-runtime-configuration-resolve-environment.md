@@ -21,7 +21,6 @@ metadata:
 
 # Next.js Runtime Environment Variable Resolution: Modules Requiring Runtime Configuration Resolve Environment
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -48,17 +47,17 @@ Runtime configuration must be distributed across distinct server and client exec
 
 ## Decision
 
-1. MUST: Modules requiring runtime configuration MUST resolve environment values through Next.js runtime environment variable conventions using process.env property evaluation.
+- **R-CEM-001** MUST: Modules requiring runtime configuration MUST resolve environment values through Next.js runtime environment variable conventions using process.env property evaluation.
 
 ## Policy Block
 
-- MUST Modules requiring runtime configuration MUST resolve environment values through Next.js runtime environment variable conventions using process.env property evaluation.
-
 In scope:
+
 - All server routes, data loaders, and client UI components requiring runtime configuration or deployment metadata.
 - Client-side components requiring external service integration keys.
 
 Out of scope:
+
 - Build-time static content files that do not evaluate runtime variables.
 - Pure utility functions that receive configuration parameters exclusively via function arguments.
 
@@ -71,11 +70,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Zero third-party library overhead for runtime configuration management.
 - Seamless integration with deployment platform environment variable injection.
 - Compile-time safety preventing un-prefixed server secrets from being bundled into client assets.
 
 Negative:
+
 - Absence of centralized schema validation can lead to runtime failures if required environment variables are undefined.
 - Scattered process.env references make auditing active configuration dependencies across the codebase more difficult.
 - Type definitions for ambient environment variables are not automatically generated or enforced without explicit ambient typing.
@@ -115,13 +116,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project's static analysis script to verify that no server-only environment variables are referenced within client component boundaries.
 - Discover and execute the type-checking script to confirm ambient typing and presence handling for all process.env references.
 - Discover and execute the automated test suite to ensure server routes and loaders handle absent environment variables gracefully.
 
 Accept when:
+
 - Static analysis passes with zero violations regarding client-side exposure of server environment variables.
 - Type checking completes without errors across all modules dereferencing process.env properties.
 - All route handlers and loaders execute successfully or handle omitted optional configuration gracefully.

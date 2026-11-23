@@ -15,7 +15,6 @@ metadata:
 
 # Adoption of zod/mini for Functional and Tree-Shakeable Schema Validation: Consumer Discover Ecosystem Lock Artifact Resolve
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -38,17 +37,17 @@ Runtime data validation across distributed application boundaries requires a uni
 
 ## Decision
 
-1. MUST: The consumer MUST discover the ecosystem lock artifact and resolve the exact installed dependency version before implementation.
+- **R-LM-001** MUST: The consumer MUST discover the ecosystem lock artifact and resolve the exact installed dependency version before implementation.
 
 ## Policy Block
 
-- MUST The consumer MUST discover the ecosystem lock artifact and resolve the exact installed dependency version before implementation.
-
 In scope:
+
 - Input validation layers and data parsing modules across the codebase.
 - Runtime schema definitions for structured and primitive payload verification.
 
 Out of scope:
+
 - Static type assertions that do not require runtime data boundary validation.
 - Legacy subsystems with dedicated isolated validator implementations.
 
@@ -61,11 +60,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Reduces bundle footprint by enabling dead-code elimination of unused schema validators and constraints.
 - Provides explicit, composable validation pipelines using discrete check functions.
 - Ensures consistent runtime boundary data parsing and static type inference.
 
 Negative:
+
 - Requires developers to adapt to discrete check composition functions rather than monolithic prototype method chaining.
 - Increases import statement granularity across files defining diverse validation constraints.
 
@@ -103,13 +104,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project dependency manifest and lock file to inspect the declared and resolved module entries for the schema validation library.
 - Execute the project automated test suite via the repository script runner to validate schema parsing assertions.
 - Run the project static type checker and linter to ensure all schema definitions adhere to functional entrypoint constraints.
 
 Accept when:
+
 - All schema validation invocations resolve through the modular functional entrypoint without importing monolithic packages.
 - Input parsing tests successfully verify structural and constraint assertions using schema parse methods.
 - Static analysis and type checking pass without errors across all modules declaring validation schemas.

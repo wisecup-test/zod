@@ -17,7 +17,6 @@ metadata:
 
 # Adoption of ZodError Core Module for Centralized Schema Validation and Error Handling: Schema Evaluation Components Expose Standardized Execution
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Scattering error construction, localized messaging, and validation diagnostics a
 
 ## Decision
 
-1. MUST: Schema evaluation components MUST expose standardized execution interfaces through safeParse and parse methods to deliver consistent result containers and issue propagation.
+- **R-LM-001** MUST: Schema evaluation components MUST expose standardized execution interfaces through safeParse and parse methods to deliver consistent result containers and issue propagation.
 
 ## Policy Block
 
-- MUST Schema evaluation components MUST expose standardized execution interfaces through safeParse and parse methods to deliver consistent result containers and issue propagation.
-
 In scope:
+
 - Core schema type definitions and parsing logic within the validation library package.
 - Validation error generation, issue collection, and localized message formatting modules.
 
 Out of scope:
+
 - External consumer application logic that only ingests validated output without defining internal parsing routines.
 - Standalone utility modules that operate without dependency on schema error structures.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Centralized error handling through ZodError guarantees consistent diagnostic structures across all schema variations.
 - Decoupling type declarations from error localization simplifies internationalization and error map customization.
 - Uniform validation methods provide a predictable consumption contract for callers.
 
 Negative:
+
 - Schema type implementations must adhere to strict internal module boundaries rather than generating inline error messages.
 - Internal delegation across multiple helper modules introduces layer indirection during validation error tracing.
 
@@ -105,13 +106,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project's test execution script from the repository manifest and run the test suite to verify schema validation and error reporting behavior.
 - Locate the repository typecheck script within the project manifest and run it to validate type compatibility across schema modules and error interfaces.
 - Identify the static analysis script from the project configuration and execute it to ensure no prohibited cross-module references or unapproved error constructions exist.
 
 Accept when:
+
 - The project test suite passes completely with all schema validation and error handling scenarios verifying expected issue formats.
 - The typecheck command completes with zero diagnostic errors across all schema type definitions and error utilities.
 - Static analysis confirms strict compliance with module boundary rules and absence of inline error message formatting in schema types.

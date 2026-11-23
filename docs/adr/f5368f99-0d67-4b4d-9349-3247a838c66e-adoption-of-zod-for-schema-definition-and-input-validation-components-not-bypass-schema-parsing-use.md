@@ -17,7 +17,6 @@ metadata:
 
 # Adoption of Zod for Schema Definition and Input Validation: Components Not Bypass Schema Parsing Use
 
-Status: proposed
 Date: 2025-05-14
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Untrusted runtime inputs crossing module boundaries risk causing unpredictable r
 
 ## Decision
 
-1. MUST_NOT: Components MUST NOT bypass schema parsing or use unvalidated type casting on data ingested across boundaries.
+- **R-LM-001** MUST_NOT: Components MUST NOT bypass schema parsing or use unvalidated type casting on data ingested across boundaries.
 
 ## Policy Block
 
-- MUST_NOT Components MUST NOT bypass schema parsing or use unvalidated type casting on data ingested across boundaries.
-
 In scope:
+
 - All runtime input validation and payload parsing across module boundaries.
 - Data ingestion points where external or untrusted structures must conform to defined schemas.
 
 Out of scope:
+
 - Internal compile-time type declarations that do not process external runtime inputs.
 - Low-level primitive operations where data invariants are already established.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Runtime type safety and input integrity are enforced consistently at all module boundaries.
 - Reduced boilerplate for input validation and schema definition through composable schema builders.
 - Consistent validation error handling across different module compilation formats.
 
 Negative:
+
 - Introduces an external dependency and runtime overhead for schema evaluation.
 - Creates direct coupling to the Zod API surface across module validation boundaries.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project's verification and test scripts from the repository manifest and execute them.
 - Execute the repository test suite to confirm that schema validation runs without errors across all module formats.
 
 Accept when:
+
 - All schema validation parsing logic executes successfully across all supported module targets.
 - Repository verification scripts complete with zero exit codes and no schema parsing errors.
 

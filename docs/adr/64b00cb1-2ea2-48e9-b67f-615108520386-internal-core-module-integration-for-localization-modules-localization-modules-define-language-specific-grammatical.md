@@ -17,7 +17,6 @@ metadata:
 
 # Internal Core Module Integration for Localization Modules: Localization Modules Define Language Specific Grammatical
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Providing localized validation error messages across dozens of distinct locales 
 
 ## Decision
 
-1. MAY: Localization modules MAY define language-specific grammatical rules and string interpolation logic while delegating validation and error structures to the core module.
+- **R-LM-001** MAY: Localization modules MAY define language-specific grammatical rules and string interpolation logic while delegating validation and error structures to the core module.
 
 ## Policy Block
 
-- MAY Localization modules MAY define language-specific grammatical rules and string interpolation logic while delegating validation and error structures to the core module.
-
 In scope:
+
 - All internal localization modules responsible for translating or formatting validation error messages.
 - Internal core modules providing shared checks, error specifications, and utilities.
 
 Out of scope:
+
 - External consumer translation overrides provided at runtime outside the library codebase.
 - Self-contained modules that operate independently of validation checks and error formatting.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Uniform error reporting structures and validation check evaluation across all supported localization modules.
 - Centralized maintenance of core validation logic, checks, and utilities without cascading changes across individual locale files.
 - Localization modules remain lightweight translation layers focused purely on language-specific phrasing.
 
 Negative:
+
 - Tight dependency coupling between all localization modules and the internal core module interfaces.
 - Changes to core check or error contracts necessitate auditing and updating dependent localization modules.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project static analysis and linting scripts to verify module import constraints across localization modules.
 - Discover and execute the repository test suite to validate locale error formatting against core check specifications.
 
 Accept when:
+
 - All localization modules successfully import core checks, errors, and utilities without boundary violations.
 - Test suites pass for all locale modules with consistent error formatting behavior.
 

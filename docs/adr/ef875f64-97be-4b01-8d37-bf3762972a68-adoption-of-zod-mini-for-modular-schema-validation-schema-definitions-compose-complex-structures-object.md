@@ -17,7 +17,6 @@ metadata:
 
 # Adoption of @zod/mini for Modular Schema Validation: Schema Definitions Compose Complex Structures Object
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Validating runtime data structures across diverse execution targets requires con
 
 ## Decision
 
-1. MUST: Schema definitions MUST compose complex structures using z.object and z.record builders with explicitly typed property schemas.
+- **R-LM-001** MUST: Schema definitions MUST compose complex structures using z.object and z.record builders with explicitly typed property schemas.
 
 ## Policy Block
 
-- MUST Schema definitions MUST compose complex structures using z.object and z.record builders with explicitly typed property schemas.
-
 In scope:
+
 - Modules defining runtime schema validation contracts, data transfer object validation, or type integrity boundaries.
 - Internal types and integration testing fixtures verifying dual module runtime compatibility.
 
 Out of scope:
+
 - Third-party interface definitions that do not participate in runtime schema parsing or data assertion.
 - Components with specialized domain-specific binary serialization layers that do not parse structured object payloads.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Reduced bundle and runtime overhead through minimal schema definitions.
 - Predictable and uniform validation behavior across dual module formats.
 - Clear and composable schema syntax using modular validation checks.
 
 Negative:
+
 - Advanced transformations and third-party plugins available only in monolithic validation libraries require custom implementations.
 - Schema authors must explicitly compose constraints using modular check methods rather than relying on bundled convenience helpers.
 
@@ -105,13 +106,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project test execution script to evaluate schema validation suite passes.
 - Discover and run the project type check script to ensure static type inference aligns with runtime schemas.
 - Discover and run the project module build verification script across all supported module targets.
 
 Accept when:
+
 - All schema validation test fixtures execute without parsing errors under both ECMAScript and CommonJS module formats.
 - Static type checking completes with zero diagnostic errors across all schema definitions and inferred types.
 

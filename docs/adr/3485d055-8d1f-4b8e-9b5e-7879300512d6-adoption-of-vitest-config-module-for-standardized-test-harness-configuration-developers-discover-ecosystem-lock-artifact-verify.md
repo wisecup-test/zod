@@ -25,7 +25,6 @@ metadata:
 
 # Adoption of vitest/config Module for Standardized Test Harness Configuration: Developers Discover Ecosystem Lock Artifact Verify
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -58,16 +57,16 @@ Inconsistent test harness definitions and untyped configuration objects lead to 
 
 ## Decision
 
-1. MUST: Developers MUST discover the ecosystem lock artifact and verify the exact resolved version of vitest/config before authoring or modifying configuration structures.
+- **R-LM-001** MUST: Developers MUST discover the ecosystem lock artifact and verify the exact resolved version of vitest/config before authoring or modifying configuration structures.
 
 ## Policy Block
 
-- MUST Developers MUST discover the ecosystem lock artifact and verify the exact resolved version of vitest/config before authoring or modifying configuration structures.
-
 In scope:
+
 - All test harness configuration files across root and package contexts.
 
 Out of scope:
+
 - Application runtime configuration modules unrelated to test runners or compilation harnesses.
 
 ## Rationale
@@ -78,11 +77,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Ensures type-safe and validated configuration surfaces across all test execution layers.
 - Unifies configuration factory signatures across separate execution, root, and compilation contexts.
 - Eliminates divergent custom configuration wrappers across packages.
 
 Negative:
+
 - Tightly couples test configuration schemas to the exported types of the specific configuration library.
 - Requires configuration authors to ensure resolution paths for core runtime utilities align across module systems.
 
@@ -117,11 +118,12 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository dependency manifest and lock artifact, verify the resolved dependency entry, and execute the project verification pipeline to validate configuration integrity.
 
 Accept when:
+
 - All test configuration definitions export structures declared through the adopted configuration factory API.
 - Repository lock verification confirms synchronization between the active environment and declared dependency ranges.
 

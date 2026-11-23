@@ -17,7 +17,6 @@ metadata:
 
 # Remark Middleware Pipeline Adoption for Content Transformation: Documentation Text Transformation Loaders Processing Markdown
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Documentation text extraction and context generation require parsing Markdown an
 
 ## Decision
 
-1. MUST: Documentation and text transformation loaders processing Markdown or MDX content MUST assemble transformation pipelines using remark with chained middleware plugin attachments.
+- **R-ISP-001** MUST: Documentation and text transformation loaders processing Markdown or MDX content MUST assemble transformation pipelines using remark with chained middleware plugin attachments.
 
 ## Policy Block
 
-- MUST Documentation and text transformation loaders processing Markdown or MDX content MUST assemble transformation pipelines using remark with chained middleware plugin attachments.
-
 In scope:
+
 - Documentation loader modules transforming Markdown and MDX content
 - Text extraction pipelines preparing documentation content for downstream ingestion
 
 Out of scope:
+
 - Standard web application UI rendering pathways relying on native framework MDX compilation
 - Plain text processing that does not parse or manipulate Markdown abstract syntax trees
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Standardizes document transformation through an explicit, sequential middleware pipeline execution order.
 - Enables modular additions or replacements of individual syntax transforms without altering loader infrastructure.
 - Eliminates parsing regressions by processing content through formal syntax tree transformations rather than raw string heuristics.
 
 Negative:
+
 - Introduces dependency coordination overhead across multiple plugin packages that must maintain mutual compatibility.
 - Increases memory and CPU consumption during document parsing compared to basic text streaming.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project test runner invocation from the dependency manifest and execute the test suite covering documentation loaders.
 - Discover the static analysis command from the root project configuration and verify all loader pipeline definitions satisfy type and lint rules.
 
 Accept when:
+
 - The documentation loader pipeline successfully parses MDX sources and produces valid string representations.
 - All automated test suites and static analysis checks covering document extraction execute without failure.
 

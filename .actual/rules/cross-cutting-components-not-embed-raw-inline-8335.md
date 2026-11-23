@@ -21,25 +21,30 @@ metadata:
 
 Scope: applies to `packages/docs/app/**`, `packages/docs/components/**`, `packages/docs/loaders/**`.
 
-These rules are ALWAYS ACTIVE for all user interface components, layouts, and documentation views requiring visual icons or glyphs.
+These rules are ALWAYS ACTIVE for:
+- All user interface components, layouts, and documentation views requiring visual icons or glyphs.
 
 ### Rules
 
-- **R-LUC-001** MUST_NOT: Components MUST NOT embed raw inline SVG markup for iconography supported by the adopted icon library or introduce secondary third-party icon packages.
+- **R-LM-001** MUST_NOT: Components MUST NOT embed raw inline SVG markup for iconography supported by the adopted icon library or introduce secondary third-party icon packages.
 
 ### Verify
 
-```bash
-# Discover and execute project verification and linting scripts from the repository manifest
-# Inspect the dependency resolution lock artifact to confirm only approved icon libraries are resolved
-# Execute workspace type-checking and build commands
-```
+- Discover the project verification and linting scripts from the repository manifest and execute them to verify that icon imports adhere to architectural constraints.
+- Inspect the dependency resolution lock artifact to confirm that only the approved icon library is resolved without unapproved iconography dependencies.
+- Execute the workspace type-checking and build commands to confirm all icon component invocations pass compile-time verification.
 
 **Accept when:**
+
 - All icon references across interface components resolve to imports from the approved icon library.
 - Type-checking and static analysis scripts run to completion with zero errors or warnings regarding icon component usage.
 - No extraneous icon dependencies or inline SVG glyph duplicates exist within the component tree.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated lint rules and static analysis in continuous integration pipelines checking import paths.
+- Verified by: Peer code review verifying adherence to standardized iconography components and styling.
+- Violation handling: Pull requests introducing raw SVG iconography or alternative icon packages are blocked until migrated to lucide-react.
+- Violation handling: Violations identified during code review require refactoring to use standard lucide-react components.
+- Exception process: Exceptions for proprietary trademarks or unique brand assets unavailable in lucide-react require architecture review approval and documentation in an approved asset registry.
 </enforcement>

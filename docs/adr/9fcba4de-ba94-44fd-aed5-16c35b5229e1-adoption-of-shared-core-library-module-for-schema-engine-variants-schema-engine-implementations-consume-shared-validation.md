@@ -17,7 +17,6 @@ metadata:
 
 # Adoption of Shared Core Library Module for Schema Engine Variants: Schema Engine Implementations Consume Shared Validation
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Maintaining parallel schema engine variants without a centralized foundation cre
 
 ## Decision
 
-1. MUST: Schema engine implementations MUST consume shared validation checks, regular expressions, and registry primitives exclusively through the internal shared core module.
+- **R-LM-001** MUST: Schema engine implementations MUST consume shared validation checks, regular expressions, and registry primitives exclusively through the internal shared core module.
 
 ## Policy Block
 
-- MUST Schema engine implementations MUST consume shared validation checks, regular expressions, and registry primitives exclusively through the internal shared core module.
-
 In scope:
+
 - Schema engine variant definitions requiring shared parsing, registry lookup, or validation logic.
 - Modules implementing schema validation contracts and instance registries.
 
 Out of scope:
+
 - Standalone utility functions that operate independently of schema parsing and registry state.
 - External adapters that interact with schema engines solely through public validation interfaces.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Ensures uniform schema parsing and regular expression evaluation across all engine variants.
 - Eliminates duplicate parsing and registry management logic across implementations.
 - Establishes a centralized boundary for schema registration and inspection through core.globalRegistry.
 
 Negative:
+
 - Tightly couples schema engine variants to the internal API contract of the core module.
 - Modifications to core validation routines require coordinated regression testing across all dependent schema variants.
 
@@ -105,13 +106,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project static analysis and linting scripts to verify adherence to module import boundaries.
 - Discover and execute the project test runner across all schema variant test suites to ensure uniform validation behavior.
 - Inspect dependency manifests and resolution artifacts to confirm that dependency version declarations match lock state.
 
 Accept when:
+
 - All schema variant test suites pass without regressions across validation parsing and execution.
 - Static boundary verification confirms schema modules import shared parsing and registry primitives exclusively from the internal core module.
 - Registry lookup tests confirm consistent resolution of schema instances through core.globalRegistry across variants.

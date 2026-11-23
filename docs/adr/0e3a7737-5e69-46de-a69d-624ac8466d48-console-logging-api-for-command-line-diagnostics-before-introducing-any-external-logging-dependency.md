@@ -17,7 +17,6 @@ metadata:
 
 # Console Logging API for Command-Line Diagnostics: Before Introducing Any External Logging Dependency
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,16 +39,16 @@ Ad-hoc logging using native runtime output methods provides immediate terminal f
 
 ## Decision
 
-1. MUST: Before introducing any external logging dependency or versioned utility, the consumer MUST inspect the repository lock artifact to verify the exact resolved version and adhere to its published API specification.
+- **R-L-001** MUST: Before introducing any external logging dependency or versioned utility, the consumer MUST inspect the repository lock artifact to verify the exact resolved version and adhere to its published API specification.
 
 ## Policy Block
 
-- MUST Before introducing any external logging dependency or versioned utility, the consumer MUST inspect the repository lock artifact to verify the exact resolved version and adhere to its published API specification.
-
 In scope:
+
 - Command-line execution scripts and benchmarking harnesses requiring interactive terminal output.
 
 Out of scope:
+
 - Production server applications, core compiler transformation libraries, and services requiring structured telemetry aggregation.
 
 ## Rationale
@@ -61,11 +60,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Zero dependency footprint for standalone utility scripts.
 - Immediate and unambiguous feedback delivered to interactive terminal sessions.
 - Clear distinction between diagnostic failure messages on standard error and standard runtime output.
 
 Negative:
+
 - Absence of structured log metadata such as timestamps, correlation identifiers, and severity tags.
 - Inability to aggregate or search log entries through centralized log analytics platforms.
 - Risk of inconsistent log formats across multiple scripts if unstructured console calls proliferate.
@@ -104,12 +105,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project static analysis and linting verification scripts to check logging conventions across script boundaries.
 - Discover and execute the repository test suite to ensure benchmarking scripts exit with expected status codes on invalid arguments.
 
 Accept when:
+
 - Static analysis validates that console output invocations are restricted to designated utility and script directories.
 - Executing the benchmark script with missing arguments outputs an actionable error message to standard error and halts execution.
 

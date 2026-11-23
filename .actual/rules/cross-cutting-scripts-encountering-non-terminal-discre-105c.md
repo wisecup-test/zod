@@ -20,32 +20,30 @@ metadata:
 
 Scope: applies to `.claude/skills/triage/scripts/**`, `scripts/**`.
 
-These rules are ALWAYS ACTIVE for all operational, verification, and repository maintenance scripts executing in standalone execution contexts.
+These rules are ALWAYS ACTIVE for:
+- Operational, verification, and repository maintenance scripts executing in standalone execution contexts.
+- Diagnostic, warning, and failure reporting within automated validation routines.
 
 ### Rules
 
-- **R-CNS-001** MAY: Scripts encountering non-terminal discrepancies MAY route advisories to the runtime console warning stream instead of terminating execution.
-- **R-CNS-002** MANDATORY: The consumer MUST discover tool names, file names, commands, package managers, and version numbers from the project repository.
-- **R-CNS-003** MANDATORY: Before writing code that uses a versioned library, the developer MUST find the dependency manifest, identify the build tool, inspect the repository lock or resolution artifact for exact versions, look up official documentation for that exact version, confirm API existence, and re-verify per dependency at point of use.
-- **R-CNS-004** MANDATORY: Construct error diagnostic strings with explicit failure summaries followed by actionable remediation steps.
-- **R-CNS-005** MANDATORY: Ensure script processes return non-zero exit codes whenever terminal failure messages are emitted to the error stream.
-- **R-CNS-006** MANDATORY: Sanitize all dynamic values and environment variables before interpolating them into console diagnostic messages.
+- **R-L-001** MAY: Scripts encountering non-terminal discrepancies MAY route advisories to the runtime console warning stream instead of terminating execution.
 
 ### Verify
 
-```bash
-# Discover the repository project manifest, identify configured script verification tasks, and execute the verification suite:
-# (Execute your project's test/verification command here, e.g., npm test or equivalent)
-
-# Inspect the script runner configuration and execute static code analysis:
-# (Execute your project's lint/static check command here)
-```
+- Discover the repository project manifest, identify configured script verification tasks, and execute the verification suite to ensure all script checks pass.
+- Inspect the script runner configuration and execute the static code analysis suite to verify error stream logging compliance.
 
 **Accept when:**
+
 - All repository verification and maintenance scripts execute without throwing unhandled exceptions.
 - Script failures and rule violations emit formatted diagnostics exclusively to the standard error stream.
 - Process exit status accurately reflects the execution outcome indicated by the emitted console stream.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline executing repository verification and static check scripts.
+- Verified by: Peer code review for all new and modified repository scripts.
+- Violation handling: Continuous integration checks fail when verification scripts encounter unhandled error conditions.
+- Violation handling: Pull requests introducing external logging dependencies or routing script errors to standard output are blocked.
+- Exception process: Submit an architectural review request detailing why native runtime console error streams cannot satisfy operational telemetry requirements.
 </enforcement>

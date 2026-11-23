@@ -19,25 +19,30 @@ metadata:
 
 Scope: applies to `packages/resolution/src/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- Runtime input parsing and validation within module resolution entrypoints
+- Data contracts interfacing with external inputs across module formats
 
 ### Rules
 
-- **R-ZOD-001** MUST: All runtime input validation across module boundaries MUST use zod schemas to parse and validate incoming payloads.
-- **R-ZOD-002** MANDATORY: Execute the lock-version grounding sequence (manifest discovery, build tool identification, exact lockfile version inspection, API reference verification) before writing code that uses a versioned library.
-- **R-ZOD-003** MANDATORY: Infer static types directly from schema definitions to maintain synchronization between compile-time and runtime models, and construct reusable schema objects for shared boundary primitives to prevent redundant declarations.
+- **R-LM-001** MUST: All runtime input validation across module boundaries MUST use zod schemas to parse and validate incoming payloads.
 
 ### Verify
 
-```bash
-# Discover the project verification script from the repository manifest and execute validation suites.
-# Discover and run the project test execution command to verify schema parsing tests pass across all module entrypoints.
-```
+- Discover the project verification script from the repository manifest and execute validation suites.
+- Discover and run the project test execution command to verify schema parsing tests pass across all module entrypoints.
 
 **Accept when:**
+
 - All boundary inputs are validated via schema parsing without manual type casting.
 - Verification suites pass with schema validation tests confirming rejection of invalid inputs and acceptance of valid inputs.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Pull requests bypassing schema validation on external inputs are blocked from merging.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Continuous integration test execution
+- Verified by: Automated code review and lint checks
+- Verified by: Peer review of pull requests touching boundary entrypoints
+- Violation handling: Pull requests bypassing schema validation on external inputs are blocked from merging.
+- Violation handling: Code review flags any unvalidated boundary type assertions for refactoring.
+- Exception process: Exceptions require documented justification demonstrating performance-critical constraints and approval by lead architects.
 </enforcement>

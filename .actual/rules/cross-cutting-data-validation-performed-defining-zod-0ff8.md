@@ -19,23 +19,29 @@ metadata:
 
 Scope: applies to `packages/resolution/src/**`.
 
-These rules are ALWAYS ACTIVE for all runtime input validation and payload parsing across module boundaries.
+These rules are ALWAYS ACTIVE for:
+- All runtime input validation and payload parsing across module boundaries.
+- Data ingestion points where external or untrusted structures must conform to defined schemas.
 
 ### Rules
 
-- **R-ZOD-001** MUST: Data validation MUST be performed by defining Zod schemas and invoking parsing methods at module boundaries prior to data consumption.
+- **R-LM-001** MUST: Data validation MUST be performed by defining Zod schemas and invoking parsing methods at module boundaries prior to data consumption.
 
 ### Verify
 
-```bash
-# Discover the project's verification and test scripts from the repository manifest and execute them.
-# Execute the repository test suite to confirm that schema validation runs without errors across all module formats.
-```
+- Discover the project's verification and test scripts from the repository manifest and execute them.
+- Execute the repository test suite to confirm that schema validation runs without errors across all module formats.
 
 **Accept when:**
+
 - All schema validation parsing logic executes successfully across all supported module targets.
 - Repository verification scripts complete with zero exit codes and no schema parsing errors.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification is mandatory via continuous integration pipelines and peer code review.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Continuous integration pipelines executing automated test suites.
+- Verified by: Peer code review verifying that boundary inputs pass through Zod schema validation.
+- Violation handling: Pull requests bypassing schema parsing for boundary inputs will be blocked during review.
+- Violation handling: Test failures resulting from unhandled schema validation errors will block deployment.
+- Exception process: Exceptions must be submitted via architectural review with documented rationale for bypassing schema validation.
 </enforcement>
