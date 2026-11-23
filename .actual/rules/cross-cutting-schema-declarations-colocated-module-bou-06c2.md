@@ -19,27 +19,30 @@ metadata:
 
 Scope: applies to `packages/resolution/src/**`.
 
-These rules are ALWAYS ACTIVE for all public module interfaces, resolution entry points accepting external input data, and boundary parsing routines processing untrusted or polymorphic payloads.
+These rules are ALWAYS ACTIVE for:
+- All public module interfaces and resolution entry points accepting external input data.
+- Boundary parsing routines that process untrusted or polymorphic payloads.
 
 ### Rules
 
-- **R-ZOD-001** SHOULD: Schema declarations SHOULD be colocated with module boundary definitions to maintain synchronization between static contracts and runtime rules.
-- **R-ZOD-002** MANDATORY: The consumer MUST discover dependency management tools, manifests, and version locks directly from the repository.
-- **R-ZOD-003** MANDATORY: Before writing code using a versioned library, execute the version-grounding check in order: find manifest, identify build tool, inspect lock/resolution artifact, look up official documentation for that exact version, and confirm API existence.
-- **R-ZOD-004** MANDATORY: Define schemas alongside boundary interfaces and invoke schema parse operations at all entry points accepting external payloads.
-- **R-ZOD-005** MANDATORY: Handle validation parse exceptions at the boundary layer to ensure structured error messages are returned to callers.
+- **R-LM-001** SHOULD: Schema declarations SHOULD be colocated with module boundary definitions to maintain synchronization between static contracts and runtime rules.
 
 ### Verify
 
-```bash
-# Discover and run repository verification scripts to test schema parse invocations
-# Execute project test suite to verify boundary validation logic
-```
+- Discover and run the repository verification scripts to verify that all schema parse invocations execute successfully against test inputs.
+- Execute the project test suite to verify that boundary validation logic correctly parses valid data and rejects invalid inputs.
 
 **Accept when:**
+
 - All input parsing invocations execute through defined validation schemas without unhandled validation failures on valid inputs.
 - The project test suite passes with full verification of boundary inputs against declared schema specifications.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All pull requests with unvalidated boundary inputs or manual type assertions will be blocked until schema validation is introduced.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated test suite execution verifying input validation behavior across module boundaries.
+- Verified by: Static analysis and peer code review of export definitions and boundary entry points.
+- Violation handling: Pull requests with unvalidated boundary inputs or manual type assertions will be blocked until schema validation is introduced.
+- Violation handling: Direct commits bypassing validation rules will trigger automated review failure.
+- Exception process: Submit an architectural review request documenting technical constraints that preclude schema validation for specific low-level performance paths.
+- Exception process: Obtain explicit sign-off from module maintainers before implementing custom parsing routines.
 </enforcement>

@@ -19,23 +19,28 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for all core schema transformation and JSON Schema generation modules within the library.
+These rules are ALWAYS ACTIVE for:
+- Core schema transformation and JSON Schema generation modules within the library.
+- Context management, schema processor registries, and metadata lookup implementations.
 
 ### Rules
 
-- **R-ZOD-001** MUST: The core validation architecture MUST isolate JSON Schema translation into modular processors coordinated through an explicit traversal context.
+- **R-LM-001** MUST: The core validation architecture MUST isolate JSON Schema translation into modular processors coordinated through an explicit traversal context.
 
 ### Verify
 
-```bash
-# Discover the repository configuration to locate and execute the test runner targeting core schema conversion modules.
-# Discover the workspace static analysis and linting scripts to verify compliance with internal module dependency boundaries.
-```
+- Discover the repository configuration to locate and execute the test runner targeting core schema conversion modules.
+- Discover the workspace static analysis and linting scripts to verify compliance with internal module dependency boundaries.
 
 **Accept when:**
+
 - The repository test suite executes without failures across all JSON Schema generation scenarios, including recursive and circular definitions.
 - Static boundary checks confirm schema transformation processors only interact with core registries through the context interface.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated unit and integration test suites validating schema-to-JSON-Schema conversions.
+- Verified by: Static analysis and code review inspecting module import boundaries and context threading.
+- Violation handling: Pull requests bypassing the traversal context or directly coupling schema definitions to serialization logic are rejected during code review.
+- Exception process: Exceptions for specialized schema transformations must be submitted to the core architecture maintainers with technical justification demonstrating why context-based dispatch is infeasible.
 </enforcement>

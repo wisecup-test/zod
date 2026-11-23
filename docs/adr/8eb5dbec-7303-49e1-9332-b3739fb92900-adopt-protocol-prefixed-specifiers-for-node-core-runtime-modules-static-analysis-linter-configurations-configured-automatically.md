@@ -20,7 +20,6 @@ metadata:
 
 # Adopt Protocol-Prefixed Specifiers for Node Core Runtime Modules: Static Analysis Linter Configurations Configured Automatically
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -46,16 +45,16 @@ Importing built-in runtime capabilities using bare specifiers introduces resolut
 
 ## Decision
 
-1. SHOULD: Static analysis and linter configurations SHOULD be configured to automatically enforce and autofix protocol-prefixed module specifiers across all codebase entries.
+- **R-LM-001** SHOULD: Static analysis and linter configurations SHOULD be configured to automatically enforce and autofix protocol-prefixed module specifiers across all codebase entries.
 
 ## Policy Block
 
-- SHOULD Static analysis and linter configurations SHOULD be configured to automatically enforce and autofix protocol-prefixed module specifiers across all codebase entries.
-
 In scope:
+
 - All TypeScript and JavaScript source files, maintenance scripts, and runner configurations that reference runtime core modules.
 
 Out of scope:
+
 - Third-party registry packages or internal workspace package specifiers that do not belong to the runtime standard library.
 
 ## Rationale
@@ -66,11 +65,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Guarantees deterministic resolution of core runtime capabilities without risk of registry package shadowing.
 - Maintains clear visual and semantic separation between runtime-native capabilities and external third-party dependencies.
 - Ensures full compatibility with modern ES module resolution algorithms and tooling across scripts and test configs.
 
 Negative:
+
 - Requires strict adherence to protocol prefixes across all development and tooling scripts.
 - Incompatible with obsolete execution environments that lack native protocol resolution capabilities.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project's automated verification script from the dependency manifest and run the linter to ensure no un-prefixed core imports exist.
 - Discover and execute the project's test suite to verify module resolution succeeds across all configurations.
 
 Accept when:
+
 - All workspace modules and scripts import core Node.js runtime facilities exclusively using the node: protocol namespace prefix.
 - Static analysis and automated lint checks verify zero un-prefixed standard library module specifiers exist across the codebase.
 - Test suites and build verification scripts execute without module resolution ambiguities or warnings.

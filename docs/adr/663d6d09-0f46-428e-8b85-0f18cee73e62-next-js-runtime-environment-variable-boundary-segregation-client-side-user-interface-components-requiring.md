@@ -21,7 +21,6 @@ metadata:
 
 # Next.js Runtime Environment Variable Boundary Segregation: Client Side User Interface Components Requiring
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -49,16 +48,16 @@ Applications combining server and client rendering require external service cred
 
 ## Decision
 
-1. SHOULD: Client-side user interface components requiring third-party service identifiers SHOULD access configuration exclusively through public environment identifiers resolved at build or bundle time.
+- **R-SC-001** SHOULD: Client-side user interface components requiring third-party service identifiers SHOULD access configuration exclusively through public environment identifiers resolved at build or bundle time.
 
 ## Policy Block
 
-- SHOULD Client-side user interface components requiring third-party service identifiers SHOULD access configuration exclusively through public environment identifiers resolved at build or bundle time.
-
 In scope:
+
 - All application modules, server route handlers, data loaders, and client components accessing environment variables or external service credentials.
 
 Out of scope:
+
 - Static documentation assets and build-time configuration files that execute solely during compilation or asset generation.
 
 ## Rationale
@@ -70,11 +69,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Guarantees that sensitive secrets and tokens remain contained within isolated server execution environments.
 - Clarifies data and configuration boundaries between client components and server loaders.
 - Prevents accidental exposure of private infrastructure variables across client bundles.
 
 Negative:
+
 - Requires client components needing sensitive operations to route requests through server endpoints rather than calling external services directly.
 - Increases cognitive overhead when coordinating configuration keys that must span both client and server domains.
 
@@ -112,12 +113,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project manifest and execute the configured static analysis scripts to verify no client components reference private environment variables.
 - Inspect repository automation workflows and run the test suite to validate that server data loaders inject authorization tokens only into server request headers.
 
 Accept when:
+
 - Static analysis confirms zero references to un-prefixed environment variables within client component modules.
 - Server route handlers and data loaders successfully authorize external requests using server-scoped environment credentials without exposing them in response bodies.
 

@@ -20,28 +20,33 @@ metadata:
 
 Scope: applies to `packages/zod/src/v3/**`, `packages/zod/src/v4/**`.
 
-These rules are ALWAYS ACTIVE for schema processing pipelines, compilation, serialization, and deserialization routines requiring external metadata association and bidirectional identity storage.
+These rules are ALWAYS ACTIVE for:
+- Schema metadata association and external identifier resolution.
+- Recursive schema serialization and deserialization involving circular reference tracking.
+- Compiler constant registration and variable scope isolation during schema code generation.
 
 ### Rules
 
-- **R-REG-001** MUST: The internal registries module MUST serve as the authoritative data access abstraction for associating schema definitions with external metadata and bidirectional identifier mappings.
-- **R-REG-002** MUST: Instantiate traversal contexts at the root of translation or compilation workflows and pass context instances explicitly down recursive visitor calls.
-- **R-REG-003** MUST: Implement bidirectional registry collections with unified registration methods that set both object-keyed and string-keyed associations concurrently.
-- **R-REG-004** MUST: Encapsulate deletion operations inside atomic registry methods that purge both primary and secondary indices within a single method call.
-- **R-REG-005** MUST: Wrap recursive traversal calls in structured exception-handling blocks that guarantee cleanup of tracking references upon completion.
+- **R-DAP-001** MUST: The internal registries module MUST serve as the authoritative data access abstraction for associating schema definitions with external metadata and bidirectional identifier mappings.
 
 ### Verify
 
-```bash
-# Discover the workspace test execution script in the project manifest and run the suite covering schema registries and compiler traversal.
-# Discover the repository static analysis script and verify zero direct property mutations on schema instances across data access modules.
-```
+- Discover the workspace test execution script in the project manifest and run the suite covering schema registries and compiler traversal.
+- Discover the repository static analysis script and verify zero direct property mutations on schema instances across data access modules.
 
 **Accept when:**
+
 - All registry unit and integration test suites pass with complete assertion coverage on bidirectional lookup, registration, and deletion.
 - Memory profiling tests confirm traversal context maps release all tracking references upon traversal completion without leakage.
 - Static type checks verify that schema definitions remain read-only and all external metadata access occurs through registry abstractions.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated unit and integration test runs executed during continuous integration workflows.
+- Verified by: Peer code reviews auditing registry data access patterns and recursion cleanup logic.
+- Verified by: Static analysis checks detecting unauthorized property assignments to schema definition objects.
+- Violation handling: Code review rejection for pull requests that mutate schema instances directly to store state.
+- Violation handling: Automated continuous integration failures when bidirectional registry indices fail synchronization invariants.
+- Exception process: Submit an architectural review request detailing why registry-based access is impractical for the specific isolated evaluation path.
+- Exception process: Obtain explicit sign-off from the technical lead with documented memory profiling and immutability impact assessments.
 </enforcement>

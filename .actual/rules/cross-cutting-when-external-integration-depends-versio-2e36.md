@@ -19,26 +19,27 @@ metadata:
 
 Scope: applies to `packages/docs/loaders/**`.
 
-These rules are ALWAYS ACTIVE for all modules that perform outbound HTTP requests to external third-party services to retrieve metadata or public metrics.
+These rules are ALWAYS ACTIVE for:
+- Modules that perform outbound HTTP requests to external third-party services to retrieve metadata or public metrics
 
 ### Rules
 
-- **R-EXT-001** MUST: When external integration depends on versioned client libraries, consumers MUST inspect the repository lock artifact to verify the exact resolved version prior to implementation.
-- **R-EXT-002** MUST: Execute lock-version grounding in order (find manifest, identify build tool, inspect lock/resolution artifact, look up official documentation for exact version, confirm every API/class/function exists, and re-run per dependency at point of use).
-- **R-EXT-003** MUST: Configure appropriate time-to-live revalidation parameters matching the data freshness requirements of consuming presentation components.
-- **R-EXT-004** MUST: Ensure error handlers log sufficient context including attempt count and diagnostic error details without exposing authentication headers.
+- **R-IA-001** MUST: When external integration depends on versioned client libraries, consumers MUST inspect the repository lock artifact to verify the exact resolved version prior to implementation
 
 ### Verify
 
-```bash
-# Discover and run the project repository typecheck script
-# Discover and execute the project integration test suite
-```
+- Discover and run the project repository typecheck script to verify external API client typings
+- Discover and execute the project integration test suite to validate external client caching and retry behavior
 
 **Accept when:**
+
 - Static analysis and test suites execute without errors across all external client modules
 - Mocked external requests confirm caching revalidation headers and retry logic function as specified
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated continuous integration test suites and peer code review.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration test suites
+- Verified by: Peer code review of data loader and external client implementations
+- Violation handling: Pull requests lacking credential protection or caching configurations will be rejected during code review
+- Exception process: Exceptions for endpoints requiring real-time updates without caching must be documented and approved by the engineering leads
 </enforcement>

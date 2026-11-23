@@ -20,23 +20,30 @@ metadata:
 
 Scope: applies to `packages/docs/app/llms-full.txt/**`, `packages/docs/loaders/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- Documentation route handlers that expose structured or aggregated documentation content.
+- Documentation loader utilities and transformation pipelines that query or compile documentation pages.
 
 ### Rules
 
-- **R-SRC-001** SHOULD: Downstream transformation pipelines SHOULD consume canonical page objects emitted by @/loaders/source and isolate formatting transformations within dedicated loader utilities.
+- **R-LM-001** SHOULD: Downstream transformation pipelines SHOULD consume canonical page objects emitted by @/loaders/source and isolate formatting transformations within dedicated loader utilities.
 
 ### Verify
 
-```bash
-# Inspect the workspace configuration to discover the project verification script, then run the test suite to validate documentation loader resolution.
-# Discover and run the project typecheck and linting commands from the package manifest to verify import boundary compliance across documentation endpoints.
-```
+- Inspect the workspace configuration to discover the project verification script, then run the test suite to validate documentation loader resolution.
+- Discover and run the project typecheck and linting commands from the package manifest to verify import boundary compliance across documentation endpoints.
 
 **Accept when:**
+
 - Documentation route handlers and text extraction loaders resolve page sources through @/loaders/source without import boundary errors.
 - Automated verification suites confirm consistent page order indexing and successful content extraction across all endpoints.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Static analysis checks configured in the continuous integration pipeline that flag unauthorized filesystem access in documentation routes.
+- Verified by: Peer code review verifying that all documentation endpoints consume content via the canonical source loader.
+- Violation handling: Pull requests containing direct filesystem access or bypasses of the source loader are rejected until refactored to use @/loaders/source.
+- Violation handling: Architectural boundary alerts are triggered during automated build checks upon detection of unauthorized content parsing modules.
+- Exception process: Exceptions must be submitted via an architecture review proposal detailing technical rationale, bounded scope, and fallback mechanisms.
+- Exception process: Approval from lead documentation architects is required prior to merging any custom content loader.
 </enforcement>

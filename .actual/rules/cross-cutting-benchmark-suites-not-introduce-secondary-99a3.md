@@ -19,23 +19,28 @@ metadata:
 
 Scope: applies to `packages/bench/**`.
 
-These rules are ALWAYS ACTIVE for performance benchmarking suites, micro-benchmark test cases, and execution harness orchestration within the repository.
+These rules are ALWAYS ACTIVE for:
+- Performance benchmarking suites and micro-benchmark test cases within the repository.
+- Execution harness orchestration and performance measurement cycles.
 
 ### Rules
 
-- **R-METABENCH-001** MUST_NOT: Benchmark suites MUST NOT introduce secondary or ad-hoc benchmarking runner frameworks for suite execution outside of the standardized metabench module.
+- **R-LM-001** MUST_NOT: Benchmark suites MUST NOT introduce secondary or ad-hoc benchmarking runner frameworks for suite execution outside of the standardized metabench module.
 
 ### Verify
 
-```bash
-# Discover and execute the designated benchmark verification script
-# Discover and run static type-checking and linting scripts to verify compliance with internal module import conventions
-```
+- Discover the repository configuration and execute the designated benchmark verification script to validate benchmark suite execution.
+- Discover and run the project static type-checking and linting scripts to verify compliance with internal module import conventions.
 
 **Accept when:**
+
 - All benchmark suites execute successfully through the metabench harness without execution errors.
 - Benchmark suite definitions adhere to module import constraints and static type validation passes across all benchmark modules.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated continuous integration pipeline runs repository benchmark validation scripts and code review inspects benchmark suites to ensure exclusive use of the metabench harness.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline running repository benchmark validation scripts.
+- Verified by: Code review inspection of benchmark suites to ensure exclusive use of the metabench harness.
+- Violation handling: Pull requests introducing ad-hoc benchmark runners or bypassing the metabench harness will fail code review and automated checks.
+- Exception process: Exceptions must be requested through an architecture review proposal detailing why the metabench module cannot support the specific benchmark requirement.
 </enforcement>

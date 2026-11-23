@@ -17,26 +17,28 @@ metadata:
 
 Scope: applies to `packages/treeshake/**`.
 
-These rules are ALWAYS ACTIVE for all modules and packages defining data models that parse or ingest external or untrusted inputs, and internal boundaries requiring explicit schema contracts and runtime type validation.
+These rules are ALWAYS ACTIVE for:
+- All modules and packages defining data models that parse or ingest external or untrusted inputs.
+- Internal boundaries requiring explicit schema contracts and runtime type validation.
 
 ### Rules
 
-- **R-ZOD-001** MUST: Use Zod as the standard library for declaring structured runtime data schemas and validating external input boundaries.
-- **R-ZOD-002** MANDATORY: Prior to writing code that uses a versioned library, execute the lock-version grounding sequence (find dependency manifest, identify build tool, inspect repository lock/resolution artifact for exact version, look up official documentation, confirm every API exists, and re-run per dependency at point of use).
-- **R-ZOD-003** MANDATORY: Construct schemas modularly by defining reusable primitive validators and composing them into composite object schemas.
-- **R-ZOD-004** MANDATORY: Utilize refinement and transformation methods to enforce domain constraints such as string trimming and range limits directly within the schema pipeline.
+- **R-LM-001** MUST: The project MUST use Zod as the standard library for declaring structured runtime data schemas and validating external input boundaries.
 
 ### Verify
 
-```bash
-# Discover the repository script runner and execute the project verification test suite
-# Discover the static analysis check defined in the project configuration and execute type checking
-```
+- Discover the repository script runner and execute the project verification test suite to ensure all schema validation tests pass.
+- Discover the static analysis check defined in the project configuration and execute type checking to verify that schema inference aligns with declared data contracts.
 
 **Accept when:**
+
 - All discovered schema validation test suites execute and report zero failures.
 - Static type analysis confirms that data types inferred from schemas match expected input contracts across all consumption boundaries.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All external data ingress points must apply schema parsing, and pull requests lacking validation will be blocked.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated test suites executing schema parsing validations during continuous integration.
+- Verified by: Code review checks verifying that all external data ingress points apply schema parsing.
+- Violation handling: Pull requests lacking schema validation at untrusted input boundaries will be blocked until compliant schemas and tests are added.
+- Exception process: Exceptions must be submitted via architectural review with documented performance benchmarking and justification.
 </enforcement>

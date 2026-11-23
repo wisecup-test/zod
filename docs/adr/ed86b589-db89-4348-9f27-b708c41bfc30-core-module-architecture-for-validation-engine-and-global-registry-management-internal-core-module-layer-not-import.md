@@ -17,7 +17,6 @@ metadata:
 
 # Core Module Architecture for Validation Engine and Global Registry Management: Internal Core Module Layer Not Import
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,18 +39,18 @@ Tightly coupling schema evaluation, serialization mappings, and backward-compati
 
 ## Decision
 
-1. MUST_NOT: The internal core module layer MUST NOT import from outward compatibility facades or high-level schema transformation modules.
+- **R-LM-001** MUST_NOT: The internal core module layer MUST NOT import from outward compatibility facades or high-level schema transformation modules.
 
 ## Policy Block
 
-- MUST_NOT The internal core module layer MUST NOT import from outward compatibility facades or high-level schema transformation modules.
-
 In scope:
+
 - Implementation and extension of validation schemas, checks, and error structures.
 - Registration and resolution of schema metadata within internal registries.
 - Integration of schema transformation processors and legacy compatibility adapters.
 
 Out of scope:
+
 - Third-party application code integrating the public validation library facade without extending core modules.
 - Isolated unit test fixtures that do not interact with shared registry instances.
 
@@ -64,11 +63,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Provides clear architectural boundaries that prevent coupling between primitive validation mechanics and specialized schema converters.
 - Unifies metadata resolution and instance tracking through a single global registry interface.
 - Allows independent testing and maintenance of foundational validation checks and error utilities.
 
 Negative:
+
 - Increases import path indirection across multi-layer module boundaries.
 - Requires strict enforcement of dependency hierarchy to prevent accidental backward imports from compatibility layers into core modules.
 
@@ -106,13 +107,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project static analysis and linting command to verify module boundary compliance.
 - Discover and execute the project test runner across core module test suites.
 - Discover and execute the circular dependency checker script defined in the project configuration.
 
 Accept when:
+
 - All core module test suites complete with zero errors.
 - Static dependency validation passes without detecting disallowed inward imports into the core module layer.
 - Schema registry resolution tests verify deterministic cache lookups across compatibility facades.

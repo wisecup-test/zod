@@ -19,29 +19,33 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for all internal modules within the core library package responsible for schema definitions, validation checks, registry lookups, and schema transformations.
+These rules are ALWAYS ACTIVE for:
+- All internal modules within the core library package responsible for schema definitions, validation checks, registry lookups, and schema transformations.
+- Functions performing recursive schema graph analysis, serialization, or metadata aggregation.
 
 ### Rules
 
-- **R-MOD-001** MUST: Schema transformations MUST query the contextual visited cache prior to processing subschemas to prevent unbounded recursion on cyclic structures.
-- **R-MOD-002** MUST: Discover the dependency manifest in the repo to identify exact resolved versions before writing code that uses a versioned library, verifying APIs via documentation.
-- **R-MOD-003** MUST: Maintain clear layering between schema definition primitives, validation checks, and serialization processors to prevent circular module dependencies.
-- **R-MOD-004** MUST: Ensure the contextual traversal cache is initialized at the root of every recursive traversal and forwarded across all child processing operations.
-- **R-MOD-005** MUST: Keep global registries focused on instance lookup and metadata resolution rather than transient execution state.
+- **R-LM-001** MUST: Schema transformations MUST query the contextual visited cache prior to processing subschemas to prevent unbounded recursion on cyclic structures.
 
 ### Verify
 
-\`\`\`bash
-# Discover and execute the repository test runner to validate recursive schema generation, registry lookups, and serialization behaviors.
-# Discover and execute the repository module boundary and circular dependency verification scripts to ensure import isolation between core submodules.
-# Discover and execute the repository static type checker to verify internal interface compatibility across all core module boundaries.
-\`\`\`
+- Discover and execute the repository test runner to validate recursive schema generation, registry lookups, and serialization behaviors.
+- Discover and execute the repository module boundary and circular dependency verification scripts to ensure import isolation between core submodules.
+- Discover and execute the repository static type checker to verify internal interface compatibility across all core module boundaries.
 
 **Accept when:**
+
 - All core module interfaces and internal imports resolve through the defined module boundaries without circular module initialization errors.
 - Schema transformations and serializations correctly track cyclic structures using the contextual traversal cache without memory leaks.
 - Static type checking and automated regression suites pass completely across all core library components.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated static analysis and module boundary linting executed during continuous integration.
+- Verified by: Mandatory peer code review by core library maintainers focusing on internal import hierarchies and context propagation.
+- Verified by: Comprehensive unit and integration test suites validating recursive schema transformation and cycle detection behavior.
+- Violation handling: Pull requests containing direct circular module imports or bypassed registry context structures are blocked from merging.
+- Violation handling: Code review rejections require refactoring non-compliant internal modules to align with designated module boundaries and context protocols.
+- Exception process: Submit an architectural exception request detailing the structural constraints that preclude using standard internal core modules or registry context traversal.
+- Exception process: Obtain formal approval from core library maintainers prior to merging any alternative state passing or module coupling pattern.
 </enforcement>

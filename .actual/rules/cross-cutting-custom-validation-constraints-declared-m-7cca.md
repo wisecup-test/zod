@@ -21,25 +21,29 @@ metadata:
 
 Scope: applies to `packages/bench/**`, `packages/resolution/src/**`, `packages/treeshake/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- All runtime input parsing, schema definitions, and payload verification in shared and client-facing packages.
 
 ### Rules
 
-- **R-MOD-001** SHOULD: Custom validation constraints SHOULD be declared using modular check functions attached to base type schemas.
-- **R-MOD-002** MANDATORY: Discover and use version-specific dependency management, lockfile inspection, and API verification before implementing schema validation logic.
-- **R-MOD-003** MANDATORY: Import only modular validation primitives to preserve optimal dead-code elimination across diverse module resolution formats.
+- **R-LM-001** SHOULD: Custom validation constraints SHOULD be declared using modular check functions attached to base type schemas.
 
 ### Verify
 
-```bash
-# Discover and run repository verification scripts that validate module imports and runtime parsing test suites
-# Inspect module resolution outputs to verify that only modular validation primitives are bundled
-```
+- Discover and run the repository verification scripts that validate module imports and runtime parsing test suites.
+- Inspect module resolution outputs to verify that only modular validation primitives are bundled into target artifacts.
 
 **Accept when:**
+
 - All schema validation implementations execute runtime parsing through the designated modular validation entry point.
 - Repository verification scripts confirm schema validation tests pass without unapproved monolithic validator imports.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated static analysis, module import inspection, and code review verification.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated static analysis and module import inspection in continuous integration workflows.
+- Verified by: Code review verification of schema definition patterns and parsing calls.
+- Violation handling: Flag imports of non-modular validation namespaces as blocking lint or static analysis violations.
+- Violation handling: Require refactoring of direct manual validation assertions into standardized modular schema definitions.
+- Exception process: Submit an architectural review request documenting technical constraints that necessitate alternative schema validation mechanisms.
+- Exception process: Obtain sign-off from module owners prior to introducing external schema parsers.
 </enforcement>

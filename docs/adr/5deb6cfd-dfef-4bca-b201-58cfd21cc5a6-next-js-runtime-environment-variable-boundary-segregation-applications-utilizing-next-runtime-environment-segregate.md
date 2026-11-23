@@ -21,7 +21,6 @@ metadata:
 
 # Next.js Runtime Environment Variable Boundary Segregation: Applications Utilizing Next Runtime Environment Segregate
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -49,16 +48,16 @@ Applications combining server and client rendering require external service cred
 
 ## Decision
 
-1. MUST: Applications utilizing the Next.js runtime environment MUST segregate credential and configuration access across runtime boundaries by restricting client-facing environment access exclusively to identifiers carrying the public prefix convention while confining sensitive secrets and authorization tokens to server-only execution contexts.
+- **R-SC-001** MUST: Applications utilizing the Next.js runtime environment MUST segregate credential and configuration access across runtime boundaries by restricting client-facing environment access exclusively to identifiers carrying the public prefix convention while confining sensitive secrets and authorization tokens to server-only execution contexts.
 
 ## Policy Block
 
-- MUST Applications utilizing the Next.js runtime environment MUST segregate credential and configuration access across runtime boundaries by restricting client-facing environment access exclusively to identifiers carrying the public prefix convention while confining sensitive secrets and authorization tokens to server-only execution contexts.
-
 In scope:
+
 - All application modules, server route handlers, data loaders, and client components accessing environment variables or external service credentials.
 
 Out of scope:
+
 - Static documentation assets and build-time configuration files that execute solely during compilation or asset generation.
 
 ## Rationale
@@ -70,11 +69,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Guarantees that sensitive secrets and tokens remain contained within isolated server execution environments.
 - Clarifies data and configuration boundaries between client components and server loaders.
 - Prevents accidental exposure of private infrastructure variables across client bundles.
 
 Negative:
+
 - Requires client components needing sensitive operations to route requests through server endpoints rather than calling external services directly.
 - Increases cognitive overhead when coordinating configuration keys that must span both client and server domains.
 
@@ -112,12 +113,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project manifest and execute the configured static analysis scripts to verify no client components reference private environment variables.
 - Inspect repository automation workflows and run the test suite to validate that server data loaders inject authorization tokens only into server request headers.
 
 Accept when:
+
 - Static analysis confirms zero references to un-prefixed environment variables within client component modules.
 - Server route handlers and data loaders successfully authorize external requests using server-scoped environment credentials without exposing them in response bodies.
 

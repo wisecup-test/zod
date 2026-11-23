@@ -17,7 +17,6 @@ metadata:
 
 # React Server Component Client Boundary Demarcation via use client Directive: Component Modules That Only Render Static
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -41,17 +40,17 @@ Within a server-first React component architecture, components default to server
 
 ## Decision
 
-1. MUST_NOT: Component modules that only render static props and require no browser APIs, event listeners, or client-side hooks MUST NOT declare the use client directive.
+- **R-RM-001** MUST_NOT: Component modules that only render static props and require no browser APIs, event listeners, or client-side hooks MUST NOT declare the use client directive.
 
 ## Policy Block
 
-- MUST_NOT Component modules that only render static props and require no browser APIs, event listeners, or client-side hooks MUST NOT declare the use client directive.
-
 In scope:
+
 - All frontend UI components within the documentation and web interface packages requiring interactive state, DOM manipulation, or browser APIs.
 - Integration wrapper components interfacing with client-only third-party UI widgets and search dialogs.
 
 Out of scope:
+
 - Purely static presentational components that render markup without client-side state, event handlers, or browser APIs.
 - Server-side data fetching layouts, page entries, and static document transformation utilities.
 
@@ -64,11 +63,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Enables full access to browser APIs, DOM node references, and interactive React lifecycle hooks within designated components.
 - Maintains clear structural separation between server-rendered content and interactive client widgets.
 - Allows seamless integration with client-dependent third-party UI primitive libraries and external interactive search widgets.
 
 Negative:
+
 - Increases client JavaScript bundle size and hydration overhead for every module opted into the client boundary.
 - Requires careful boundary placement to avoid unintentionally converting static server-rendered child trees into client-rendered subtrees.
 - Introduces architectural friction when sharing utility functions or types between server and client component boundaries.
@@ -108,13 +109,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project dependency manifest and lock artifact, and verify the exact resolved versions of the UI framework and component libraries.
 - Discover and run the project static analysis and linting scripts to verify that client hooks are accompanied by client boundary declarations.
 - Discover and execute the project build verification command to confirm clean compilation across server and client component boundaries.
 
 Accept when:
+
 - All UI components utilizing React state, effects, browser DOM references, or client-only hooks declare the use client directive at the module root.
 - Static and server-renderable UI components without interactivity remain free of the use client directive to avoid unnecessary client bundle growth.
 - Automated build and static analysis checks pass with zero client boundary syntax or runtime lifecycle errors.

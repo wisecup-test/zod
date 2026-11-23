@@ -18,7 +18,6 @@ metadata:
 
 # Adoption of next/image for Optimized UI Image Rendering: Components Displaying Theme Specific Graphics Encapsulate
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -42,22 +41,25 @@ Rendering graphical assets with native markup across client and layout component
 
 ## Decision
 
-1. SHOULD: Components displaying theme-specific graphics SHOULD encapsulate theme-switching logic within dedicated wrapper components utilizing next/image rather than duplicating inline styling.
+- **R-LM-001** SHOULD: Components displaying theme-specific graphics SHOULD encapsulate theme-switching logic within dedicated wrapper components utilizing next/image rather than duplicating inline styling.
 
 ## Policy Block
 
-- SHOULD Components displaying theme-specific graphics SHOULD encapsulate theme-switching logic within dedicated wrapper components utilizing next/image rather than duplicating inline styling.
-
 In scope:
+
 - All presentation components, layouts, and brand visual elements rendering raster images.
 - Client-side and shared layout components displaying logo assets and theme-dependent imagery.
 
 Out of scope:
+
 - Inline vector graphics rendered directly as scalable vector elements.
 - Non-visual utility functions and server-side metadata endpoints that do not render graphical interface elements.
 
 Exceptions:
-- EXC-20-001: Third-party content or syndication formats require raw markup where framework-level image components cannot be evaluated.
+
+- **EXC-20-001** Third-party content or syndication formats require raw markup where framework-level image components cannot be evaluated.
+  Approval: Architecture Lead
+  Documentation: Document the restriction in the component header with justification for raw markup.
 
 ## Rationale
 
@@ -68,11 +70,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Consistent image handling and layout stability across desktop and mobile viewports.
 - Automatic asset optimization and responsive scaling benefits provided by the framework module.
 - Simplified theme and logo swapping encapsulated within dedicated image components.
 
 Negative:
+
 - Requires explicit width and height configurations or wrapper styling, increasing boilerplate for simple icons.
 - Tightens coupling of interface components to framework-specific asset handling abstractions.
 
@@ -110,12 +114,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the repository linter suite to check for prohibited native image markup in presentation components.
 - Discover and run the project type-checker and build pipeline to verify that next/image invocations satisfy contract constraints.
 
 Accept when:
+
 - Repository linting rules verify no raw HTML image tags exist within documentation component modules.
 - Type verification and build commands succeed with all next/image properties matching resolved module definitions.
 

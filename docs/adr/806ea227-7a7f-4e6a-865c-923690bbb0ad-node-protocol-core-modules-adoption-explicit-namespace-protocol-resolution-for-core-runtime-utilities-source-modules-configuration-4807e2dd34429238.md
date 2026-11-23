@@ -1,10 +1,10 @@
 ---
 version: 2
-name: 8855787a-2ca9-48d0-8e07-bca1a1ac414e-node-protocol-core-modules-adoption-explicit-namespace-protocol-resolution-for-core-runtime-utilities-input-validation-serialization-routines-reading-filesystem
-description: "node: Protocol Core Modules Adoption: Explicit Namespace Protocol Resolution for Core Runtime Utilities: Input Validation Serialization Routines Reading Filesystem"
+name: 806ea227-7a7f-4e6a-865c-923690bbb0ad-node-protocol-core-modules-adoption-explicit-namespace-protocol-resolution-for-core-runtime-utilities-source-modules-configuration-4807e2dd34429238
+description: "node: Protocol Core Modules Adoption: Explicit Namespace Protocol Resolution for Core Runtime Utilities: Source Modules Configuration Units Repository Utility"
 metadata:
   actual:
-    adr_id: 8855787a-2ca9-48d0-8e07-bca1a1ac414e
+    adr_id: 806ea227-7a7f-4e6a-865c-923690bbb0ad
     status: accepted
     candidate_group_id: b221aea1-37c8-4893-8cb2-d3c57617eb2f
     evidence:
@@ -18,9 +18,8 @@ metadata:
       - vitest.root.mjs
 ---
 
-# node: Protocol Core Modules Adoption: Explicit Namespace Protocol Resolution for Core Runtime Utilities: Input Validation Serialization Routines Reading Filesystem
+# node: Protocol Core Modules Adoption: Explicit Namespace Protocol Resolution for Core Runtime Utilities: Source Modules Configuration Units Repository Utility
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -46,18 +45,18 @@ Relying on bare module specifiers for core runtime functionality allows third-pa
 
 ## Decision
 
-1. MUST: Input validation and serialization routines reading filesystem contents MUST parse data structures defensively through validated deserialization mechanisms.
+- **R-LM-001** MUST_NOT: Source modules, configuration units, and repository utility scripts MUST NOT import runtime core utilities using un-prefixed bare specifiers.
 
 ## Policy Block
 
-- MUST Input validation and serialization routines reading filesystem contents MUST parse data structures defensively through validated deserialization mechanisms.
-
 In scope:
+
 - All repository configuration files requiring core system utilities
 - All automation and verification scripts interfacing with filesystem, path, or URL capabilities
 - All internal modules relying on runtime platform interfaces
 
 Out of scope:
+
 - Client-side browser application bundles executing in environments lacking runtime core module support
 - Third-party vendor libraries packaged as external distribution artifacts
 
@@ -70,11 +69,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Eliminates namespace collisions and prevents malicious or accidental shadowing of platform modules by third-party packages.
 - Enables static analysis and bundlers to immediately recognize platform built-ins without heuristic resolution checks.
 - Ensures consistency across configuration files, maintenance scripts, and automation tasks.
 
 Negative:
+
 - Precludes execution on legacy runtime versions that do not support protocol-prefixed specifiers without transformation.
 - Requires automated linting and continuous integration checks to prevent regression to legacy bare specifiers.
 
@@ -112,12 +113,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the repository linter to verify that no bare imports of runtime core modules exist in source or configuration files.
 - Discover and run the repository test and type-checking scripts to verify successful resolution of all protocol-prefixed module imports.
 
 Accept when:
+
 - Static analysis and linting pass with zero violations of core module import prefix rules.
 - All test suites and configuration modules execute and resolve runtime core utilities without resolution errors.
 

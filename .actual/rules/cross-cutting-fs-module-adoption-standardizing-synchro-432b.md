@@ -20,25 +20,28 @@ metadata:
 
 Scope: applies to `.claude/skills/triage/scripts/**`, `scripts/**`.
 
-These rules are ALWAYS ACTIVE for standalone repository maintenance, triage, verification, and code generation scripts executed outside of published distribution packages.
+These rules are ALWAYS ACTIVE for:
+- Standalone repository maintenance, triage, verification, and code generation scripts.
+- Local file system inspection and artifact writing workflows executed outside of published distribution packages.
 
 ### Rules
 
-- **R-FS-001** SHOULD: Sequential verification and artifact generation scripts SHOULD employ synchronous read operations such as readFileSync for discrete metadata inspection to ensure deterministic and linear execution flow.
-- **R-FS-002** MANDATORY: When reading structured data files, pass the text encoding parameter directly to readFileSync prior to parsing the decoded string.
-- **R-FS-003** MANDATORY: Wrap file system read operations in structured exception handling blocks to emit informative diagnostic messages upon file absence or access failure.
+- **R-LM-001** SHOULD: Sequential verification and artifact generation scripts SHOULD employ synchronous read operations such as readFileSync for discrete metadata inspection to ensure deterministic and linear execution flow.
 
 ### Verify
 
-```bash
-# Discover the project verification script defined in the repository configuration manifest and execute it to verify repository integrity.
-# Inspect script source files to confirm all file system imports utilize the protocol-prefixed core module namespace without third-party wrapper dependencies.
-```
+- Discover the project verification script defined in the repository configuration manifest and execute it to verify repository integrity.
+- Inspect script source files to confirm all file system imports utilize the protocol-prefixed core module namespace without third-party wrapper dependencies.
 
 **Accept when:**
+
 - All repository automation and verification scripts execute to completion without file system resolution errors.
 - Static module import analysis confirms file system access in script files is restricted to the protocol-qualified core module namespace.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration checks that execute verification scripts on every pull request.
+- Verified by: Static analysis and peer review of newly introduced or modified script files.
+- Violation handling: Pull requests introducing third-party file system utilities or non-protocol-qualified imports in scripts will be blocked during review until updated to adhere to core module standards.
+- Exception process: Exceptions require documented justification and approval from engineering leads where specialized third-party file manipulation features are demonstrably necessary.
 </enforcement>

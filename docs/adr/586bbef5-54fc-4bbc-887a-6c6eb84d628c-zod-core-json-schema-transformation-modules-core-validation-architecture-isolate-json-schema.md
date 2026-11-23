@@ -17,7 +17,6 @@ metadata:
 
 # Zod Core JSON Schema Transformation Modules: Core Validation Architecture Isolate Json Schema
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Generating compliant JSON Schema from expressive, composable runtime validation 
 
 ## Decision
 
-1. MUST: The core validation architecture MUST isolate JSON Schema translation into modular processors coordinated through an explicit traversal context.
+- **R-LM-001** MUST: The core validation architecture MUST isolate JSON Schema translation into modular processors coordinated through an explicit traversal context.
 
 ## Policy Block
 
-- MUST The core validation architecture MUST isolate JSON Schema translation into modular processors coordinated through an explicit traversal context.
-
 In scope:
+
 - Core schema transformation and JSON Schema generation modules within the library.
 - Context management, schema processor registries, and metadata lookup implementations.
 
 Out of scope:
+
 - Runtime data validation paths that do not generate JSON Schema representations.
 - External schema format converters operating outside the core library module boundaries.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Decouples individual schema transformation logic into discrete, independently testable processor units.
 - Prevents infinite loops on recursive and self-referencing schemas through context-driven seen caching.
 - Centralizes metadata extraction through registry lookups rather than scattered ad-hoc property access.
 
 Negative:
+
 - Increases architectural indirection by requiring all processors to coordinate through shared context abstractions.
 - Requires new schema types to provide corresponding processor registrations to maintain complete JSON Schema parity.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository configuration to locate and execute the test runner targeting core schema conversion modules.
 - Discover the workspace static analysis and linting scripts to verify compliance with internal module dependency boundaries.
 
 Accept when:
+
 - The repository test suite executes without failures across all JSON Schema generation scenarios, including recursive and circular definitions.
 - Static boundary checks confirm schema transformation processors only interact with core registries through the context interface.
 

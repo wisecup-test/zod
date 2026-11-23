@@ -20,30 +20,33 @@ metadata:
 
 Scope: applies to `packages/zod/src/mini/**`, `packages/zod/src/v4-mini/**`.
 
-These rules are ALWAYS ACTIVE for modular lightweight distribution variants and internal submodules providing public or semi-public validation surface definitions.
+These rules are ALWAYS ACTIVE for:
+- Modular and lightweight package entry point exports within the library workspace.
+- Internal submodules providing public or semi-public validation surface definitions.
 
 ### Rules
 
-- **R-MOD-001** MAY: New modular entry points MAY define specialized re-export groupings provided they source primitive definitions strictly from the canonical external core module.
-- **R-MOD-002** MANDATORY: Ensure all re-exported symbols from the shared external core module preserve type definitions and parameter constraints identical to the primary library exports.
-- **R-MOD-003** MANDATORY: Structure entry facades as pure re-export boundaries with minimal to zero runtime initialization code.
-- **R-MOD-004** MANDATORY (LOCK-VERSION GROUNDING): Before writing code that uses a versioned library, execute in order: find the dependency manifest, identify the build tool, inspect the repository lock or resolution artifact to determine the exact resolved version, look up official documentation for that exact version, confirm every API/class/function exists in that version, and re-run steps per dependency at point of use.
+- **R-LM-001** MAY: New modular entry points MAY define specialized re-export groupings provided they source primitive definitions strictly from the canonical external core module.
 
 ### Verify
 
-```bash
-# Discover the repository build script from the project manifest and execute compilation verification:
-# (Example: pnpm build / npm run build)
-# Locate the project test runner and execute the test suite targeting modular entry points:
-# (Example: pnpm test)
-# Run the module import linter to verify lightweight entry facades import exclusively from the canonical external core module.
-```
+- Discover the repository build script from the project manifest and execute the compilation verification task to validate module export compatibility.
+- Locate the project test runner configuration and execute the suite targeting modular entry point exports.
+- Query the workspace static analysis configuration and run the module import linter to verify that lightweight entry facades import exclusively from the canonical external core module.
 
 **Accept when:**
+
 - All lightweight entry facades successfully compile and resolve exports against the canonical external core module without unresolved references.
 - Automated test suites confirm behavioral equivalence across all modular export pathways.
 - Static analysis checks pass with zero reported violations of module boundary delegation rules.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification by automated CI, peer review, and static analysis linting is mandatory. Violations will block code merging and require refactoring to delegate directly to the canonical external core export.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline execution checking module export integrity and type signatures.
+- Verified by: Peer code review validating that new entry facades delegate to the canonical external core module rather than duplicating runtime definitions.
+- Verified by: Static analysis linting rules restricting direct internal cross-module dependencies.
+- Violation handling: Pull requests introducing duplicate core implementations or bypassing the external core module are blocked from merging.
+- Violation handling: Flagged architectural violations must be refactored to delegate directly to the canonical external core export.
+- Exception process: Exceptions require written justification submitted via the architectural review workflow detailing why delegation is technically infeasible.
+- Exception process: Approved exceptions must be time-bounded and documented within an architecture review record prior to code merge.
 </enforcement>

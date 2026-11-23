@@ -22,23 +22,30 @@ metadata:
 
 Scope: applies to `scripts/**`, `vitest.compile.config.ts`, `vitest.config.ts`, `vitest.root.mjs`.
 
-These rules are ALWAYS ACTIVE for all repository configuration files, automation and verification scripts interfacing with filesystem, path, or URL capabilities, and internal modules relying on runtime platform interfaces.
+These rules are ALWAYS ACTIVE for:
+- All repository configuration files requiring core system utilities
+- All automation and verification scripts interfacing with filesystem, path, or URL capabilities
+- All internal modules relying on runtime platform interfaces
 
 ### Rules
 
-- **R-NODE-001** SHOULD: Module path resolutions and directory URL derivations SHOULD use protocol-prefixed path and URL utilities consistently across all configuration definitions and execution scripts.
+- **R-LM-001** SHOULD: Module path resolutions and directory URL derivations SHOULD use protocol-prefixed path and URL utilities consistently across all configuration definitions and execution scripts.
 
 ### Verify
 
-```bash
-# Discover and run the repository linter to verify that no bare imports of runtime core modules exist in source or configuration files.
-# Discover and run the repository test and type-checking scripts to verify successful resolution of all protocol-prefixed module imports.
-```
+- Discover and run the repository linter to verify that no bare imports of runtime core modules exist in source or configuration files.
+- Discover and run the repository test and type-checking scripts to verify successful resolution of all protocol-prefixed module imports.
 
 **Accept when:**
+
 - Static analysis and linting pass with zero violations of core module import prefix rules.
 - All test suites and configuration modules execute and resolve runtime core utilities without resolution errors.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration lint checks inspecting import specifiers
+- Verified by: Code review validation for all new configuration files and utility scripts
+- Violation handling: Pull requests containing bare specifiers for runtime core modules are blocked by automated continuous integration
+- Violation handling: Violations must be updated to use the explicit protocol prefix before merge approval
+- Exception process: Exceptions for legacy compatibility require written justification and approval from the lead architecture maintainers.
 </enforcement>

@@ -18,7 +18,6 @@ metadata:
 
 # Standard Runtime Console Error Logging: Diagnostic Logging Statements Not Record Unredacted
 
-Status: proposed
 Date: 2025-05-15
 Deciders: Detection Pipeline (automated)
 
@@ -42,16 +41,16 @@ Uncaught exceptions and operational errors require visibility without introducin
 
 ## Decision
 
-1. MUST_NOT: Diagnostic logging statements MUST_NOT record unredacted authorization tokens or sensitive environment configurations.
+- **R-L-001** MUST_NOT: Diagnostic logging statements MUST_NOT record unredacted authorization tokens or sensitive environment configurations.
 
 ## Policy Block
 
-- MUST_NOT Diagnostic logging statements MUST_NOT record unredacted authorization tokens or sensitive environment configurations.
-
 In scope:
+
 - All asynchronous error handlers and boundary catch blocks in client and server runtime scopes lacking dedicated telemetry services.
 
 Out of scope:
+
 - Modules that integrate dedicated telemetry clients, analytics reporters, or structured audit trails.
 
 ## Rationale
@@ -62,10 +61,12 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Zero dependency footprint and zero configuration overhead for recording runtime failures.
 - Universal compatibility across both client-side and server-side execution contexts.
 
 Negative:
+
 - Logs lack uniform structured metadata required for centralized aggregation and searching.
 - Log formatting and severity level handling remain uncoordinated across runtime environments.
 
@@ -97,12 +98,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the project verification scripts through the repository build system to check for code analysis and linting compliance.
 - Run repository test suites to ensure error handling paths and diagnostic outputs function without unhandled promise rejections.
 
 Accept when:
+
 - Automated static analysis verification passes without reporting unhandled exception suppressions.
 - Error dispatch sites conform to contextual messaging guidelines across all target modules.
 

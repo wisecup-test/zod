@@ -18,7 +18,6 @@ metadata:
 
 # Zod Shared External Core Module Delegation: New Modular Entry Points Define Specialized
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -42,17 +41,17 @@ Maintaining independent core validation primitives across distinct entry points 
 
 ## Decision
 
-1. MAY: New modular entry points MAY define specialized re-export groupings provided they source primitive definitions strictly from the canonical external core module.
+- **R-LM-001** MAY: New modular entry points MAY define specialized re-export groupings provided they source primitive definitions strictly from the canonical external core module.
 
 ## Policy Block
 
-- MAY New modular entry points MAY define specialized re-export groupings provided they source primitive definitions strictly from the canonical external core module.
-
 In scope:
+
 - Modular and lightweight package entry point exports within the library workspace.
 - Internal submodules providing public or semi-public validation surface definitions.
 
 Out of scope:
+
 - Internal standalone utility helpers that do not expose public schema primitives.
 - Full-bundle monolithic distribution entry points with independent top-level bindings.
 
@@ -65,11 +64,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Guarantees behavioral and schema validation consistency across all lightweight module entry points.
 - Eliminates duplication of foundational validation primitives, reducing overall package footprint.
 - Establishes clear architectural separation between consumer-facing entry facades and core external implementations.
 
 Negative:
+
 - Couples modular entry facades to the internal structure and export contracts of the shared external core module.
 - Requires strict boundary governance to ensure entry facades do not inadvertently pull in unwanted transitive internal dependencies.
 
@@ -107,13 +108,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository build script from the project manifest and execute the compilation verification task to validate module export compatibility.
 - Locate the project test runner configuration and execute the suite targeting modular entry point exports.
 - Query the workspace static analysis configuration and run the module import linter to verify that lightweight entry facades import exclusively from the canonical external core module.
 
 Accept when:
+
 - All lightweight entry facades successfully compile and resolve exports against the canonical external core module without unresolved references.
 - Automated test suites confirm behavioral equivalence across all modular export pathways.
 - Static analysis checks pass with zero reported violations of module boundary delegation rules.

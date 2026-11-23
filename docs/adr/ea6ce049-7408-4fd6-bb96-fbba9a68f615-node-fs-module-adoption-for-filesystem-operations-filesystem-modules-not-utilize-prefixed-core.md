@@ -18,7 +18,6 @@ metadata:
 
 # node:fs Module Adoption for Filesystem Operations: Filesystem Modules Not Utilize Prefixed Core
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -42,17 +41,17 @@ Repository maintenance scripts and package generation utilities require dependab
 
 ## Decision
 
-1. MUST_NOT: Filesystem modules MUST NOT utilize un-prefixed core module specifiers to prevent namespace collision with external registry packages.
+- **R-LM-001** MUST_NOT: Filesystem modules MUST NOT utilize un-prefixed core module specifiers to prevent namespace collision with external registry packages.
 
 ## Policy Block
 
-- MUST_NOT Filesystem modules MUST NOT utilize un-prefixed core module specifiers to prevent namespace collision with external registry packages.
-
 In scope:
+
 - Repository automation scripts, code generators, and verification routines requiring direct host filesystem access
 - Build-time manifest inspection and artifact generation workflows
 
 Out of scope:
+
 - Runtime client packages distributed for cross-platform execution that do not operate in host filesystem environments
 - Asynchronous streaming I/O workflows that require non-blocking event-driven pipelines
 
@@ -65,11 +64,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Eliminates potential module resolution collisions between platform core capabilities and external dependencies.
 - Simplifies script flow by avoiding promise resolution chains and asynchronous boilerplate in linear execution tasks.
 - Ensures consistent file reading and parsing patterns across all repository maintenance utilities.
 
 Negative:
+
 - Synchronous I/O blocks the process execution thread during file read operations.
 - Limits applicability to CLI and build-time environments, preventing reuse within non-blocking runtime services.
 
@@ -107,12 +108,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the repository verification script that checks manifest integrity.
 - Discover and run the build generation pipeline to confirm all generated artifacts match the declared schema.
 
 Accept when:
+
 - All build scripts and code generators import filesystem capabilities through the explicit node:fs protocol specifier without resolution errors.
 - Manifest inspection workflows successfully load and parse target configuration files synchronously without unhandled exceptions.
 

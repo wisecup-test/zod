@@ -17,7 +17,6 @@ metadata:
 
 # Core Module Architecture for Shared Schema Primitives: Peripheral Distribution Flavors Not Import Directly
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,16 +39,16 @@ Independent library flavors and entrypoint modules require identical schema trav
 
 ## Decision
 
-1. MUST_NOT: Peripheral distribution flavors MUST NOT import directly from sibling distribution flavors to access shared parsing or traversal logic.
+- **R-LM-001** MUST_NOT: Peripheral distribution flavors MUST NOT import directly from sibling distribution flavors to access shared parsing or traversal logic.
 
 ## Policy Block
 
-- MUST_NOT Peripheral distribution flavors MUST NOT import directly from sibling distribution flavors to access shared parsing or traversal logic.
-
 In scope:
+
 - All internal schema distributions, flavor entrypoints, and shared utility modules within the library architecture.
 
 Out of scope:
+
 - End-user application consumer code outside the internal library implementation boundaries.
 
 ## Rationale
@@ -60,11 +59,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Centralizes critical parsing, traversal algorithms, and schema registries into a single authoritative module.
 - Eliminates redundant implementations across diverse entrypoint distributions.
 - Enforces unidirectional architectural dependencies from peripheral distributions into the core engine.
 
 Negative:
+
 - Changes to core module interfaces require synchronized updates and regression verification across all dependent distribution flavors.
 - Distribution packages carry an architectural dependency on internal core contracts that must be preserved during refactoring.
 
@@ -102,12 +103,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the project boundary analysis check to confirm that all shared imports originate from the core module.
 - Discover and run the repository test and validation suite to verify that all distribution flavors successfully integrate with the core module.
 
 Accept when:
+
 - Dependency boundary analysis passes with zero cross-flavor couplings and all shared traversal logic referencing the core module.
 - Repository test suites execute successfully with all modules resolving core registry and utility contracts.
 

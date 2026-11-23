@@ -19,27 +19,29 @@ metadata:
 
 Scope: applies to `packages/tsc/bench/**`.
 
-These rules are ALWAYS ACTIVE for benchmark harness suites and performance measurement suites executing external processes.
+These rules are ALWAYS ACTIVE for:
+- Benchmark harness suites and performance measurement suites executing external processes
+- Integration benchmarks requiring programmatic compiler process invocation
 
 ### Rules
 
-- **R-EXEC-001** MUST_NOT: Benchmark suites MUST NOT invoke unabstracted core runtime child process spawning APIs directly when execa is available as the adopted process execution interface.
-- **R-EXEC-002** MANDATORY: The consumer MUST derive all tool names, file names, commands, package managers, and version numbers from the project repository following the discovery policy.
-- **R-EXEC-003** MANDATORY: Before writing code that uses a versioned library, execute in order: find dependency manifest, identify build tool, inspect repository lock or resolution artifact for the exact resolved version, look up official documentation for that exact version, and confirm every API/class/function exists.
-- **R-EXEC-004** MANDATORY: Benchmark suites should encapsulate shared fixture generation and parameter setup in reusable helper modules before invoking execa for compiler execution.
-- **R-EXEC-005** MANDATORY: Process outputs should be inspected for error exit codes and process signal terminations to ensure benchmark metrics only record successful executions.
+- **R-LM-001** MUST_NOT: Benchmark suites MUST NOT invoke unabstracted core runtime child process spawning APIs directly when execa is available as the adopted process execution interface.
 
 ### Verify
 
-```bash
-# Discover the benchmark execution task in the project task configuration and run the benchmark suite to verify child process execution.
-# Inspect repository dependency declarations to confirm execa is declared within the appropriate workspace dependency scope.
-```
+- Discover the benchmark execution task in the project task configuration and run the benchmark suite to verify child process execution.
+- Inspect repository dependency declarations to confirm execa is declared within the appropriate workspace dependency scope.
 
 **Accept when:**
+
 - All benchmark execution suites spawn external processes through execa without runtime failures.
 - Automated benchmark runs complete with deterministic exit codes and clean child process termination.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline execution of benchmark suites
+- Verified by: Static code review verifying process invocation compliance across benchmark modules
+- Violation handling: Direct calls to unapproved process execution primitives block code review approval
+- Violation handling: Unmanaged process spawning identified during review must be refactored to use execa
+- Exception process: Exceptions require approval from benchmark harness maintainers with documented technical justification.
 </enforcement>

@@ -20,22 +20,31 @@ metadata:
 
 Scope: applies to `packages/docs/app/**`, `packages/docs/components/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- All presentation components, layouts, and brand visual elements rendering raster images.
+- Client-side and shared layout components displaying logo assets and theme-dependent imagery.
 
 ### Rules
 
-- **R-IMG-001** MUST_NOT: Components MUST NOT render standard HTML img elements for static or remote media assets within the presentation layer.
+- **R-LM-001** MUST_NOT: Components MUST NOT render standard HTML img elements for static or remote media assets within the presentation layer.
 
 ### Verify
 
-```bash
-# Discover and execute the repository linter suite and type-checker/build pipeline
-```
+- Discover and execute the repository linter suite to check for prohibited native image markup in presentation components.
+- Discover and run the project type-checker and build pipeline to verify that next/image invocations satisfy contract constraints.
 
 **Accept when:**
+
 - Repository linting rules verify no raw HTML image tags exist within documentation component modules.
 - Type verification and build commands succeed with all next/image properties matching resolved module definitions.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated linting, CI type validation, build verification, and pull request code review.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated linting rules prohibiting native image elements in component files.
+- Verified by: Continuous integration type validation and build verification.
+- Verified by: Pull request code review of newly introduced visual presentation components.
+- Violation handling: Automated continuous integration failure upon detection of unapproved image markup.
+- Violation handling: Required refactoring to replace raw tags with next/image before pull request merge.
+- Exception process: Submit an exception request to the architecture team specifying the technical constraint precluding next/image adoption.
+- Exception process: Obtain documented architectural approval before bypassing linting or merging code.
 </enforcement>

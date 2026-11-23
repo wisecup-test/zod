@@ -19,24 +19,28 @@ metadata:
 
 Scope: applies to `packages/zod/src/v3/benchmarks/**`.
 
-These rules are ALWAYS ACTIVE for validation routines, schema parsing modules, primitive evaluation routines undergoing performance evaluation, and automated benchmark execution harnesses and regression measurement suites.
+These rules are ALWAYS ACTIVE for:
+- Validation routines, schema parsing modules, and primitive evaluation routines undergoing performance evaluation
+- Automated benchmark execution harnesses and regression measurement suites
 
 ### Rules
 
-- **R-BENCH-001** MUST_NOT: Benchmark implementations MUST NOT mix disparate schema workloads into a single suite without isolating comparative baseline evaluations.
-- **R-BENCH-002** MANDATORY: The consumer MUST derive all tool names, file names, commands, package managers, and version numbers from the project repository.
-- **R-BENCH-003** MANDATORY: Before writing code that uses a versioned library, execute lock-version grounding in order: find dependency manifest, identify build tool, inspect repository lock or resolution artifact, look up official documentation for that exact version, confirm every API/class/function exists in that version, and re-run per dependency at point of use for version-sensitive behavior.
+- **R-LM-001** MUST_NOT: Benchmark implementations MUST NOT mix disparate schema workloads into a single suite without isolating comparative baseline evaluations.
 
 ### Verify
 
-```bash
-echo "Discover and execute project benchmark verification scripts from configuration artifacts"
-```
+- echo "Discover and execute project benchmark verification scripts from configuration artifacts"
 
 **Accept when:**
+
 - All benchmark suites complete execution cycles without unhandled exceptions.
 - Cycle event listeners log target operations per second for all registered validation scenarios.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline execution of benchmark verification targets.
+- Verified by: Peer code review for all new schema primitives and parsing performance test cases.
+- Violation handling: Pull requests introducing validation primitives without corresponding benchmark coverage are blocked from merging.
+- Violation handling: Benchmark execution failures or unhandled cycle errors fail the continuous integration build.
+- Exception process: Exceptions require documented architectural justification and explicit sign-off from the technical lead.
 </enforcement>

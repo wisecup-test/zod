@@ -23,24 +23,30 @@ metadata:
 
 Scope: applies to `packages/docs/**`, `packages/resolution/**`, `packages/zod/**`, `scripts/**`, `vitest.config.ts`.
 
-These rules are ALWAYS ACTIVE for unit test suite configurations across all workspace packages and global test runner harness setup scripts and lifecycle hooks.
+These rules are ALWAYS ACTIVE for:
+- Unit test suite configuration across all workspace packages
+- Global test runner harness setup scripts and lifecycle hooks
 
 ### Rules
 
-- **R-VITEST-001** MUST: Root test configurations MUST export base testing options using defineConfig to establish shared execution defaults across all workspace packages.
+- **R-TS-001** MUST: Root test configurations MUST export base testing options using defineConfig to establish shared execution defaults across all workspace packages.
 
 ### Verify
 
-```bash
-# Discover the root test execution script from the project manifest and execute it to verify workspace test suites run cleanly.
-# Discover package manifest test scripts and execute package-level test suites to confirm project configuration inheritance resolves properly.
-```
+- Discover the root test execution script from the project manifest and execute it to verify workspace test suites run cleanly.
+- Discover package manifest test scripts and execute package-level test suites to confirm project configuration inheritance resolves properly.
 
 **Accept when:**
+
 - All package unit test suites execute and pass without configuration resolution errors.
 - Configuration merging via mergeConfig resolves without conflicting property overrides or runtime schema warnings.
 - Global test lifecycle hooks execute during suite setup and teardown as defined.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline executing unit test suites across all packages.
+- Verified by: Code review checks validating that package test configurations use mergeConfig with base configuration imports.
+- Violation handling: Pull requests with failing test suites or invalid test configuration resolution are blocked from merging.
+- Violation handling: Test configurations that duplicate base settings instead of using inheritance must be refactored before approval.
+- Exception process: Teams requiring divergent test runner configurations must submit an architectural review request explaining why base configuration inheritance cannot be used.
 </enforcement>

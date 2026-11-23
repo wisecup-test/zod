@@ -18,7 +18,6 @@ metadata:
 
 # node:child_process Core Module Adoption: Subprocess Management in Automation Scripts: Automation Scripts Not Introduce External Third
 
-Status: proposed
 Date: 2025-05-14
 Deciders: Detection Pipeline (automated)
 
@@ -42,16 +41,16 @@ Automation and triage scripts requiring external command execution risk supply-c
 
 ## Decision
 
-1. MUST_NOT: Automation scripts MUST NOT introduce external third-party process wrapper packages when native core module capabilities fulfill the execution requirements
+- **R-LM-001** MUST_NOT: Automation scripts MUST NOT introduce external third-party process wrapper packages when native core module capabilities fulfill the execution requirements
 
 ## Policy Block
 
-- MUST_NOT Automation scripts MUST NOT introduce external third-party process wrapper packages when native core module capabilities fulfill the execution requirements
-
 In scope:
+
 - Repository automation scripts, maintenance utilities, and triage workflows executing external commands or system utilities
 
 Out of scope:
+
 - Client-side application code executing in browser environments where runtime process execution modules are unavailable
 
 ## Rationale
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Zero third-party dependency footprint for repository maintenance and triage execution routines
 - Deterministic process lifecycle control with transparent standard input, output, and error handling
 - Unambiguous module resolution guaranteed by explicit protocol-prefixed specifiers
 
 Negative:
+
 - Low-level process spawning primitives require explicit stream handling and error code management compared to opinionated wrapper packages
 - Operating system discrepancies in process invocation must be accounted for across developer environments
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the repository verification scripts declared in the root dependency manifest
 - Discover and run static code inspection and typechecking suites across automation scripts to validate module import compliance
 
 Accept when:
+
 - All repository maintenance and triage scripts import process execution capabilities using the explicit protocol prefix
 - Static validation and code inspection verification suites complete with zero errors across all repository scripts
 

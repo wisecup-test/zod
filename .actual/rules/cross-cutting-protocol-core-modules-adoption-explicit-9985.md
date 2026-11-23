@@ -22,25 +22,30 @@ metadata:
 
 Scope: applies to `scripts/**`, `vitest.compile.config.ts`, `vitest.config.ts`, `vitest.root.mjs`.
 
-These rules are ALWAYS ACTIVE for all configuration files, automation scripts, verification scripts, and internal modules requiring core system utilities or interacting with runtime core module interfaces.
+These rules are ALWAYS ACTIVE for:
+- All repository configuration files requiring core system utilities
+- All automation and verification scripts interfacing with filesystem, path, or URL capabilities
+- All internal modules relying on runtime platform interfaces
 
 ### Rules
 
-- **R-NODE-001** MUST: Before integrating or updating dependencies that interact with runtime core module interfaces, engineers MUST inspect the project lock artifact to resolve and verify the exact locked version of the runtime and tooling dependencies against official reference documentation.
-- **R-NODE-002** MUST: Use explicit protocol-prefixed module specifiers for all runtime core utility modules (such as filesystem, path, and URL capabilities) to prevent dependency shadowing and namespace ambiguity.
-- **R-NODE-003** MUST: Ensure all execution runtimes and build tools conform to the resolved versions specified in the repository lock artifact and natively support protocol-prefixed module resolution.
+- **R-LM-001** MUST: Before integrating or updating dependencies that interact with runtime core module interfaces, engineers MUST inspect the project lock artifact to resolve and verify the exact locked version of the runtime and tooling dependencies against official reference documentation.
 
 ### Verify
 
-```bash
-# Discover and run the repository linter to verify that no bare imports of runtime core modules exist in source or configuration files.
-# Discover and run the repository test and type-checking scripts to verify successful resolution of all protocol-prefixed module imports.
-```
+- Discover and run the repository linter to verify that no bare imports of runtime core modules exist in source or configuration files.
+- Discover and run the repository test and type-checking scripts to verify successful resolution of all protocol-prefixed module imports.
 
 **Accept when:**
+
 - Static analysis and linting pass with zero violations of core module import prefix rules.
 - All test suites and configuration modules execute and resolve runtime core utilities without resolution errors.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration lint checks inspecting import specifiers
+- Verified by: Code review validation for all new configuration files and utility scripts
+- Violation handling: Pull requests containing bare specifiers for runtime core modules are blocked by automated continuous integration
+- Violation handling: Violations must be updated to use the explicit protocol prefix before merge approval
+- Exception process: Exceptions for legacy compatibility require written justification and approval from the lead architecture maintainers.
 </enforcement>

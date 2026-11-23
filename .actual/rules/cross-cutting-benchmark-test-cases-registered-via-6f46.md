@@ -19,23 +19,27 @@ metadata:
 
 Scope: applies to `packages/zod/src/v3/benchmarks/**`.
 
-These rules are ALWAYS ACTIVE for benchmark test suites and performance measurement modules utilizing the benchmark library.
+These rules are ALWAYS ACTIVE for:
+- Benchmark test suites and performance measurement modules utilizing the benchmark library.
 
 ### Rules
 
-- **R-BENCH-001** MUST_NOT: Benchmark test cases registered via the add method MUST NOT perform console logging or telemetry aggregation inside the measured execution lambda.
+- **R-IP-001** MUST_NOT: Benchmark test cases registered via the add method MUST NOT perform console logging or telemetry aggregation inside the measured execution lambda.
 
 ### Verify
 
-```bash
-# Discover the repository benchmark script defined in the dependency manifest and execute it to verify suite cycle output.
-# Inspect benchmark suite definitions to ensure test lambdas do not contain standard input and output or logging statements.
-```
+- Discover the repository benchmark script defined in the dependency manifest and execute it to verify suite cycle output.
+- Inspect benchmark suite definitions to ensure test lambdas do not contain standard input and output or logging statements.
 
 **Accept when:**
+
 - Benchmark suites execute and emit cycle events reporting target completion without throwing unhandled exceptions.
 - All benchmark suites register cycle event listeners via the on method and exclude logging logic from add test lambdas.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated static analysis, code review checks, and continuous integration test runs ensuring all benchmark suites run to completion without unhandled callback errors.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated static analysis and code review checks verifying that benchmark suites use suite cycle event listeners.
+- Verified by: Continuous integration test runs ensuring all benchmark suites run to completion without unhandled callback errors.
+- Violation handling: Pull requests containing inline logging inside benchmark case definitions or missing cycle event listeners must be revised before merge.
+- Exception process: Exceptions require documented architectural justification and sign-off from the performance engineering team.
 </enforcement>

@@ -19,28 +19,27 @@ metadata:
 
 Scope: applies to `scripts/**`.
 
-These rules are ALWAYS ACTIVE for all repository automation, validation, and maintenance scripts reading execution parameters and pipeline signaling variables.
+These rules are ALWAYS ACTIVE for:
+- Repository automation, validation, and maintenance scripts reading execution parameters and pipeline signaling variables.
 
 ### Rules
 
-- **R-ENV-001** MUST: Engineers MUST discover the ecosystem lock artifact and confirm all dependency versions prior to introducing external environment parsing libraries.
-- **R-ENV-002** MUST: Discover repository script definitions through the project configuration manifest and verify environment variable requirements prior to script execution.
-- **R-ENV-003** MUST: Ensure all environment variable access points define clear fallback default values when variables are omitted in local development environments.
-- **R-ENV-004** MUST: Enforce strict isolation between operational execution flags and secrets, and avoid dumping environment dictionaries to logging streams.
-- **R-ENV-005** MUST: Implement defensive presence checks and explicit string-to-number validation with fallback defaults for environment variables.
+- **R-SC-001** MUST: Engineers MUST discover the ecosystem lock artifact and confirm all dependency versions prior to introducing external environment parsing libraries.
 
 ### Verify
 
-```bash
-# Discover and run repository script verification, type-checking, and linting suites across automation scripts
-npm test -- --runInBand || yarn test
-npm run lint || yarn lint
-```
+- Discover and run the project repository script verification and type-checking suites across automation scripts.
+- Execute the repository linting and static analysis suite to check for unvalidated environment variable references.
 
 **Accept when:**
+
 - All automation and maintenance scripts execute cleanly without unhandled undefined environment variable exceptions.
 - Static analysis and type checking pass across all repository automation scripts without unhandled configuration types.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Pull requests introducing unvalidated or sensitive credential handling via plain environment variables are blocked until remediated.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline execution across pull requests.
+- Verified by: Peer code review verification of script modifications and environment variable usage.
+- Violation handling: Pull requests introducing unvalidated or sensitive credential handling via plain environment variables are blocked until remediated.
+- Exception process: Exceptions require documented review and architectural sign-off justifying why direct environment access is insufficient or why dedicated secret retrieval is needed.
 </enforcement>

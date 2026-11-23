@@ -18,7 +18,6 @@ metadata:
 
 # Zod Runtime Schema Input Validation: Boundary Handlers Not Bypass Schema Validation
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -42,22 +41,25 @@ Ingesting unvalidated or weakly validated data across serialization boundaries r
 
 ## Decision
 
-1. MUST_NOT: Boundary handlers MUST NOT bypass schema validation when deserializing or transforming external payloads.
+- **R-SCP-001** MUST_NOT: Boundary handlers MUST NOT bypass schema validation when deserializing or transforming external payloads.
 
 ## Policy Block
 
-- MUST_NOT Boundary handlers MUST NOT bypass schema validation when deserializing or transforming external payloads.
-
 In scope:
+
 - All external data ingestion boundaries, serialized payload parsers, and schema translation utilities.
 - Components processing untrusted, dynamic, or externally supplied data structures.
 
 Out of scope:
+
 - Internal function calls operating entirely within trusted domain boundaries where inputs were validated upon entry.
 - Isolated internal algorithms operating exclusively on validated immutable structures.
 
 Exceptions:
-- EXC-42-001: Extreme performance constraints where schema parsing overhead is demonstrably prohibitive on hot execution paths.
+
+- **EXC-42-001** Extreme performance constraints where schema parsing overhead is demonstrably prohibitive on hot execution paths.
+  Approval: Security and architecture team approval
+  Documentation: Documented benchmark comparison and alternative boundary sanitization implementation in project docs.
 
 ## Rationale
 
@@ -67,11 +69,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Eliminates injection of malformed data into domain workflows by enforcing structural contracts at runtime boundaries.
 - Guarantees alignment between runtime data validation and static compile-time type structures.
 - Standardizes structured error reporting across data ingestion and transformation layers.
 
 Negative:
+
 - Runtime processing overhead incurred during schema evaluation and recursive structure parsing.
 - Maintenance overhead of keeping schema definitions synchronized with external contract modifications.
 
@@ -109,12 +113,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the project test runner to verify input validation test suites pass successfully.
 - Discover and execute the static analysis script to verify schema definitions and usage across boundary modules.
 
 Accept when:
+
 - All boundary ingestion routines execute Zod schema validation without bypassing parse or safeParse checks.
 - Automated test suites confirm malformed inputs are safely rejected before reaching internal business logic.
 

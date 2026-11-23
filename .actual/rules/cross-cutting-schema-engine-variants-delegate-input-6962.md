@@ -19,29 +19,32 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/**`.
 
-These rules are ALWAYS ACTIVE for all schema engine variants requiring shared parsing, registry lookup, or validation logic, and modules implementing schema validation contracts and instance registries.
+These rules are ALWAYS ACTIVE for:
+- Schema engine variant definitions requiring shared parsing, registry lookup, or validation logic.
+- Modules implementing schema validation contracts and instance registries.
 
 ### Rules
 
-- **R-SEV-001** SHOULD: Schema engine variants SHOULD delegate input validation and execution handling to shared core verification primitives through safeParse methods.
-- **R-SEV-002** MANDATORY: Developers MUST derive tool names, file names, commands, package managers, and version numbers from the project repository.
-- **R-SEV-003** MANDATORY: Before writing code that uses a versioned library, developers MUST execute the lock-version grounding procedure in order: find dependency manifest, identify build tool, inspect lock/resolution artifact, look up official documentation for the exact version, confirm every API/class/function exists, and re-run per dependency at point of use.
-- **R-SEV-004** MANDATORY: Schema variant implementations MUST verify that interactions with core.globalRegistry properly handle type casting and instance retrieval across execution contexts.
-- **R-SEV-005** MANDATORY: When extending schema parsing capabilities, developers MUST evaluate whether new validation checks belong in the shared core module or variant-specific extensions.
+- **R-LM-001** SHOULD: Schema engine variants SHOULD delegate input validation and execution handling to shared core verification primitives through safeParse methods.
 
 ### Verify
 
-```bash
-# Discover and run the project static analysis and linting scripts to verify adherence to module import boundaries.
-# Discover and execute the project test runner across all schema variant test suites to ensure uniform validation behavior.
-# Inspect dependency manifests and resolution artifacts to confirm that dependency version declarations match lock state.
-```
+- Discover and run the project static analysis and linting scripts to verify adherence to module import boundaries.
+- Discover and execute the project test runner across all schema variant test suites to ensure uniform validation behavior.
+- Inspect dependency manifests and resolution artifacts to confirm that dependency version declarations match lock state.
 
 **Accept when:**
+
 - All schema variant test suites pass without regressions across validation parsing and execution.
 - Static boundary verification confirms schema modules import shared parsing and registry primitives exclusively from the internal core module.
 - Registry lookup tests confirm consistent resolution of schema instances through core.globalRegistry across variants.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by continuous integration automated test suites, static module dependency analysis and import boundary linters, and peer code reviews on all schema engine pull requests.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Continuous integration automated test suites
+- Verified by: Static module dependency analysis and import boundary linters
+- Verified by: Peer code reviews on all schema engine pull requests
+- Violation handling: Pull requests that duplicate core parsing logic or bypass the shared core module are blocked from merging.
+- Violation handling: Violations discovered in active development must be refactored to consume shared core primitives before acceptance.
+- Exception process: Exceptions require documented architectural justification demonstrating why a specialized schema variant cannot utilize the shared core module, approved by the lead architect.
 </enforcement>

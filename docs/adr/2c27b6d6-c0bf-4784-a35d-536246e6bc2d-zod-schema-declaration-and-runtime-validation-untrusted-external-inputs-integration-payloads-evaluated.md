@@ -21,7 +21,6 @@ metadata:
 
 # Zod Schema Declaration and Runtime Validation: Untrusted External Inputs Integration Payloads Evaluated
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -48,17 +47,17 @@ External and dynamic inputs entering application packages lack runtime safety gu
 
 ## Decision
 
-1. SHOULD: Untrusted external inputs and integration payloads SHOULD be evaluated using safeParse rather than throwing parse operations to ensure defensive error handling.
+- **R-LM-001** SHOULD: Untrusted external inputs and integration payloads SHOULD be evaluated using safeParse rather than throwing parse operations to ensure defensive error handling.
 
 ## Policy Block
 
-- SHOULD Untrusted external inputs and integration payloads SHOULD be evaluated using safeParse rather than throwing parse operations to ensure defensive error handling.
-
 In scope:
+
 - External data ingestion points, API integration payloads, and boundary contracts across application modules.
 - Data model validation logic requiring synchronization between runtime assertions and static typing.
 
 Out of scope:
+
 - Internal closed-loop algorithmic functions operating exclusively on pre-validated data structures.
 - Performance-critical micro-benchmarking loops where validation cost dominates execution time and inputs are invariant.
 
@@ -71,11 +70,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Runtime boundary inputs are strictly validated before executing core business logic.
 - TypeScript static types and runtime validation rules remain unified through automated schema type inference.
 - Validation errors yield structured, actionable diagnostics at the ingestion boundary.
 
 Negative:
+
 - Runtime parsing introduces computational overhead on hot or high-throughput execution paths.
 - Bundled client applications incur additional artifact footprint for schema definition and parsing logic.
 
@@ -113,12 +114,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - git grep -E "(safeParse|parse)\(" -- "*.ts" "*.mts" "*.cts"
 - find . -name "*test*" -not -path "*/node_modules/*"
 
 Accept when:
+
 - All schema-governed boundary inputs parse incoming payloads using Zod schemas before application processing.
 - Verification test suites and type-checking scripts pass without unhandled validation errors or structural drift.
 

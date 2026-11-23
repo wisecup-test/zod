@@ -17,7 +17,6 @@ metadata:
 
 # Adoption of json-schema-processors Core Module Architecture: Schema Processor Implementations Register Visited Nodes
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -41,17 +40,17 @@ Inline schema-to-JSON-schema conversions create tight coupling between schema de
 
 ## Decision
 
-1. MUST: Schema processor implementations MUST register visited schema nodes in the traversal context cache using ctx.seen to prevent circular reference cycles and duplicate processing.
+- **R-LM-001** MUST: Schema processor implementations MUST register visited schema nodes in the traversal context cache using ctx.seen to prevent circular reference cycles and duplicate processing.
 
 ## Policy Block
 
-- MUST Schema processor implementations MUST register visited schema nodes in the traversal context cache using ctx.seen to prevent circular reference cycles and duplicate processing.
-
 In scope:
+
 - Core schema-to-JSON-schema transformation and generation modules within the library.
 - Validation check routines and registries interacting with schema translation pipelines.
 
 Out of scope:
+
 - Client-side runtime parsing and direct value validation outside schema serialization pipelines.
 - External schema format conversions handled by third-party companion extensions.
 
@@ -64,11 +63,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Eliminates circular reference failures during JSON schema synthesis through context-bound node tracking.
 - Centralizes schema conversion rules in dedicated processor modules, avoiding code duplication across disparate schema definitions.
 - Clarifies subsystem boundaries between core validation definitions, type registries, and schema output generators.
 
 Negative:
+
 - Increases indirection across the core subsystem by distributing conversion logic across separate processor and generator modules.
 - Incurs memory overhead from maintaining traversal state and cloned object structures in the transformation context.
 
@@ -106,12 +107,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project repository validation suite for core module type-checking and unit test suites.
 - Discover and execute the repository integration test suite verifying JSON schema generation across complex and cyclic schema fixtures.
 
 Accept when:
+
 - All unit tests for schema processors and generators pass without errors or circular reference exceptions.
 - Static type analysis across all core modules completes with zero diagnostic warnings or type mismatch errors.
 

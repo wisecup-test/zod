@@ -19,27 +19,31 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/**`.
 
-These rules are ALWAYS ACTIVE for all localization definitions, internationalization message formatting modules, and extensions or contributions providing new language message maps.
+These rules are ALWAYS ACTIVE for:
+- All localization definitions and internationalization message formatting modules within the library.
+- Extensions and contributions providing new language message maps.
 
 ### Rules
 
-- **R-ZOD-001** SHOULD: New locale contributions SHOULD implement error mapping functions by mapping internal core issue codes to localized message templates.
-- **R-ZOD-002** MANDATORY: Discover the internal core module export surface to identify available check types, error models, and string utility routines before authoring new locale definitions.
-- **R-ZOD-003** MANDATORY: Ensure all localized message factories conform to the error formatting signature expected by the core error handling subsystem.
-- **R-ZOD-004** MANDATORY: Execute lock-version grounding (find dependency manifest, identify build tool, inspect lock/resolution artifact, lookup official documentation for exact version, confirm API existence, and re-run per dependency at point of use) before writing code that uses a versioned library.
+- **R-LM-001** SHOULD: New locale contributions SHOULD implement error mapping functions by mapping internal core issue codes to localized message templates.
 
 ### Verify
 
-```bash
-# Discover the project task runner configuration and execute the static type-checking and linting suites to ensure locale imports satisfy internal core module boundaries.
-# Discover the test suite execution script from the repository manifest and run all localization unit tests to verify error formatting consistency against core expectations.
-```
+- Discover the project task runner configuration and execute the static type-checking and linting suites to ensure locale imports satisfy internal core module boundaries.
+- Discover the test suite execution script from the repository manifest and run all localization unit tests to verify error formatting consistency against core expectations.
 
 **Accept when:**
+
 - All localization modules resolve imports directly against the internal core module boundary without missing exports or type errors.
 - Automated localization test suites execute and pass across all registered locale targets.
 - No duplicate validation check definitions or uncoordinated error structures exist across localization files.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated static analysis, type checks, and unit test suites must be executed to verify import boundaries and message formatting validations across all locale modules.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated static analysis and type checks verifying import boundaries on every pull request.
+- Verified by: Unit test suites executing message formatting validations across all locale modules.
+- Verified by: Peer review by library maintainers for any newly proposed localization modules.
+- Violation handling: Pull requests introducing foreign imports or duplicated check logic into localization modules will fail automated checks and require remediation before merge.
+- Violation handling: Discovered regressions or non-conforming locale definitions will be tracked as blocking issues.
+- Exception process: Exceptions requiring custom formatting logic must be submitted as architectural change requests to core maintainers, seeking extension of internal core utilities rather than localized workarounds.
 </enforcement>

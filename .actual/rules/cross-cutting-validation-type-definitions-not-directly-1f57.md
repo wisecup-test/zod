@@ -19,25 +19,31 @@ metadata:
 
 Scope: applies to `packages/zod/src/v3/**`.
 
-These rules are ALWAYS ACTIVE for core schema type definitions, parsing logic, validation error generation, issue collection, and localized message formatting modules within the validation library package.
+These rules are ALWAYS ACTIVE for:
+- Core schema type definitions and parsing logic within the validation library package.
+- Validation error generation, issue collection, and localized message formatting modules.
 
 ### Rules
 
-- **R-VAL-001** MUST_NOT: Validation type definitions MUST NOT directly embed locale-specific error string mappings or message formatting routines within type declaration modules.
+- **R-LM-001** MUST_NOT: Validation type definitions MUST NOT directly embed locale-specific error string mappings or message formatting routines within type declaration modules.
 
 ### Verify
 
-```bash
-# Discover and run the project's test execution script from the repository manifest
-# Locate and run the repository typecheck script within the project manifest
-# Identify and execute the static analysis script from the project configuration
-```
+- Discover the project's test execution script from the repository manifest and run the test suite to verify schema validation and error reporting behavior.
+- Locate the repository typecheck script within the project manifest and run it to validate type compatibility across schema modules and error interfaces.
+- Identify the static analysis script from the project configuration and execute it to ensure no prohibited cross-module references or unapproved error constructions exist.
 
 **Accept when:**
+
 - The project test suite passes completely with all schema validation and error handling scenarios verifying expected issue formats.
 - The typecheck command completes with zero diagnostic errors across all schema type definitions and error utilities.
 - Static analysis confirms strict compliance with module boundary rules and absence of inline error message formatting in schema types.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification is mandatory via automated CI, peer code review, and build checks.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline executing repository test and typecheck scripts.
+- Verified by: Peer code review verifying that schema types delegate to the centralized error subsystem and omit direct localization bindings.
+- Violation handling: Pull requests introducing direct error formatting or bypassing centralized error utilities are rejected at code review.
+- Violation handling: Build failures triggered by type mismatches or failing validation error tests block automated merging.
+- Exception process: Exceptions for specialized low-overhead parsing utilities must be submitted via an architectural change request and approved by the core library maintainers.
 </enforcement>

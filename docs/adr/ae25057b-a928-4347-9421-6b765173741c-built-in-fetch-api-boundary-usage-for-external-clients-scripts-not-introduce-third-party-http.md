@@ -17,7 +17,6 @@ metadata:
 
 # Built-in Fetch API Boundary Usage for External Clients: Scripts Not Introduce Third Party Http
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -41,22 +40,25 @@ Standalone repository maintenance routines require network communication with ex
 
 ## Decision
 
-1. MUST_NOT: Scripts MUST NOT introduce third-party HTTP client libraries for routine remote queries when runtime built-in fetch satisfies communication requirements.
+- **R-IA-001** MUST_NOT: Scripts MUST NOT introduce third-party HTTP client libraries for routine remote queries when runtime built-in fetch satisfies communication requirements.
 
 ## Policy Block
 
-- MUST_NOT Scripts MUST NOT introduce third-party HTTP client libraries for routine remote queries when runtime built-in fetch satisfies communication requirements.
-
 In scope:
+
 - Repository automation and maintenance scripts performing outbound network requests to external services.
 - Standalone utility routines querying remote registries or external service endpoints.
 
 Out of scope:
+
 - Core library runtime modules distributed to end consumers.
 - Internal cross-module communication that does not cross network boundaries.
 
 Exceptions:
-- EXC-26-001: An external remote endpoint requires specialized authentication flows or transfer protocols unsupported by the runtime built-in fetch API.
+
+- **EXC-26-001** An external remote endpoint requires specialized authentication flows or transfer protocols unsupported by the runtime built-in fetch API.
+  Approval: Architecture review sign-off
+  Documentation: Document the protocol constraint and justification in the consuming utility documentation.
 
 ## Rationale
 
@@ -67,11 +69,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Reduces external dependency surface area by using runtime built-in network capabilities.
 - Avoids version synchronization overhead across independent utility scripts that require network communication.
 - Maintains zero-dependency footprints for repository automation and maintenance tasks.
 
 Negative:
+
 - Lacks a centralized middleware layer for automatic retries, exponential backoff, and unified telemetry across scripts.
 - Requires repetitive inline header and payload configuration across disparate utility routines.
 
@@ -109,13 +113,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the repository type-checking routine to confirm that all fetch invocations conform to runtime signature requirements.
 - Discover and run the project static analysis and linting verification scripts to ensure external network requests adhere to repository security and syntax standards.
 - Discover and run the project test suite to validate that script routines communicating with external boundaries handle network responses correctly.
 
 Accept when:
+
 - All outbound HTTP invocations in maintenance scripts use the runtime built-in fetch interface without external client dependencies.
 - Type checking and static analysis verification scripts pass without errors across all script modules.
 - Network response handling verifies status codes and safely parses payloads across external client invocation points.

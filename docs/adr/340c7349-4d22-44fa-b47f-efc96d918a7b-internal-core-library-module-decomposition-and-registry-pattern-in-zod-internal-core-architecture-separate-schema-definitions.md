@@ -17,7 +17,6 @@ metadata:
 
 # Internal Core Library Module Decomposition and Registry Pattern in Zod: Internal Core Architecture Separate Schema Definitions
 
-Status: proposed
 Date: 2025-05-15
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Without a cohesive internal module decomposition and state-passing protocol, com
 
 ## Decision
 
-1. MUST: The internal core architecture MUST separate schema definitions, validation checks, metadata registries, and serialization processors into dedicated internal library submodules communicating across explicit module boundaries.
+- **R-LM-001** MUST: The internal core architecture MUST separate schema definitions, validation checks, metadata registries, and serialization processors into dedicated internal library submodules communicating across explicit module boundaries.
 
 ## Policy Block
 
-- MUST The internal core architecture MUST separate schema definitions, validation checks, metadata registries, and serialization processors into dedicated internal library submodules communicating across explicit module boundaries.
-
 In scope:
+
 - All internal modules within the core library package responsible for schema definitions, validation checks, registry lookups, and schema transformations.
 - Functions performing recursive schema graph analysis, serialization, or metadata aggregation.
 
 Out of scope:
+
 - Public-facing schema consumption code outside the internal core library package.
 - Simple non-recursive utility functions that do not participate in schema transformation or metadata registration.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Decouples domain validation checks, schema representations, and serialization processors into focused, independently testable internal modules.
 - Prevents stack overflow exceptions during recursive schema traversal by enforcing explicit cyclic structure tracking via contextual traversal caches.
 - Provides centralized schema metadata indexing through dedicated registries without polluting core schema definition objects.
 
 Negative:
+
 - Internal submodules require disciplined adherence to dependency hierarchies to prevent circular initialization issues at module load time.
 - Propagating contextual caching instances across all transformation steps increases call signature complexity across internal processing functions.
 - Shared registry structures introduce state management requirements that must be carefully isolated across execution contexts.
@@ -107,13 +108,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the repository test runner to validate recursive schema generation, registry lookups, and serialization behaviors.
 - Discover and execute the repository module boundary and circular dependency verification scripts to ensure import isolation between core submodules.
 - Discover and execute the repository static type checker to verify internal interface compatibility across all core module boundaries.
 
 Accept when:
+
 - All core module interfaces and internal imports resolve through the defined module boundaries without circular module initialization errors.
 - Schema transformations and serializations correctly track cyclic structures using the contextual traversal cache without memory leaks.
 - Static type checking and automated regression suites pass completely across all core library components.

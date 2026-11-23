@@ -15,7 +15,6 @@ metadata:
 
 # Package Test Project Configuration Composition via vitest/config: Package Level Test Configurations Use Mergeconfig
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -38,17 +37,17 @@ Maintaining independent unit test execution across workspace packages without co
 
 ## Decision
 
-1. MUST: Package-level test configurations MUST use mergeConfig from vitest/config to compose package-specific overrides with the shared root configuration rather than duplicating baseline settings.
+- **R-TS-001** MUST: Package-level test configurations MUST use mergeConfig from vitest/config to compose package-specific overrides with the shared root configuration rather than duplicating baseline settings.
 
 ## Policy Block
 
-- MUST Package-level test configurations MUST use mergeConfig from vitest/config to compose package-specific overrides with the shared root configuration rather than duplicating baseline settings.
-
 In scope:
+
 - Workspace packages requiring package-specific unit testing configurations within a multi-package repository.
 - Test configurations that extend shared workspace baseline settings.
 
 Out of scope:
+
 - Root workspace configuration definitions establishing global test defaults.
 - Single-package repositories without hierarchical configuration inheritance.
 
@@ -61,11 +60,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Eliminates duplicate test runner settings across workspace package boundaries.
 - Ensures consistent inheritance of common coverage thresholds, reporters, and runtime environments.
 - Permits localized package test environment overrides without modifying global workspace defaults.
 
 Negative:
+
 - Creates coupling between package test configurations and the export shape of the root configuration.
 - Requires developers to understand configuration merging semantics to avoid unintended property collisions or overwrites.
 
@@ -103,13 +104,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - find . -maxdepth 3 -type f -exec grep -l "defineProject" {} +
 - find . -maxdepth 3 -type f -exec grep -l "mergeConfig" {} +
 - REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd) && grep -rn "from [\"']vitest/config[\"']" "$REPO_ROOT"
 
 Accept when:
+
 - Package test configuration modules import defineProject and mergeConfig from vitest/config.
 - Package test project definitions compose the shared root configuration with package-specific overrides via mergeConfig.
 - Project test verification directives execute package test suites without configuration composition errors.

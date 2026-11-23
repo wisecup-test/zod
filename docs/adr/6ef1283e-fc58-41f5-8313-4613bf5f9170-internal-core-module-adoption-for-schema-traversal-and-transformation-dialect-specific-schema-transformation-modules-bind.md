@@ -17,7 +17,6 @@ metadata:
 
 # Internal Core Module Adoption for Schema Traversal and Transformation: Dialect Specific Schema Transformation Modules Bind
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -41,17 +40,17 @@ Schema dialects require consistent deep traversal and transformation capabilitie
 
 ## Decision
 
-1. MUST: Dialect-specific schema transformation modules MUST bind traversal operations to local schema definitions while keeping traversal mechanics centralized in the internal core module.
+- **R-LM-001** MUST: Dialect-specific schema transformation modules MUST bind traversal operations to local schema definitions while keeping traversal mechanics centralized in the internal core module.
 
 ## Policy Block
 
-- MUST Dialect-specific schema transformation modules MUST bind traversal operations to local schema definitions while keeping traversal mechanics centralized in the internal core module.
-
 In scope:
+
 - Implementation of schema transformation, traversal, and utility operations across dialect modules.
 - Internal module structures sharing common structural inspection and manipulation logic.
 
 Out of scope:
+
 - Self-contained schema definitions that do not perform recursive traversal or structural transformation.
 - External boundary adapters that do not manipulate internal schema trees.
 
@@ -64,11 +63,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Traversal logic and structural transformation algorithms are maintained in a single core location.
 - Consistent schema walking behavior is guaranteed across distinct dialect implementations.
 - Dialect modules remain focused on syntax and dialect-specific definitions without duplicating visitor machinery.
 
 Negative:
+
 - Dialect transformation modules depend directly on internal core module interfaces, requiring disciplined internal interface stability.
 - Changes to core traversal mechanics risk impacting all consuming dialect modules simultaneously.
 
@@ -106,12 +107,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project test suite from the repository manifest to verify schema transformation consistency across all dialect modules.
 - Discover and execute the project static analysis and lint checks to confirm module dependency boundaries and verify that core modules do not depend on dialect submodules.
 
 Accept when:
+
 - All schema transformation and traversal tests pass across both full and lightweight dialect implementations.
 - Module boundary analysis confirms unidirectional dependencies from dialect transformation modules to the internal core module.
 

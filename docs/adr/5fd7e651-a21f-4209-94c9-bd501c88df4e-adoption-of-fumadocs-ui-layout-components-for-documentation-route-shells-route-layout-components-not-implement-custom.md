@@ -17,7 +17,6 @@ metadata:
 
 # Adoption of fumadocs-ui Layout Components for Documentation Route Shells: Route Layout Components Not Implement Custom
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,20 +39,23 @@ Maintaining bespoke layout shells across documentation and publishing route hier
 
 ## Decision
 
-1. MUST_NOT: Route layout components MUST NOT implement custom sidebar navigation drawers or responsive menu toggle logic that bypasses or conflicts with fumadocs-ui layout state management.
+- **R-LM-001** MUST_NOT: Route layout components MUST NOT implement custom sidebar navigation drawers or responsive menu toggle logic that bypasses or conflicts with fumadocs-ui layout state management.
 
 ## Policy Block
 
-- MUST_NOT Route layout components MUST NOT implement custom sidebar navigation drawers or responsive menu toggle logic that bypasses or conflicts with fumadocs-ui layout state management.
-
 In scope:
+
 - Route layout modules governing documentation, technical guides, reference material, and content publishing sections.
 
 Out of scope:
+
 - Application routes independent of documentation or editorial publishing, including isolated API endpoints and standalone utility interfaces.
 
 Exceptions:
-- EXC-20-001: A specialized content route requires full-bleed canvas styling that cannot be accommodated within fumadocs-ui layout container contracts.
+
+- **EXC-20-001** A specialized content route requires full-bleed canvas styling that cannot be accommodated within fumadocs-ui layout container contracts.
+  Approval: Architecture review and documentation platform leads
+  Documentation: Document the structural deviation and layout rationale directly in the route module commentary.
 
 ## Rationale
 
@@ -64,11 +66,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Enforces uniform navigation chrome, responsive sidebars, and document outline tracking across all documentation route segments.
 - Eliminates redundant layout boilerplate by consuming standardized layout primitives from fumadocs-ui.
 - Centralizes global navigation, repository references, and brand presentation within a single shared layout configuration module.
 
 Negative:
+
 - Couples documentation route presentation and layout customization to the API contracts and structural conventions of fumadocs-ui.
 - Customizing layout containers outside supported component slots requires overriding library styling contracts or coordinating upstream updates.
 
@@ -106,13 +110,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository build and static analysis scripts declared in the project manifest, and execute the type-checking pipeline to confirm layout component type conformance.
 - Discover and execute the project test runner to verify that route layout components render with required configuration properties.
 - Inspect layout imports across documentation route hierarchies to confirm layout components are sourced from fumadocs-ui layout entry points and bind to the centralized configuration module.
 
 Accept when:
+
 - Static type analysis passes with zero errors across all documentation route layout modules.
 - Documentation and content route layouts render navigation headers, sidebars, and main content containers without runtime exceptions.
 - All route layout implementations ingest the centralized layout configuration module without local duplication of global navigation structures.

@@ -17,7 +17,6 @@ metadata:
 
 # Benchmark Library Adoption for Schema Performance Evaluation: Performance Profiling Execution Throughput Measurement Schema
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Measuring parser throughput and execution overhead across primitive and composit
 
 ## Decision
 
-1. MUST: Performance profiling and execution throughput measurement for schema validation modules MUST use the benchmark suite API to construct standardized execution cases.
+- **R-LM-001** MUST: Performance profiling and execution throughput measurement for schema validation modules MUST use the benchmark suite API to construct standardized execution cases.
 
 ## Policy Block
 
-- MUST Performance profiling and execution throughput measurement for schema validation modules MUST use the benchmark suite API to construct standardized execution cases.
-
 In scope:
+
 - Performance evaluation and throughput profiling of schema parsing and validation functions.
 - Regression analysis of core primitive and composite data structure parsers.
 
 Out of scope:
+
 - Functional correctness assertions and end-to-end integration tests.
 - Non-performance-critical utility routines.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Provides reproducible, statistically sound throughput metrics for schema parsing across diverse payload shapes.
 - Enables precise detection of parsing latency regressions across primitive and complex composite schemas.
 - Separates performance benchmarking harnesses from functional test assertions.
 
 Negative:
+
 - Dedicated benchmark suites require ongoing synchronization as schema validation interfaces and parsing semantics evolve.
 - Comprehensive benchmark test runs introduce additional compute duration into performance validation workflows.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the performance test script declared in the repository dependency manifest and execute it using the project-designated task runner.
 - Inspect the repository task configuration to locate and trigger the benchmark suite execution workflow.
 
 Accept when:
+
 - All benchmark test suites execute to completion through their registered cycle event handlers without uncaught exceptions.
 - Validation parse operations within benchmark cases accurately reflect real-world payload shapes and error conditions.
 

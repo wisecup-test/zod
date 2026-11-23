@@ -17,23 +17,29 @@ metadata:
 
 Scope: applies to `packages/docs/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- Unit and integration test configuration across individual workspace packages.
+- Sub-project test definitions inheriting from shared repository-level test configurations.
 
 ### Rules
 
-- **R-VITEST-001** MUST: Project-specific test configurations MUST compose their settings with the shared root test configuration using mergeConfig from vitest/config rather than redefining global execution parameters independently.
+- **R-TS-001** MUST: Project-specific test configurations MUST compose their settings with the shared root test configuration using mergeConfig from vitest/config rather than redefining global execution parameters independently.
 
 ### Verify
 
-```bash
-# Discover the repository test execution script from the workspace root manifest and execute the workspace-wide test suite
-# Discover the repository configuration linting script from the workspace root manifest and execute it
-```
+- Discover the repository test execution script from the workspace root manifest and execute the workspace-wide test suite to confirm all project configurations resolve and pass.
+- Discover the repository configuration linting script from the workspace root manifest and execute it to verify conformance of all sub-project test configuration files.
 
 **Accept when:**
+
 - All sub-package test configurations successfully merge the shared root configuration without schema validation errors during test initialization.
 - The workspace test runner discovers and executes tests across all configured sub-projects with unified reporting output.
 
 <enforcement>
 Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline execution verifying project test configuration resolution.
+- Verified by: Peer code review for all modifications to sub-package test configuration files.
+- Violation handling: Pull requests containing unmerged, duplicate standalone configurations without documented approval are blocked from merging.
+- Violation handling: Static analysis warnings or build failures triggered by invalid project configuration schemas.
+- Exception process: Submit an architectural review request outlining package-specific technical constraints that necessitate divergence from root test configuration.
 </enforcement>

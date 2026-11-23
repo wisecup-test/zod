@@ -17,7 +17,6 @@ metadata:
 
 # Zod Schema-Based String Input Validation: Modules Requiring String Input Validation Construct
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,16 +39,16 @@ Unvalidated input strings entering internal domain modules risk propagating malf
 
 ## Decision
 
-1. MUST: Modules requiring string input validation MUST construct Zod schemas using string definitions and enforce validation prior to passing values to internal domain logic.
+- **R-SCP-001** MUST: Modules requiring string input validation MUST construct Zod schemas using string definitions and enforce validation prior to passing values to internal domain logic.
 
 ## Policy Block
 
-- MUST Modules requiring string input validation MUST construct Zod schemas using string definitions and enforce validation prior to passing values to internal domain logic.
-
 In scope:
+
 - Boundary handlers, resolution modules, and services receiving external or untrusted string inputs.
 
 Out of scope:
+
 - Internal trusted subroutines where data has already been validated against formal schemas.
 
 ## Rationale
@@ -61,11 +60,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Guarantees runtime structural validity of string inputs before domain execution.
 - Reduces vulnerability surface area by blocking malformed or unexpected input payloads.
 - Provides explicit error diagnostics when inputs fail schema constraints.
 
 Negative:
+
 - Incurs parsing latency and memory allocation overhead on each validation invocation.
 - Synchronous parse exceptions require structured error handling to prevent unhandled process interruptions.
 
@@ -103,12 +104,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project test suite to verify that schema validation tests pass.
 - Discover and run the project type checking and linting tasks to ensure type safety and rule compliance.
 
 Accept when:
+
 - All test suites asserting schema parsing behavior pass with zero failures.
 - Static analysis and type checking pass without errors or type assertion bypasses.
 

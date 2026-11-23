@@ -1,10 +1,10 @@
 ---
 version: 2
-name: 5d6e8a33-c66e-431f-b5ff-9f8e6d1dc341-internal-schema-metadata-registries-module-for-contextual-state-and-bidirectional-identity-storage-schema-transformation-compilation-routines-not-attach
-description: "Internal Schema Metadata Registries Module for Contextual State and Bidirectional Identity Storage: Schema Transformation Compilation Routines Not Attach"
+name: 485a1265-82d1-4de2-b3d9-3b7971e8b42d-internal-schema-metadata-registries-module-for-contextual-state-and-bidirectional-identity-storage-registry-implementations-9830cb50861d7847
+description: "Internal Schema Metadata Registries Module for Contextual State and Bidirectional Identity Storage: Registry Implementations Maintaining Bidirectional Identifier Schema"
 metadata:
   actual:
-    adr_id: 5d6e8a33-c66e-431f-b5ff-9f8e6d1dc341
+    adr_id: 485a1265-82d1-4de2-b3d9-3b7971e8b42d
     status: accepted
     candidate_group_id: d8b3ef21-85e1-4a50-9fc9-84f24d157d45
     evidence:
@@ -16,9 +16,8 @@ metadata:
       - src/v4/**
 ---
 
-# Internal Schema Metadata Registries Module for Contextual State and Bidirectional Identity Storage: Schema Transformation Compilation Routines Not Attach
+# Internal Schema Metadata Registries Module for Contextual State and Bidirectional Identity Storage: Registry Implementations Maintaining Bidirectional Identifier Schema
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -43,23 +42,26 @@ Schema compilation, serialization, and deserialization routines require attachin
 
 ## Decision
 
-1. MUST_NOT: Schema transformation and compilation routines MUST NOT attach transient traversal state, intermediate constants, or resolved references directly to schema instances as mutable properties.
+- **R-DAP-001** SHOULD: Registry implementations maintaining bidirectional identifier-to-schema lookups SHOULD synchronize both primary and inverse index collections atomically during registration and deregistration.
 
 ## Policy Block
 
-- MUST_NOT Schema transformation and compilation routines MUST NOT attach transient traversal state, intermediate constants, or resolved references directly to schema instances as mutable properties.
-
 In scope:
+
 - Schema metadata association and external identifier resolution.
 - Recursive schema serialization and deserialization involving circular reference tracking.
 - Compiler constant registration and variable scope isolation during schema code generation.
 
 Out of scope:
+
 - Direct evaluation of primitive type guards without metadata associations.
 - Stateless in-memory scalar validations requiring no cross-schema reference traversal.
 
 Exceptions:
-- EXC-30-001: Transient inlined union checks execute in isolated single-pass evaluators without cyclic references or external identifiers.
+
+- **EXC-30-001** Transient inlined union checks execute in isolated single-pass evaluators without cyclic references or external identifiers.
+  Approval: Architecture review board
+  Documentation: Document isolated lifecycle boundaries and verify zero reference retention in test suites.
 
 ## Rationale
 
@@ -70,11 +72,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Preserves schema immutability by preventing contextual and traversal metadata from polluting schema definition objects.
 - Enables cycle-safe recursive schema transformations through structured lookup and recursion tracking containers.
 - Provides deterministic cleanup of traversal state during compilation and schema translation phases.
 
 Negative:
+
 - Requires developers to thread explicit context containers through every level of recursive visitor calls in schema transformations.
 - Introduces operational overhead for maintaining synchronization across dual primary and secondary index collections.
 
@@ -112,12 +116,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the workspace test execution script in the project manifest and run the suite covering schema registries and compiler traversal.
 - Discover the repository static analysis script and verify zero direct property mutations on schema instances across data access modules.
 
 Accept when:
+
 - All registry unit and integration test suites pass with complete assertion coverage on bidirectional lookup, registration, and deletion.
 - Memory profiling tests confirm traversal context maps release all tracking references upon traversal completion without leakage.
 - Static type checks verify that schema definitions remain read-only and all external metadata access occurs through registry abstractions.

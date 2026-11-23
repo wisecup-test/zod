@@ -19,25 +19,29 @@ metadata:
 
 Scope: applies to `packages/resolution/src/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- All runtime input validation and payload parsing across module boundaries.
+- Data ingestion points where external or untrusted structures must conform to defined schemas.
 
 ### Rules
 
-- **R-ZOD-001** MUST_NOT: Components MUST NOT bypass schema parsing or use unvalidated type casting on data ingested across boundaries.
+- **R-LM-001** MUST_NOT: Components MUST NOT bypass schema parsing or use unvalidated type casting on data ingested across boundaries.
 
 ### Verify
 
-```bash
-# Discover and run the project's verification and test scripts from the repository manifest
-# Example discovery:
-TEST_SCRIPT=$(npm pkg get scripts.test --json 2>/dev/null || echo "test")
-eval "npm test"
-```
+- Discover the project's verification and test scripts from the repository manifest and execute them.
+- Execute the repository test suite to confirm that schema validation runs without errors across all module formats.
 
 **Accept when:**
+
 - All schema validation parsing logic executes successfully across all supported module targets.
 - Repository verification scripts complete with zero exit codes and no schema parsing errors.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All runtime input validation must utilize schema parsing without bypassing boundary checks.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Continuous integration pipelines executing automated test suites.
+- Verified by: Peer code review verifying that boundary inputs pass through Zod schema validation.
+- Violation handling: Pull requests bypassing schema parsing for boundary inputs will be blocked during review.
+- Violation handling: Test failures resulting from unhandled schema validation errors will block deployment.
+- Exception process: Exceptions must be submitted via architectural review with documented rationale for bypassing schema validation.
 </enforcement>

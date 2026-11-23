@@ -20,25 +20,30 @@ metadata:
 
 Scope: applies to `packages/tsc/bench/**`, `packages/tsc/bisect.ts`.
 
-These rules are ALWAYS ACTIVE for modules and scripts that orchestrate asynchronous external subprocess executions, as well as CLI task runners and benchmarking harnesses managing long-running child processes.
+These rules are ALWAYS ACTIVE for:
+- Modules and scripts that orchestrate asynchronous external subprocess executions
+- CLI task runners and benchmarking harnesses managing long-running child processes
 
 ### Rules
 
-- **R-EXEC-001** SHOULD: Child process tracking collections SHOULD remove terminated or exited child process references dynamically to minimize memory retention during extended executions.
-- **R-EXEC-002** MANDATORY: Maintain a collection of running child process instances returned by execa and register a process.on listener for SIGINT to iterate and kill remaining active processes.
-- **R-EXEC-003** MANDATORY: Check the killed property on child process objects before issuing kill calls to avoid redundant termination signals on already-exited processes.
+- **R-IP-001** SHOULD: Child process tracking collections SHOULD remove terminated or exited child process references dynamically to minimize memory retention during extended executions.
 
 ### Verify
 
-```bash
-# Discover and run the project static analysis and linting scripts to verify compliance with process execution and signal handler conventions.
-# Discover and execute the project test runner against subprocess orchestration and signal handling test suites to confirm graceful termination.
-```
+- Discover and run the project static analysis and linting scripts to verify compliance with process execution and signal handler conventions.
+- Discover and execute the project test runner against subprocess orchestration and signal handling test suites to confirm graceful termination.
 
 **Accept when:**
+
 - Subprocess executions use execa and register SIGINT signal listeners that terminate active child process handles.
 - Interruption during execution results in all child processes being terminated without orphaned background tasks.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by static code analysis scanning for execa usage and associated SIGINT signal handler registrations, automated test suites verifying process termination behavior during interruption signals, and peer code review for changes introducing external process execution.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Static code analysis scanning for execa usage and associated SIGINT signal handler registrations
+- Verified by: Automated test suites verifying process termination behavior during interruption signals
+- Verified by: Peer code review for changes introducing external process execution
+- Violation handling: Pull requests lacking required signal cleanup for spawned processes are blocked until lifecycle handlers are implemented.
+- Violation handling: Automated linting failures flagging unhandled child process executions must be resolved before merging.
+- Exception process: Exceptions for utilities requiring alternative lifecycle management must be documented with architectural review approval.
 </enforcement>

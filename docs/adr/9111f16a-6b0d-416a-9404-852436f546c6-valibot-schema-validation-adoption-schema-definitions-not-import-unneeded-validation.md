@@ -15,7 +15,6 @@ metadata:
 
 # Valibot Schema Validation Adoption: Schema Definitions Not Import Unneeded Validation
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -38,22 +37,25 @@ Inconsistent or heavyweight schema validation libraries introduce substantial bu
 
 ## Decision
 
-1. MUST_NOT: Schema definitions MUST NOT import unneeded validation functions or bundle entire library namespaces into runtime bundles.
+- **R-LM-001** MUST_NOT: Schema definitions MUST NOT import unneeded validation functions or bundle entire library namespaces into runtime bundles.
 
 ## Policy Block
 
-- MUST_NOT Schema definitions MUST NOT import unneeded validation functions or bundle entire library namespaces into runtime bundles.
-
 In scope:
+
 - Modules defining data schemas, input parsing, and runtime boundary validation.
 - Components requiring modular schema verification and tree-shakeable packaging.
 
 Out of scope:
+
 - Internal language-primitive manipulations where formal schema boundaries are not exposed.
 - Performance-critical inner loops where external schema parsing overhead is explicitly prohibited.
 
 Exceptions:
-- EXC-20-001: A third-party protocol requires a divergent schema validation specification
+
+- **EXC-20-001** A third-party protocol requires a divergent schema validation specification
+  Approval: Architecture Review Board
+  Documentation: Document the protocol constraint and isolation boundary in the module specification
 
 ## Rationale
 
@@ -64,11 +66,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Modular schema composition eliminates unused validation code from production bundles.
 - Consistent runtime parsing contracts ensure predictable boundary data handling across modules.
 - Static type inference is tightly coupled with runtime schema definitions, preventing type drift.
 
 Negative:
+
 - Functional schema composition syntax requires explicit imports for every validator and schema primitive.
 - Upstream library API shifts across minor versions may require targeted schema refactoring.
 
@@ -106,13 +110,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project test runner configuration from the repository manifest and execute the validation test suite.
 - Discover the static analysis and type verification script from the repository manifest and run it to verify schema compilation.
 - Discover the build bundle inspection script from repository configuration and execute it to verify modular tree-shaking compliance.
 
 Accept when:
+
 - All schema validation test suites execute and pass without validation or runtime errors.
 - Static type checking completes with zero type errors for all inferred schema types.
 - Bundle inspection confirms unused validation functions are eliminated from production output.

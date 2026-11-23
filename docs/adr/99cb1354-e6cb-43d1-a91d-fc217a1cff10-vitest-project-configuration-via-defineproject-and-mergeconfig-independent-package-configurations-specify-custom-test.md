@@ -15,7 +15,6 @@ metadata:
 
 # Vitest Project Configuration via defineProject and mergeConfig: Independent Package Configurations Specify Custom Test
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -39,22 +38,25 @@ Uncoordinated test configurations across sub-packages lead to fragmented testing
 
 ## Decision
 
-1. MAY: Independent package configurations MAY specify custom test timeout thresholds or execution pool constraints when workload characteristics require package-specific runtime isolation.
+- **R-TS-001** MAY: Independent package configurations MAY specify custom test timeout thresholds or execution pool constraints when workload characteristics require package-specific runtime isolation.
 
 ## Policy Block
 
-- MAY Independent package configurations MAY specify custom test timeout thresholds or execution pool constraints when workload characteristics require package-specific runtime isolation.
-
 In scope:
+
 - Unit and integration test configuration across individual workspace packages.
 - Sub-project test definitions inheriting from shared repository-level test configurations.
 
 Out of scope:
+
 - Repository root-level test suite orchestration and global runner entry points.
 - Non-unit test workflows governed by standalone external runners.
 
 Exceptions:
-- EXC-39-001: A package requires an isolated execution environment incompatible with root configuration flags.
+
+- **EXC-39-001** A package requires an isolated execution environment incompatible with root configuration flags.
+  Approval: Architecture Review Board or Principal Quality Engineer
+  Documentation: Documented within the package test configuration header and tracked in architectural records.
 
 ## Rationale
 
@@ -65,11 +67,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Ensures uniform test execution semantics, reporter formats, and coverage criteria across workspace packages.
 - Minimizes duplicate boilerplate across package test configuration modules.
 - Facilitates seamless localized package test runs as well as unified whole-repository test runs.
 
 Negative:
+
 - Creates structural coupling between package-level test configuration modules and the relative path of the shared root configuration.
 - Upstream changes to root configuration defaults risk propagating unintended test behavioral shifts across dependent sub-projects.
 
@@ -107,12 +111,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository test execution script from the workspace root manifest and execute the workspace-wide test suite to confirm all project configurations resolve and pass.
 - Discover the repository configuration linting script from the workspace root manifest and execute it to verify conformance of all sub-project test configuration files.
 
 Accept when:
+
 - All sub-package test configurations successfully merge the shared root configuration without schema validation errors during test initialization.
 - The workspace test runner discovers and executes tests across all configured sub-projects with unified reporting output.
 

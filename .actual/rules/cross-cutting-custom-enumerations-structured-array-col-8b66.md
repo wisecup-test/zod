@@ -19,25 +19,27 @@ metadata:
 
 Scope: applies to `packages/integration/fixtures/drizzle-zod/**`.
 
-These rules are ALWAYS ACTIVE for relational database schema definitions and data model declarations.
+These rules are ALWAYS ACTIVE for:
+- Relational database schema definitions and data model declarations.
 
 ### Rules
 
-- **R-PG-001** SHOULD: Custom enumerations and structured array columns SHOULD be declared using pg-core enum and array builder functions.
-- **R-PG-002** MANDATORY: The consumer MUST derive build tools, file names, commands, package managers, and version numbers from the project repository.
-- **R-PG-003** MANDATORY: Before writing code that uses a versioned library, execute the lock-version grounding steps in order (find manifest, identify build tool, inspect lock artifact, look up official documentation for exact version, confirm API existence, re-run per dependency at point of use).
+- **R-DM-001** SHOULD: Custom enumerations and structured array columns SHOULD be declared using pg-core enum and array builder functions.
 
 ### Verify
 
-```bash
-# Discover and execute the repository type-checking script to ensure schema definitions satisfy compile-time constraints.
-# Discover and run the project test suite to verify schema instantiation and data model operations.
-```
+- Discover and execute the repository type-checking script to ensure schema definitions satisfy compile-time constraints.
+- Discover and run the project test suite to verify schema instantiation and data model operations.
 
 **Accept when:**
+
 - The project type-checking script passes with zero diagnostic errors across schema definitions.
 - All database model verification suites execute successfully.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verification is mandatory.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration pipeline type verification.
+- Verified by: Pull request peer code review.
+- Violation handling: Pull requests introducing non-standard relational schema definitions will be blocked until brought into compliance.
+- Exception process: Exceptions must be documented in an architectural exception request and approved by data architecture leads.
 </enforcement>

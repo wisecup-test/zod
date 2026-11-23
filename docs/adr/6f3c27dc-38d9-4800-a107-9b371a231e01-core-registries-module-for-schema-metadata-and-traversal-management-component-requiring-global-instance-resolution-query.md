@@ -17,7 +17,6 @@ metadata:
 
 # Core Registries Module for Schema Metadata and Traversal Management: Component Requiring Global Instance Resolution Query
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,23 +39,26 @@ Transforming schema structures into target specifications requires resolving ass
 
 ## Decision
 
-1. MUST: Component APIs requiring global instance resolution MUST query globalRegistry rather than maintaining isolated static instance caches.
+- **R-LM-001** MUST: Component APIs requiring global instance resolution MUST query globalRegistry rather than maintaining isolated static instance caches.
 
 ## Policy Block
 
-- MUST Component APIs requiring global instance resolution MUST query globalRegistry rather than maintaining isolated static instance caches.
-
 In scope:
+
 - Core schema transformation pipelines
 - Schema serialization and generation modules
 - Internal API schema instance registries
 
 Out of scope:
+
 - Stateless primitive validation operations
 - External consumer application logic
 
 Exceptions:
-- EXC-20-001: Isolated unit testing of schema nodes where metadata resolution is not evaluated
+
+- **EXC-20-001** Isolated unit testing of schema nodes where metadata resolution is not evaluated
+  Approval: Core Architecture Review
+  Documentation: Record test isolation mock strategy in test header documentation
 
 ## Rationale
 
@@ -67,11 +69,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Guarantees immutability of schema definitions during transformations and conversions.
 - Prevents infinite recursion and call-stack overflow exceptions in cyclical schema structures.
 - Provides deterministic and centralized metadata lookup across disparate processing stages.
 
 Negative:
+
 - Requires threading explicit execution context objects through all downstream visitors and schema processors.
 - Increases memory overhead during deep schema traversal due to retained context cache references.
 
@@ -109,12 +113,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project test suite covering core schema transformation and registry operations.
 - Discover and run the repository static analysis and type checking verification scripts.
 
 Accept when:
+
 - All core schema transformation tests pass without circular reference errors.
 - Static analysis confirms that metadata resolution and traversal state operations use the designated registries and context APIs.
 

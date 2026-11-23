@@ -18,7 +18,6 @@ metadata:
 
 # next/link Client Navigation Module Adoption: Components Implementing Custom Interactive Triggers Styled
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -42,16 +41,16 @@ Navigating between internal documentation routes using standard unmanaged browse
 
 ## Decision
 
-1. SHOULD: Components implementing custom interactive triggers or styled wrappers around next/link SHOULD maintain accessible anchor semantics and keyboard focus behaviors.
+- **R-LM-001** SHOULD: Components implementing custom interactive triggers or styled wrappers around next/link SHOULD maintain accessible anchor semantics and keyboard focus behaviors.
 
 ## Policy Block
 
-- SHOULD Components implementing custom interactive triggers or styled wrappers around next/link SHOULD maintain accessible anchor semantics and keyboard focus behaviors.
-
 In scope:
+
 - All page views and interactive UI components requiring navigation between internal application routes.
 
 Out of scope:
+
 - External hyperlinks pointing to third-party domains or non-routed static file downloads.
 
 ## Rationale
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Preserves in-memory client state across page transitions without triggering browser full-page reload cycles.
 - Accelerates subsequent route navigation latency via automated background prefetching of linked route assets.
 - Ensures consistent navigation semantics across all documentation components and layout templates.
 
 Negative:
+
 - Increases client JavaScript bundle footprint compared to unadorned native anchor elements.
 - Introduces background network overhead when multiple links prefetch destination routes within the viewport.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the repository static analysis and linting scripts to identify non-compliant anchor usage.
 - Discover and execute the repository test runner to verify navigation component rendering and routing integrity.
 
 Accept when:
+
 - All internal navigation hyperlinks render through next/link without unmanaged anchor element fallbacks.
 - Repository static analysis and test validation suites pass without routing rule violations.
 

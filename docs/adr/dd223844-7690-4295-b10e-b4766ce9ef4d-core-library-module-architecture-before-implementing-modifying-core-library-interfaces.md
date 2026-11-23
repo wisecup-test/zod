@@ -17,7 +17,6 @@ metadata:
 
 # Core Library Module Architecture: Before Implementing Modifying Core Library Interfaces
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Monolithic validation logic couples schema representations with compilation mech
 
 ## Decision
 
-1. MUST: Before implementing or modifying core library interfaces, consumers MUST discover the project dependency manifest and authoritative resolution artifact to verify exact locked versions.
+- **R-LM-001** MUST: Before implementing or modifying core library interfaces, consumers MUST discover the project dependency manifest and authoritative resolution artifact to verify exact locked versions.
 
 ## Policy Block
 
-- MUST Before implementing or modifying core library interfaces, consumers MUST discover the project dependency manifest and authoritative resolution artifact to verify exact locked versions.
-
 In scope:
+
 - Internal core library modules responsible for schema definition, compilation routines, and validation checks.
 - Runtime compilation and method installation mechanisms wrapping parser functions.
 
 Out of scope:
+
 - Public consumer applications invoking external high-level validation APIs.
 - External utility extensions operating outside the core library module boundary.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Isolates schema compilation and user method installation from underlying validation check logic.
 - Improves parsing throughput by delegating execution to compiled functions with safe fallback mechanisms.
 - Provides dedicated lookup layers and caching mechanisms for efficient schema transformation and resolution.
 
 Negative:
+
 - Inter-module dependencies within the core subsystem require disciplined dependency hygiene to prevent circular imports.
 - Compiler state management and cache tracking introduce memory considerations during complex schema generation.
 
@@ -105,13 +106,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the repository build verification script to validate module resolution across all core library boundaries.
 - Discover and run the project test suite targeting core schema compilation, parsing, and validation check routines.
 - Discover and run the repository static type checker and module linting tools to confirm interface compliance and absence of circular references.
 
 Accept when:
+
 - All unit tests covering core schema compilation, parsing, and check validations pass cleanly.
 - Static type analysis confirms that function signatures and compiled method wrappers adhere to declared interfaces with zero type errors.
 - Module boundary analysis verifies no undeclared cyclic references exist between core library modules.

@@ -17,7 +17,6 @@ metadata:
 
 # Adoption of zod for Runtime Schema Validation and Parsing: Runtime Input Validation Across Module Boundaries
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Unvalidated input data passing into resolution logic introduces runtime failure 
 
 ## Decision
 
-1. MUST: All runtime input validation across module boundaries MUST use zod schemas to parse and validate incoming payloads.
+- **R-LM-001** MUST: All runtime input validation across module boundaries MUST use zod schemas to parse and validate incoming payloads.
 
 ## Policy Block
 
-- MUST All runtime input validation across module boundaries MUST use zod schemas to parse and validate incoming payloads.
-
 In scope:
+
 - Runtime input parsing and validation within module resolution entrypoints
 - Data contracts interfacing with external inputs across module formats
 
 Out of scope:
+
 - Internal pure functions operating on already validated and typed structures
 - Compile-time-only type declarations where runtime validation is not applicable
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Runtime payload integrity is guaranteed upon ingestion at module boundaries.
 - Static types are inferred directly from schema definitions, eliminating contract divergence.
 - Validation failures produce structured error information rather than unexpected runtime exceptions.
 
 Negative:
+
 - Schema execution introduces runtime overhead during input parsing.
 - An external runtime dependency footprint is incurred across distributed module entrypoints.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project verification script from the repository manifest and execute validation suites.
 - Discover and run the project test execution command to verify schema parsing tests pass across all module entrypoints.
 
 Accept when:
+
 - All boundary inputs are validated via schema parsing without manual type casting.
 - Verification suites pass with schema validation tests confirming rejection of invalid inputs and acceptance of valid inputs.
 

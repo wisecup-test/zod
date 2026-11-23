@@ -17,7 +17,6 @@ metadata:
 
 # node:fs/promises Metadata Deserialization: Memory Ordering Indices Derived Validated Metadata
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -41,17 +40,17 @@ Server route handlers reading local filesystem resources require reliable asynch
 
 ## Decision
 
-1. MAY: In-memory ordering indices MAY be derived from validated metadata entries to coordinate document sequencing.
+- **R-SCP-001** MAY: In-memory ordering indices MAY be derived from validated metadata entries to coordinate document sequencing.
 
 ## Policy Block
 
-- MAY In-memory ordering indices MAY be derived from validated metadata entries to coordinate document sequencing.
-
 In scope:
+
 - Server route handlers and endpoint loaders performing asynchronous reads of local filesystem metadata.
 - Internal metadata processing workflows using runtime filesystem modules.
 
 Out of scope:
+
 - Client-side components without access to runtime filesystem modules.
 - External network requests governed by perimeter security gateways and HTTP payload validators.
 
@@ -64,11 +63,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Eliminates external dependency bloat by relying on standard runtime filesystem capabilities.
 - Provides asynchronous non-blocking I/O during server route execution.
 - Keeps metadata ingestion logic simple and co-located with documentation route handlers.
 
 Negative:
+
 - Direct JSON.parse calls lack type guards or runtime schema enforcement, propagating structural errors downstream.
 - Malformed metadata on disk leads to immediate unhandled exceptions unless explicitly caught in the handler.
 - Pattern is localized to a single file, lacking architectural uniformity across the broader codebase.
@@ -107,13 +108,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project script runner and execute the automated test suite targeting route handlers and metadata loaders.
 - Discover the static analysis and linting command from the repository manifest and execute it against secure coding rules.
 - Inspect the build definition scripts and run the compilation check to confirm type safety across route handlers.
 
 Accept when:
+
 - Automated tests covering metadata retrieval and parsing pass without unhandled rejection or syntax errors.
 - Static verification scripts report zero violations regarding unvalidated deserialization.
 - Route execution successfully completes metadata ingestion and document ordering without throwing unhandled exceptions.

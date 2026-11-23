@@ -17,7 +17,6 @@ metadata:
 
 # Contextual Schema Issue Error Callback Dispatching in Core Utilities: Core Utility Functions Not Instantiate Couple
 
-Status: proposed
 Date: 2025-05-15
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Emitting telemetry and diagnostic error logs from within core schema validation 
 
 ## Decision
 
-1. MUST_NOT: Core utility functions MUST NOT instantiate or couple to concrete external logging libraries or global output streams.
+- **R-L-001** MUST_NOT: Core utility functions MUST NOT instantiate or couple to concrete external logging libraries or global output streams.
 
 ## Policy Block
 
-- MUST_NOT Core utility functions MUST NOT instantiate or couple to concrete external logging libraries or global output streams.
-
 In scope:
+
 - Core schema utility functions that process validation issues and error records.
 - Validation context definitions and schema instance configurations supporting optional error listeners.
 
 Out of scope:
+
 - Application-level services managing operational log aggregation and external log transport.
 - User-facing presentation components consuming formatted error messages.
 
@@ -62,10 +61,12 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Decouples core schema utility evaluation from specific logging engines or external observability frameworks.
 - Allows contextual issue inspection and custom error logging handlers to be attached per schema definition or validation invocation.
 
 Negative:
+
 - Invoking arbitrary consumer-provided callbacks inside core validation pathways can introduce unpredictable latency.
 - Single-file utility scope limits the consistency of observability across broader subsystem components.
 
@@ -103,12 +104,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project test runner from the repository manifest and execute all unit tests governing core schema utility error paths.
 - Discover the static analysis tool from the repository configuration and verify compliance with optional callback invocation rules.
 
 Accept when:
+
 - All unit and regression test suites for core schema utilities pass with zero failures.
 - Static analysis confirms that error callbacks are executed exclusively through guarded optional invocation patterns.
 

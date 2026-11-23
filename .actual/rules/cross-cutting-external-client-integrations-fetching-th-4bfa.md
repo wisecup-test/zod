@@ -19,40 +19,27 @@ metadata:
 
 Scope: applies to `packages/docs/loaders/**`.
 
-These rules are ALWAYS ACTIVE for modules that perform outbound HTTP requests to external third-party services to retrieve metadata or public metrics.
+These rules are ALWAYS ACTIVE for:
+- Modules that perform outbound HTTP requests to external third-party services to retrieve metadata or public metrics
 
 ### Rules
 
-- **R-EXT-001** MUST: External client integrations fetching third-party service data MUST configure request-level revalidation caching to limit repetitive remote network calls.
-- **R-EXT-002** MUST: Configure appropriate time-to-live revalidation parameters matching the data freshness requirements of the consuming presentation components.
-- **R-EXT-003** MUST: Ensure error handlers log sufficient context including attempt count and diagnostic error details without exposing authentication headers.
-- **R-EXT-004** MUST: Before writing code that uses a versioned library, execute in order: dependency manifest discovery, build tool identification, lock file inspection, public documentation lookup for that exact version, and API existence confirmation.
+- **R-IA-001** MUST: External client integrations fetching third-party service data MUST configure request-level revalidation caching to limit repetitive remote network calls
 
 ### Verify
 
-```bash
-# Discover and run the project repository typecheck script to verify external API client typings
-typecheck_script=$(npm pkg get scripts.typecheck --json 2>/dev/null || echo "tsc --noEmit")
-if [ "$typecheck_script" != "null" ] && [ -n "$typecheck_script" ]; then
-  npm run typecheck || npx tsc --noEmit
-else
-  npx tsc --noEmit
-fi
-
-# Discover and execute the project integration test suite to validate external client caching and retry behavior
-test_script=$(npm pkg get scripts.test:integration --json 2>/dev/null || npm pkg get scripts.test --json 2>/dev/null)
-if [ "$test_script" != "null" ] && [ -n "$test_script" ]; then
-  npm run test:integration || npm test
-else
-  npx jest integration
-fi
-```
+- Discover and run the project repository typecheck script to verify external API client typings
+- Discover and execute the project integration test suite to validate external client caching and retry behavior
 
 **Accept when:**
-- Static analysis and test suites execute without errors across all external client modules.
-- Mocked external requests confirm caching revalidation headers and retry logic function as specified.
-- Outbound requests correctly use runtime environment variables for bearer token authentication.
+
+- Static analysis and test suites execute without errors across all external client modules
+- Mocked external requests confirm caching revalidation headers and retry logic function as specified
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Automated continuous integration test suites and peer code reviews verify these rules.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated continuous integration test suites
+- Verified by: Peer code review of data loader and external client implementations
+- Violation handling: Pull requests lacking credential protection or caching configurations will be rejected during code review
+- Exception process: Exceptions for endpoints requiring real-time updates without caching must be documented and approved by the engineering leads
 </enforcement>

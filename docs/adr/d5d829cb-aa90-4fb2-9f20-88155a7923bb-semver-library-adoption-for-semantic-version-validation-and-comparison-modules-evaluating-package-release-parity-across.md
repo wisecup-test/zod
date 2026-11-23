@@ -17,7 +17,6 @@ metadata:
 
 # semver Library Adoption for Semantic Version Validation and Comparison: Modules Evaluating Package Release Parity Across
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Maintaining version alignment and release gating across published packages requi
 
 ## Decision
 
-1. MUST: Modules evaluating package release parity across registries MUST validate version equality and lockstep alignment via semver comparison utilities.
+- **R-LM-001** MUST: Modules evaluating package release parity across registries MUST validate version equality and lockstep alignment via semver comparison utilities.
 
 ## Policy Block
 
-- MUST Modules evaluating package release parity across registries MUST validate version equality and lockstep alignment via semver comparison utilities.
-
 In scope:
+
 - Automation scripts, release verification routines, and tooling that parse, compare, or validate package versions.
 - Release gating checks that verify version synchronization across multiple published distributions.
 
 Out of scope:
+
 - Runtime application code that does not inspect or compare semantic version numbers.
 - Non-versioned identifiers and arbitrary alphanumeric string processing.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Deterministic and specification-compliant semantic version parsing and comparison across all verification tooling.
 - Elimination of brittle custom regular expressions and ad-hoc string splitting for version comparisons.
 - Reliable detection of version drift and lockstep mismatches across distributed packages.
 
 Negative:
+
 - Introduces an external library dependency into the project tooling dependency graph.
 - Engineers must ensure the installed library version supports any specific version range syntax required by registry metadata.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the project verification script defined in the repository manifest responsible for semver checking.
 - Discover and execute the automated lockstep verification script defined in the repository manifest.
 
 Accept when:
+
 - Version validation routines successfully parse and compare version identifiers using the semver library.
 - Lockstep verification halts with an error exit code when version mismatches are detected between synchronized packages.
 - All automated verification directives pass without unhandled exceptions or syntax errors.

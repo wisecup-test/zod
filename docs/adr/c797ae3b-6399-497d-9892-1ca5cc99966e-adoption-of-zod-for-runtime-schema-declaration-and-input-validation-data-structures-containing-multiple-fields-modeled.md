@@ -15,7 +15,6 @@ metadata:
 
 # Adoption of Zod for Runtime Schema Declaration and Input Validation: Data Structures Containing Multiple Fields Modeled
 
-Status: proposed
 Date: 2025-02-18
 Deciders: Detection Pipeline (automated)
 
@@ -38,22 +37,25 @@ Without a unified runtime schema validation standard, data structures ingested f
 
 ## Decision
 
-1. SHOULD: Data structures containing multiple fields SHOULD be modeled using object schema declarations composed of primitive validator types.
+- **R-LM-001** SHOULD: Data structures containing multiple fields SHOULD be modeled using object schema declarations composed of primitive validator types.
 
 ## Policy Block
 
-- SHOULD Data structures containing multiple fields SHOULD be modeled using object schema declarations composed of primitive validator types.
-
 In scope:
+
 - All modules and packages defining data models that parse or ingest external or untrusted inputs.
 - Internal boundaries requiring explicit schema contracts and runtime type validation.
 
 Out of scope:
+
 - Performance-critical inner loops where data has already passed boundary validation.
 - Pure internal utility functions operating exclusively on compile-time verified primitives.
 
 Exceptions:
-- EXC-20-001: A module operates in an environment where schema parsing introduces unacceptable latency and inputs have been verified by an upstream gateway.
+
+- **EXC-20-001** A module operates in an environment where schema parsing introduces unacceptable latency and inputs have been verified by an upstream gateway.
+  Approval: Architectural review approval required.
+  Documentation: The exception rationale and alternative validation mechanism must be documented in the module architectural notes.
 
 ## Rationale
 
@@ -64,11 +66,13 @@ Exceptions:
 ## Consequences
 
 Positive:
+
 - Guarantees runtime data integrity at module ingestion points by rejecting invalid payloads early.
 - Reduces redundant manual validation logic through reusable schema definitions.
 - Synchronizes static type definitions with runtime validation logic through schema inference.
 
 Negative:
+
 - Introduces runtime execution latency during data parsing and schema validation.
 - Increases bundle footprint due to the inclusion of runtime schema evaluation logic.
 
@@ -106,12 +110,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the repository script runner and execute the project verification test suite to ensure all schema validation tests pass.
 - Discover the static analysis check defined in the project configuration and execute type checking to verify that schema inference aligns with declared data contracts.
 
 Accept when:
+
 - All discovered schema validation test suites execute and report zero failures.
 - Static type analysis confirms that data types inferred from schemas match expected input contracts across all consumption boundaries.
 

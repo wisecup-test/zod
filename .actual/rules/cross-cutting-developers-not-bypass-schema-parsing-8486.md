@@ -19,24 +19,30 @@ metadata:
 
 Scope: applies to `packages/resolution/src/**`.
 
-These rules are ALWAYS ACTIVE for runtime input parsing and validation within module resolution entrypoints and data contracts interfacing with external inputs.
+These rules are ALWAYS ACTIVE for:
+- Runtime input parsing and validation within module resolution entrypoints
+- Data contracts interfacing with external inputs across module formats
 
 ### Rules
 
-- **R-ZOD-001** MUST_NOT: Developers MUST_NOT bypass schema parsing by casting unvalidated external input directly to expected internal types.
+- **R-LM-001** MUST_NOT: Developers MUST_NOT bypass schema parsing by casting unvalidated external input directly to expected internal types.
 
 ### Verify
 
-```bash
-# Discover the project verification script from the repository manifest and execute validation suites.
-# Discover and run the project test execution command to verify schema parsing tests pass across all module entrypoints.
-npm test
-```
+- Discover the project verification script from the repository manifest and execute validation suites.
+- Discover and run the project test execution command to verify schema parsing tests pass across all module entrypoints.
 
 **Accept when:**
+
 - All boundary inputs are validated via schema parsing without manual type casting.
 - Verification suites pass with schema validation tests confirming rejection of invalid inputs and acceptance of valid inputs.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Continuous integration test execution, automated code review, and peer review enforce these rules, and pull requests bypassing schema validation are blocked.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Continuous integration test execution
+- Verified by: Automated code review and lint checks
+- Verified by: Peer review of pull requests touching boundary entrypoints
+- Violation handling: Pull requests bypassing schema validation on external inputs are blocked from merging.
+- Violation handling: Code review flags any unvalidated boundary type assertions for refactoring.
+- Exception process: Exceptions require documented justification demonstrating performance-critical constraints and approval by lead architects.
 </enforcement>

@@ -25,27 +25,30 @@ metadata:
 
 # Adoption of vitest/config Module for Standardized Test Harness Configuration: Configurations Requiring Explicit Typing Leverage Viteuserconfig
 
-Scope: applies to the whole repository; excludes `!packages/bench/**`, `!packages/docs/**`, `!packages/integration/**`, `!packages/mini/**`, `!packages/resolution/**`, `!packages/treeshake/**`, `!packages/tsc/**`, `!packages/zod/**`.
+Scope: applies to `**`; excludes `!packages/bench/**`, `!packages/docs/**`, `!packages/integration/**`, `!packages/mini/**`, `!packages/resolution/**`, `!packages/treeshake/**`, `!packages/tsc/**`, `!packages/zod/**`.
 
-These rules are ALWAYS ACTIVE for all test harness configuration files across root and package contexts.
+These rules are ALWAYS ACTIVE for:
+- All test harness configuration files across root and package contexts.
 
 ### Rules
 
-- **R-VIT-001** SHOULD: Configurations requiring explicit typing leverage the ViteUserConfig type interface provided by the configuration module.
-- **R-VIT-002** MANDATORY: Consumers must execute lock-version grounding, inspecting repository lock or resolution artifacts to determine exact resolved versions before using version-sensitive library APIs.
+- **R-LM-001** SHOULD: Configurations requiring explicit typing SHOULD leverage the ViteUserConfig type interface provided by the configuration module.
 
 ### Verify
 
-```bash
-# Discover dependency manifest and lock artifact, verify resolved dependency entry
-# Run the project verification pipeline to validate test configuration integrity
-npm test -- --run
-```
+- Discover the repository dependency manifest and lock artifact, verify the resolved dependency entry, and execute the project verification pipeline to validate configuration integrity.
 
 **Accept when:**
+
 - All test configuration definitions export structures declared through the adopted configuration factory API.
 - Repository lock verification confirms synchronization between the active environment and declared dependency ranges.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All test configurations must use the standardized configuration factory API and adhere to lock-file grounding requirements.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated static analysis verifying that test configuration files consume the designated configuration factory API.
+- Verified by: Code reviews checking adherence to lock-file grounding and module isolation rules.
+- Violation handling: Flagged configurations fail build and pull request checks until brought into compliance.
+- Violation handling: Non-compliant configuration exports must be refactored to use the standardized configuration factory.
+- Exception process: Submit an architectural exception request detailing why custom test execution flags cannot be expressed through the standard configuration factory.
+- Exception process: Obtain review and sign-off from the architectural governance leads before committing unvalidated test configurations.
 </enforcement>

@@ -17,7 +17,6 @@ metadata:
 
 # Standard Schema Interface Adoption: Before Implementing Updating Modules That Rely
 
-Status: proposed
 Date: 2025-05-14
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Schema validation frameworks encounter friction when coordinating schema compila
 
 ## Decision
 
-1. MUST: Before implementing or updating modules that rely on the Standard Schema specification, consumers MUST inspect the repository dependency lock artifact to determine the exact resolved specification version and verify contract compatibility.
+- **R-LM-001** MUST: Before implementing or updating modules that rely on the Standard Schema specification, consumers MUST inspect the repository dependency lock artifact to determine the exact resolved specification version and verify contract compatibility.
 
 ## Policy Block
 
-- MUST Before implementing or updating modules that rely on the Standard Schema specification, consumers MUST inspect the repository dependency lock artifact to determine the exact resolved specification version and verify contract compatibility.
-
 In scope:
+
 - Core schema definition modules, validation engines, and error normalization pipelines.
 - Serialization adapters and schema introspection utilities translating validation definitions to external formats.
 
 Out of scope:
+
 - Peripheral utility helpers that do not participate in schema validation or transformation contracts.
 - Legacy compatibility layers maintained outside the primary schema compilation engine.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Establishes a uniform, interoperable interface contract across all core schema definition and transformation workflows.
 - Eliminates redundant translation adapters by standardizing issue structures and metadata access patterns across subsystems.
 - Facilitates predictable schema serialization and external tool integration through shared interface conventions.
 
 Negative:
+
 - Imposes strict structural conformance constraints across all internal schema definitions and error reporting nodes.
 - Requires continuous maintenance and alignment when upstream interface specification contracts undergo version transitions.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and execute the project repository static type verification suite to confirm interface conformance across all core modules.
 - Execute the project automated test suite to ensure schema transformation and error reporting behavior complies with specification contracts.
 
 Accept when:
+
 - All core schema compilation, error handling, and serialization modules pass static type verification without interface mismatches.
 - Automated unit and integration test suites succeed with zero regressions in schema validation or issue formatting.
 

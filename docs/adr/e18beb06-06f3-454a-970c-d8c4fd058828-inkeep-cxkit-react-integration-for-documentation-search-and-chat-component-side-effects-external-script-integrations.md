@@ -17,7 +17,6 @@ metadata:
 
 # @inkeep/cxkit-react Integration for Documentation Search and Chat: Component Side Effects External Script Integrations
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,16 +39,16 @@ Documentation platforms require embedded, interactive search and conversational 
 
 ## Decision
 
-1. SHOULD: Component side effects and external script integrations for @inkeep/cxkit-react SHOULD synchronize within React useEffect hooks to maintain consistent client lifecycle boundaries.
+- **R-LM-001** SHOULD: Component side effects and external script integrations for @inkeep/cxkit-react SHOULD synchronize within React useEffect hooks to maintain consistent client lifecycle boundaries.
 
 ## Policy Block
 
-- SHOULD Component side effects and external script integrations for @inkeep/cxkit-react SHOULD synchronize within React useEffect hooks to maintain consistent client lifecycle boundaries.
-
 In scope:
+
 - Frontend documentation user interface components requiring search dialogs or floating assistant widgets.
 
 Out of scope:
+
 - Server-rendered backend routes and static non-interactive documentation generation modules.
 
 ## Rationale
@@ -61,11 +60,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Offloads search indexing, conversational reasoning, and AI widget maintenance to a specialized external documentation search provider.
 - Provides turnkey search dialogs and interactive assistance bubbles with consistent client-side behavior.
 - Standardizes client-side integration patterns through well-defined React lifecycle hooks and environment key configuration.
 
 Negative:
+
 - Creates runtime dependency and network coupling to third-party widget hosting and backend search availability.
 - Introduces client bundle overhead and browser execution overhead for interactive documentation components.
 - Exposes search service integration parameters to the browser via public environment variables.
@@ -104,13 +105,14 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - # Discover and run the workspace lint script to verify client boundary directives and environment variable usage.
 - # Discover and run the workspace typecheck script to validate component bindings against library interfaces.
 - # Discover and run the workspace test runner to confirm documentation component mounting.
 
 Accept when:
+
 - Static analysis verification confirms all widget wrapper components declare client boundaries.
 - Type checking completes with zero unresolved symbols or incompatible interface references.
 - Component mounting tests verify proper configuration resolution and lifecycle initialization.

@@ -17,7 +17,6 @@ metadata:
 
 # Zod Core Internal Module Architecture: Localization Definitions Not Define Independent Error
 
-Status: proposed
 Date: 2025-02-18
 Deciders: Detection Pipeline (automated)
 
@@ -41,17 +40,17 @@ Managing localized validation error messages across numerous languages risks fra
 
 ## Decision
 
-1. MUST_NOT: Localization definitions MUST_NOT define independent error structures or duplicate core validation check logic outside of the established internal core library interfaces.
+- **R-LM-001** MUST_NOT: Localization definitions MUST_NOT define independent error structures or duplicate core validation check logic outside of the established internal core library interfaces.
 
 ## Policy Block
 
-- MUST_NOT Localization definitions MUST_NOT define independent error structures or duplicate core validation check logic outside of the established internal core library interfaces.
-
 In scope:
+
 - All localization definitions and internationalization message formatting modules within the library.
 - Extensions and contributions providing new language message maps.
 
 Out of scope:
+
 - Core engine validation logic and primary schema parsers.
 - Independent consumer applications consuming the compiled public library interface.
 
@@ -64,11 +63,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Consistent error structure and issue code handling across all supported language targets.
 - Elimination of duplicated check logic and redundant string manipulation routines across localization files.
 - Reduced cognitive overhead for internationalization contributors who only need to map localized strings to standardized core error definitions.
 
 Negative:
+
 - Changes to internal core error signatures require simultaneous updates or backwards compatibility across all sixty-two locale definitions.
 - Localizations are tightly bound to the internal core module export contract and cannot easily deviate for unique language-specific error architectures without core changes.
 
@@ -106,12 +107,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover the project task runner configuration and execute the static type-checking and linting suites to ensure locale imports satisfy internal core module boundaries.
 - Discover the test suite execution script from the repository manifest and run all localization unit tests to verify error formatting consistency against core expectations.
 
 Accept when:
+
 - All localization modules resolve imports directly against the internal core module boundary without missing exports or type errors.
 - Automated localization test suites execute and pass across all registered locale targets.
 - No duplicate validation check definitions or uncoordinated error structures exist across localization files.

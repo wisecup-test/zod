@@ -17,7 +17,6 @@ metadata:
 
 # drizzle-zod Integration for pgTable Schema Modeling: Developers Inspect Repository Lock Artifact Determine
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,16 +39,16 @@ Maintaining duplicate definitions for database persistence schemas and applicati
 
 ## Decision
 
-1. MUST: Developers MUST inspect the repository lock artifact to determine the exact resolved versions of drizzle-zod and drizzle-orm/pg-core before implementing or modifying schema definitions.
+- **R-DM-001** MUST: Developers MUST inspect the repository lock artifact to determine the exact resolved versions of drizzle-zod and drizzle-orm/pg-core before implementing or modifying schema definitions.
 
 ## Policy Block
 
-- MUST Developers MUST inspect the repository lock artifact to determine the exact resolved versions of drizzle-zod and drizzle-orm/pg-core before implementing or modifying schema definitions.
-
 In scope:
+
 - Relational database table definitions that derive runtime validation schemas using drizzle-zod.
 
 Out of scope:
+
 - Persistence layers that do not use relational table definitions or where validation is handled by independent protocol specifications.
 
 ## Rationale
@@ -61,10 +60,12 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Eliminates redundant schema definitions across database models and validation layers.
 - Ensures database table constraints and runtime input validation contracts remain synchronized.
 
 Negative:
+
 - Couples application validation models directly to physical database column representations.
 - Restricts data modeling conventions to column types and constructs supported by the schema derivation utility.
 
@@ -99,12 +100,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project type checking script to verify that derived drizzle-zod validation schemas align with pgTable declarations.
 - Discover and run the project test suite to verify that integration tests for schema models pass.
 
 Accept when:
+
 - Type validation confirms that relational table definitions and derived validation schemas compile without diagnostic errors.
 - Project integration test suites exercising schema modeling and input validation pass without failure.
 

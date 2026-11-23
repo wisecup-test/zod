@@ -19,27 +19,29 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/core/**`.
 
-These rules are ALWAYS ACTIVE for core schema definition modules, validation engines, error normalization pipelines, serialization adapters, and schema introspection utilities.
+These rules are ALWAYS ACTIVE for:
+- Core schema definition modules, validation engines, and error normalization pipelines.
+- Serialization adapters and schema introspection utilities translating validation definitions to external formats.
 
 ### Rules
 
-- **R-SSIA-001** MUST: Before implementing or updating modules that rely on the Standard Schema specification, consumers MUST inspect the repository dependency lock artifact to determine the exact resolved specification version and verify contract compatibility.
-- **R-SSIA-002** MUST (DISCOVERY POLICY): The consumer MUST derive all tool names, file names, commands, package managers, and version numbers from the project repository.
-- **R-SSIA-003** MUST (LOCK-VERSION GROUNDING): Before writing code that uses a versioned library, execute in order: find the dependency manifest, identify the build tool, inspect the lock/resolution artifact for the exact resolved version, look up official documentation for that exact version, confirm every API exists, and re-run steps per dependency at point of use.
-- **R-SSIA-004** SHOULD: Inspect the repository dependency graph to identify existing schema metadata registries and caching layers before implementing new transformation adapters.
-- **R-SSIA-005** MUST: Ensure all schema traversal procedures incorporate cache lookups and prototype safety guards to handle recursive definitions safely.
+- **R-LM-001** MUST: Before implementing or updating modules that rely on the Standard Schema specification, consumers MUST inspect the repository dependency lock artifact to determine the exact resolved specification version and verify contract compatibility.
 
 ### Verify
 
-```bash
-# Discover and execute the project repository static type verification suite to confirm interface conformance across all core modules.
-# Execute the project automated test suite to ensure schema transformation and error reporting behavior complies with specification contracts.
-```
+- Discover and execute the project repository static type verification suite to confirm interface conformance across all core modules.
+- Execute the project automated test suite to ensure schema transformation and error reporting behavior complies with specification contracts.
 
 **Accept when:**
+
 - All core schema compilation, error handling, and serialization modules pass static type verification without interface mismatches.
 - Automated unit and integration test suites succeed with zero regressions in schema validation or issue formatting.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Continuous integration pipelines, static type analysis, and automated test suites verify compliance. Contributions introducing proprietary validation interfaces or non-compliant issue structures are rejected.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Continuous integration pipelines executing static type analysis and automated test suites on all code contributions.
+- Verified by: Peer architectural reviews verifying contract compliance against the Standard Schema specification during pull request evaluation.
+- Violation handling: Contributions introducing proprietary validation interfaces or non-compliant issue structures are rejected during continuous integration checks.
+- Violation handling: Non-conforming implementations must be refactored to align with the Standard Schema interface contract prior to merge approval.
+- Exception process: Architectural exceptions require formal review and unanimous approval by the architecture engineering group with documented technical justification and an agreed-upon remediation timeline.
 </enforcement>

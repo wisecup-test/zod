@@ -17,7 +17,6 @@ metadata:
 
 # Direct process.env Runtime Configuration Access in Automation Scripts: Engineers Discover Ecosystem Lock Artifact Confirm
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,16 +39,16 @@ Repository automation scripts require runtime parameters to modulate execution d
 
 ## Decision
 
-1. MUST: Engineers MUST discover the ecosystem lock artifact and confirm all dependency versions prior to introducing external environment parsing libraries.
+- **R-SC-001** MUST: Engineers MUST discover the ecosystem lock artifact and confirm all dependency versions prior to introducing external environment parsing libraries.
 
 ## Policy Block
 
-- MUST Engineers MUST discover the ecosystem lock artifact and confirm all dependency versions prior to introducing external environment parsing libraries.
-
 In scope:
+
 - Repository automation, validation, and maintenance scripts reading execution parameters and pipeline signaling variables.
 
 Out of scope:
+
 - Production application runtime modules, public library export surfaces, and authentication or credential-handling subsystems.
 
 ## Rationale
@@ -61,11 +60,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Zero external dependency footprint and no initialization overhead for lightweight repository maintenance and testing routines.
 - Native compatibility with continuous integration workflows and standard execution environments without configuration loader boilerplate.
 - Explicit property-based access clearly documents runtime configuration dependencies directly in script code.
 
 Negative:
+
 - Absence of automated schema parsing or type coercion requires manual type parsing for non-string values.
 - No built-in secret masking or audit logging if sensitive credentials are inadvertently passed through standard environment variables.
 - Runtime failures can occur silently if expected environment variables are undefined and lack explicit default fallbacks.
@@ -104,12 +105,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project repository script verification and type-checking suites across automation scripts.
 - Execute the repository linting and static analysis suite to check for unvalidated environment variable references.
 
 Accept when:
+
 - All automation and maintenance scripts execute cleanly without unhandled undefined environment variable exceptions.
 - Static analysis and type checking pass across all repository automation scripts without unhandled configuration types.
 

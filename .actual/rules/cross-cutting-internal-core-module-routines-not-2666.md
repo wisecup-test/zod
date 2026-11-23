@@ -19,23 +19,30 @@ metadata:
 
 Scope: applies to `packages/zod/src/v4/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- Implementation of schema transformation, traversal, and utility operations across dialect modules.
+- Internal module structures sharing common structural inspection and manipulation logic.
 
 ### Rules
 
-- **R-ICM-001** MUST_NOT: Internal core module routines MUST NOT introduce circular dependencies by importing dialect-specific schema definitions or dialect transformation modules.
+- **R-LM-001** MUST_NOT: Internal core module routines MUST NOT introduce circular dependencies by importing dialect-specific schema definitions or dialect transformation modules.
 
 ### Verify
 
-```bash
-# Discover and run the project test suite from the repository manifest to verify schema transformation consistency across all dialect modules.
-# Discover and execute the project static analysis and lint checks to confirm module dependency boundaries and verify that core modules do not depend on dialect submodules.
-```
+- Discover and run the project test suite from the repository manifest to verify schema transformation consistency across all dialect modules.
+- Discover and execute the project static analysis and lint checks to confirm module dependency boundaries and verify that core modules do not depend on dialect submodules.
 
 **Accept when:**
+
 - All schema transformation and traversal tests pass across both full and lightweight dialect implementations.
 - Module boundary analysis confirms unidirectional dependencies from dialect transformation modules to the internal core module.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Continuous integration test validation and static analysis checks must verify schema transformation correctness and detect disallowed circular dependencies between internal core modules and dialect modules.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Continuous integration test validation verifying schema transformation correctness across all dialect modules.
+- Verified by: Static analysis checks detecting disallowed circular dependencies between internal core modules and dialect modules.
+- Verified by: Pull request architectural code reviews evaluating dependency imports and visitor usage.
+- Violation handling: Pull requests duplicating traversal logic or introducing circular imports from core to dialect modules will be blocked at continuous integration.
+- Violation handling: Violations discovered in review must be refactored to consume shared visitor and utility routines from the internal core module.
+- Exception process: Exceptions require documented justification detailing why the internal core traversal interface cannot support the specific transformation requirement, approved by core maintainers.
 </enforcement>

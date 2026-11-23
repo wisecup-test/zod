@@ -19,28 +19,29 @@ metadata:
 
 Scope: applies to `packages/resolution/src/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- All runtime input validation and payload parsing across module boundaries.
+- Data ingestion points where external or untrusted structures must conform to defined schemas.
 
 ### Rules
 
-- **R-ZOD-001** SHOULD: Schema definitions and parsing routines SHOULD remain structurally identical across all module compilation targets supported by the repository.
-- **R-ZOD-002** MANDATORY: Discover the project's verification and test scripts from the repository manifest and execute them.
-- **R-ZOD-003** MANDATORY: Execute the repository test suite to confirm that schema validation runs without errors across all module formats.
-- **R-ZOD-004** MANDATORY (LOCK-VERSION GROUNDING): Before writing code that uses a versioned library, execute in order: 1. Find the dependency manifest in the repo. 2. Identify the build tool from the manifest. 3. Inspect the repository lock or resolution artifact to determine the exact resolved version. 4. Look up the official documentation, changelog, or public API reference for that exact version. 5. Confirm every API, class, or function you will call exists in that exact version's documentation. 6. For version-sensitive behavior, re-run steps 3-5 per dependency at point of use.
-- **R-ZOD-005** MANDATORY: Declare validation schemas modularly so that schema definitions and parsing operations remain consistent across all module compilation formats.
-- **R-ZOD-006** MANDATORY: Handle validation failures at boundaries by catching parsing errors and transforming them into structured domain errors.
+- **R-LM-001** SHOULD: Schema definitions and parsing routines SHOULD remain structurally identical across all module compilation targets supported by the repository.
 
 ### Verify
 
-```bash
-# Discover and execute project's verification and test scripts from the repository manifest
-# Execute the repository test suite to confirm schema validation runs without errors across all module formats
-```
+- Discover the project's verification and test scripts from the repository manifest and execute them.
+- Execute the repository test suite to confirm that schema validation runs without errors across all module formats.
 
 **Accept when:**
+
 - All schema validation parsing logic executes successfully across all supported module targets.
 - Repository verification scripts complete with zero exit codes and no schema parsing errors.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All boundary inputs must pass through Zod schema validation, and pull requests bypassing schema parsing or tests failing due to unhandled schema validation errors will be blocked.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Continuous integration pipelines executing automated test suites.
+- Verified by: Peer code review verifying that boundary inputs pass through Zod schema validation.
+- Violation handling: Pull requests bypassing schema parsing for boundary inputs will be blocked during review.
+- Violation handling: Test failures resulting from unhandled schema validation errors will block deployment.
+- Exception process: Exceptions must be submitted via architectural review with documented rationale for bypassing schema validation.
 </enforcement>

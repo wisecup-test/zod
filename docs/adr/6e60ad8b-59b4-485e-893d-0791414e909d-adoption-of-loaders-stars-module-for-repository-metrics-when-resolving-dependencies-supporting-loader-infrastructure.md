@@ -17,7 +17,6 @@ metadata:
 
 # Adoption of @/loaders/stars Module for Repository Metrics: When Resolving Dependencies Supporting Loader Infrastructure
 
-Status: proposed
 Date: 2025-05-18
 Deciders: Detection Pipeline (automated)
 
@@ -40,17 +39,17 @@ Directly embedding third-party API queries or ad-hoc data fetching logic within 
 
 ## Decision
 
-1. MUST: When resolving dependencies supporting the loader infrastructure, the consumer MUST inspect the repository lock artifact to determine the exact resolved versions before point of use.
+- **R-LM-001** MUST: When resolving dependencies supporting the loader infrastructure, the consumer MUST inspect the repository lock artifact to determine the exact resolved versions before point of use.
 
 ## Policy Block
 
-- MUST When resolving dependencies supporting the loader infrastructure, the consumer MUST inspect the repository lock artifact to determine the exact resolved versions before point of use.
-
 In scope:
+
 - Documentation UI components displaying repository star counts or ecosystem popularity metrics.
 - Presentation elements requiring standardized star pill indicators or ecosystem summaries.
 
 Out of scope:
+
 - Backend build scripts or external data synchronizers operating outside the documentation presentation layer.
 - Unrelated UI components that do not render repository star counts.
 
@@ -63,11 +62,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Centralizes data retrieval and ingestion logic for repository star counts into a single maintainable module.
 - Decouples visual presentation components from remote API rate limits, authentication requirements, and transport protocols.
 - Facilitates consistent caching and formatting of ecosystem metrics across all documentation views.
 
 Negative:
+
 - Introduces an internal coupling where presentation components depend on the interface and availability of the @/loaders/stars module.
 - Changes to repository star schema or loading contracts require coordinated updates across all consumer components.
 
@@ -105,12 +106,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the project static analysis and module boundary verification scripts to confirm that star metrics imports originate exclusively from @/loaders/stars.
 - Discover and execute the project test runner to verify that components consuming @/loaders/stars render metric data according to the module contract.
 
 Accept when:
+
 - All UI components rendering repository star metrics import star data exclusively from the @/loaders/stars module.
 - Static analysis and module boundary checks pass with zero unauthorized direct network imports for repository metadata in presentation components.
 

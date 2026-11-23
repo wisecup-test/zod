@@ -19,26 +19,30 @@ metadata:
 
 Scope: applies to `packages/resolution/src/**`.
 
-These rules are ALWAYS ACTIVE for all files matching the configured scope.
+These rules are ALWAYS ACTIVE for:
+- Runtime input parsing and validation within module resolution entrypoints
+- Data contracts interfacing with external inputs across module formats
 
 ### Rules
 
-- **R-ZOD-001** SHOULD: Schemas SHOULD be co-located with their corresponding boundary interface definitions to maintain schema synchronization.
-- **R-ZOD-002** MANDATORY: Construct reusable schema objects for shared boundary primitives to prevent redundant declarations.
-- **R-ZOD-003** MANDATORY: Infer static types directly from schema definitions to maintain synchronization between compile-time and runtime models.
-- **R-ZOD-004** MANDATORY (LOCK-VERSION GROUNDING): Before writing code that uses a versioned library, execute in order: (1) Find the dependency manifest in the repo. (2) Identify the build tool. (3) Inspect the repository lock or resolution artifact to determine the exact resolved version. (4) Look up official documentation/changelog/API reference for that exact version without relying solely on training-data recall. (5) Confirm every API, class, or function exists in that exact version's documentation before using it. (6) Re-run steps 3-5 per dependency at point of use for version-sensitive behavior.
+- **R-LM-001** SHOULD: Schemas SHOULD be co-located with their corresponding boundary interface definitions to maintain schema synchronization.
 
 ### Verify
 
-```bash
-# Discover the project verification script from the repository manifest and execute validation suites.
-# Discover and run the project test execution command to verify schema parsing tests pass across all module entrypoints.
-```
+- Discover the project verification script from the repository manifest and execute validation suites.
+- Discover and run the project test execution command to verify schema parsing tests pass across all module entrypoints.
 
 **Accept when:**
+
 - All boundary inputs are validated via schema parsing without manual type casting.
 - Verification suites pass with schema validation tests confirming rejection of invalid inputs and acceptance of valid inputs.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Pull requests bypassing schema validation on external inputs are blocked from merging. Code review flags any unvalidated boundary type assertions for refactoring.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Continuous integration test execution
+- Verified by: Automated code review and lint checks
+- Verified by: Peer review of pull requests touching boundary entrypoints
+- Violation handling: Pull requests bypassing schema validation on external inputs are blocked from merging.
+- Violation handling: Code review flags any unvalidated boundary type assertions for refactoring.
+- Exception process: Exceptions require documented justification demonstrating performance-critical constraints and approval by lead architects.
 </enforcement>

@@ -20,23 +20,28 @@ metadata:
 
 Scope: applies to `packages/docs/app/blog/**`, `packages/docs/components/**`.
 
-These rules are ALWAYS ACTIVE for all documentation content pages, blog rendering views, navigation sidebars, syndicated feed endpoints that display code titles, and UI components within the documentation workspace requiring standardized code title labels.
+These rules are ALWAYS ACTIVE for:
+- Documentation content pages, blog rendering views, navigation sidebars, and syndicated feed endpoints that display code titles.
+- UI components within the documentation workspace requiring standardized code title labels.
 
 ### Rules
 
-- **R-ADR-001** MUST: Consumers MUST discover the repository dependency resolution artifacts and verify module path alias configurations before integrating the module.
+- **R-LM-001** MUST: Consumers MUST discover the repository dependency resolution artifacts and verify module path alias configurations before integrating the module.
 
 ### Verify
 
-```bash
-# Discover and execute the repository static analysis script to verify all code title imports resolve to the shared internal component.
-# Discover and run the project type checking and test suites to verify interface compatibility across documentation routes and components.
-```
+- Discover and execute the repository static analysis script to verify all code title imports resolve to the shared internal component.
+- Discover and run the project type checking and test suites to verify interface compatibility across documentation routes and components.
 
 **Accept when:**
+
 - All documentation pages, blog views, navigation components, and syndication endpoints import code title rendering from the centralized internal module without unresolved path errors.
 - Project static analysis, type verification, and test suites pass without violations regarding unshared inline code title implementations.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. All pull requests containing ad-hoc code title implementations or unapproved styling wrappers are blocked until updated to import the shared module.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated static analysis and linter rules checking import statements during continuous integration.
+- Verified by: Peer code review for all new documentation components, blog templates, and feed generation routes.
+- Violation handling: Pull requests containing ad-hoc code title implementations or unapproved styling wrappers are blocked until updated to import the shared module.
+- Exception process: Exceptions must be submitted via an architecture review request detailing why the centralized module cannot accommodate the specific presentation or serialization constraint.
 </enforcement>

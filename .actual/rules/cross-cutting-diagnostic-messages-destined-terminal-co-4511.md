@@ -19,23 +19,27 @@ metadata:
 
 Scope: applies to `packages/tsc/bench/**`.
 
-These rules are ALWAYS ACTIVE for command-line execution scripts and benchmarking harnesses requiring interactive terminal output.
+These rules are ALWAYS ACTIVE for:
+- Command-line execution scripts and benchmarking harnesses requiring interactive terminal output.
 
 ### Rules
 
-- **R-DIAG-001** SHOULD: Diagnostic messages destined for terminal consumers SHOULD separate error notifications on standard error from standard runtime process output.
+- **R-L-001** SHOULD: Diagnostic messages destined for terminal consumers SHOULD separate error notifications on standard error from standard runtime process output.
 
 ### Verify
 
-```bash
-# Discover and run the project static analysis and linting verification scripts to check logging conventions across script boundaries.
-# Discover and execute the repository test suite to ensure benchmarking scripts exit with expected status codes on invalid arguments.
-```
+- Discover and run the project static analysis and linting verification scripts to check logging conventions across script boundaries.
+- Discover and execute the repository test suite to ensure benchmarking scripts exit with expected status codes on invalid arguments.
 
 **Accept when:**
+
 - Static analysis validates that console output invocations are restricted to designated utility and script directories.
 - Executing the benchmark script with missing arguments outputs an actionable error message to standard error and halts execution.
 
 <enforcement>
-Claude Code MUST NOT skip or defer verification. Verified by automated static analysis checks in continuous integration pipelines and peer review during pull requests.
+Claude Code MUST NOT skip or defer verification.
+- Verified by: Automated static analysis checks in continuous integration pipelines.
+- Verified by: Peer review during pull requests affecting utility and benchmarking scripts.
+- Violation handling: Pull requests containing unauthorized direct console invocations outside permitted script directories are blocked until resolved.
+- Exception process: Exceptions for temporary debugging logs or alternative logging utilities must be documented in code comments and approved by module maintainers.
 </enforcement>

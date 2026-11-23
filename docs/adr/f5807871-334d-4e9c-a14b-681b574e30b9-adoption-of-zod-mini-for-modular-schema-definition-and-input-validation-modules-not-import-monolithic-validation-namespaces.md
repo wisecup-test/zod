@@ -19,7 +19,6 @@ metadata:
 
 # Adoption of zod/mini for Modular Schema Definition and Input Validation: Modules Not Import Monolithic Validation Namespaces
 
-Status: proposed
 Date: 2025-05-15
 Deciders: Detection Pipeline (automated)
 
@@ -44,16 +43,16 @@ Adopting monolithic schema validation libraries causes excessive bundle size and
 
 ## Decision
 
-1. MUST_NOT: Modules MUST NOT import monolithic validation namespaces where modular schema primitives fulfill the validation requirements.
+- **R-LM-001** MUST_NOT: Modules MUST NOT import monolithic validation namespaces where modular schema primitives fulfill the validation requirements.
 
 ## Policy Block
 
-- MUST_NOT Modules MUST NOT import monolithic validation namespaces where modular schema primitives fulfill the validation requirements.
-
 In scope:
+
 - All runtime input parsing, schema definitions, and payload verification in shared and client-facing packages.
 
 Out of scope:
+
 - Internal utility functions that operate strictly on pre-validated, strongly typed memory structures.
 
 ## Rationale
@@ -64,11 +63,13 @@ Out of scope:
 ## Consequences
 
 Positive:
+
 - Reduces bundle payload and improves dead-code elimination by importing modular validation primitives.
 - Standardizes runtime input parsing and schema verification across diverse module distribution targets.
 - Provides declarative data structure parsing with explicit check combinators.
 
 Negative:
+
 - Developers must explicitly compose validation constraints rather than relying on auto-chained monolithic helper methods.
 - Schema composition requires strict adherence to modular check functions to prevent accidental inclusion of unneeded parsing logic.
 
@@ -106,12 +107,13 @@ LOCK-VERSION GROUNDING (MANDATORY) — before writing code that uses a versioned
 
 ## Continuation Context
 
-
 Verify commands:
+
 - Discover and run the repository verification scripts that validate module imports and runtime parsing test suites.
 - Inspect module resolution outputs to verify that only modular validation primitives are bundled into target artifacts.
 
 Accept when:
+
 - All schema validation implementations execute runtime parsing through the designated modular validation entry point.
 - Repository verification scripts confirm schema validation tests pass without unapproved monolithic validator imports.
 
